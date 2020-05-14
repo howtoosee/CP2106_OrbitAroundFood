@@ -2,7 +2,7 @@
 NUS CP2106 Independent Software Development Project (Orbital)
 
 ## Team members
-- Chen Xihao
+- [Chen Xihao](https://github.com/howtoosee/)
 - Lau Xin Yee
 
 ## Some informaiton on our project

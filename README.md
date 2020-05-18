@@ -1,8 +1,7 @@
 # OrbitAroundFood 
 NUS CP2106 Independent Software Development Project (Orbital)  
 
-#### OrbitAroundFood Logo
-[![Orbit-Around-Food-logo.jpg](https://i.postimg.cc/fRzpKhny/Orbit-Around-Food-logo.jpg)](https://postimg.cc/xcZ6fhdV)  
+![logo](https://raw.githubusercontent.com/howtoosee/CP2106_OrbitAroundFood/master/project_logo.png)
 
 ## Team members
 - [Chen Xihao](https://github.com/howtoosee/)

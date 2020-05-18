@@ -25,6 +25,6 @@ To develop an application which collates all the food options in NUS (May limit 
 - Android App
 
 #### Tech Stack
+- ReactNative for app development
 - JavaScript
-- Firebase(Store backend database)
-- React Native(Develop Android and iOS Apps)
+- FireBase for backend database

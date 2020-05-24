@@ -7,8 +7,6 @@ import Search from "./components/search";
 export default function App() {
   const [searchItem, setSearchItem] = useState('');
 
-  const searchInputHandler = input => setSearchItem(input);
-  const addSearchHist = () => console.log(searchItem);
 
   return (
       <Search/>

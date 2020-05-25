@@ -7,3 +7,6 @@ D
 components/search.js,1/4/14c2f674330813ea73d29f19483ac9aa765bec2e
 6
 App.js,a/4/a4a49f7b4c549593514920b942b5a787f2773862
+:
+
+.gitignore,a/5/a5cc2925ca8258af241be7e5b0381edf30266302

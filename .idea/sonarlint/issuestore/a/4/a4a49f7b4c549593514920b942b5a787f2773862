@@ -1,11 +1,9 @@
 
-Njavascript:S1128"&Remove this unused import of 'Button'.(˜×¨Ğøÿÿÿÿ8˜Â¬Ì¢.
+Ljavascript:S1128"$Remove this unused import of 'Text'.(˜×¨Ğøÿÿÿÿ8˜Â¬Ì¢.
+cjavascript:S1481";Remove the declaration of the unused 'searchItem' variable.(ØÕÀÈşÿÿÿÿ8¬»Ê°¤.
+Njavascript:S1128"&Remove this unused import of 'Button'.(˜×¨Ğøÿÿÿÿ8Ù÷Ë¢.
+`javascript:S1854"8Remove this useless assignment to variable "searchItem".(ØÕÀÈşÿÿÿÿ8¬»Ê°¤.
 Ljavascript:S1128"$Remove this unused import of 'View'.(˜×¨Ğøÿÿÿÿ8˜Â¬Ì¢.
-fjavascript:S1481
-"CRemove the declaration of the unused 'searchInputHandler' variable.(ÍœÍ†8˜Â¬Ì¢.
-cjavascript:S1854";Remove this useless assignment to variable "addSearchHist".(¦Î¹ºùÿÿÿÿ8˜Â¬Ì¢.
-cjavascript:S1854
-"@Remove this useless assignment to variable "searchInputHandler".(ÍœÍ†8˜Â¬Ì¢.
-Ljavascript:S1128"$Remove this unused import of 'Text'.(˜×¨Ğøÿÿÿÿ8Ù÷Ë¢.
-fjavascript:S1481">Remove the declaration of the unused 'addSearchHist' variable.(¦Î¹ºùÿÿÿÿ8˜Â¬Ì¢.
 Qjavascript:S1128")Remove this unused import of 'TextInput'.(˜×¨Ğøÿÿÿÿ8˜Â¬Ì¢.
+cjavascript:S1854";Remove this useless assignment to variable "setSearchItem".(ØÕÀÈşÿÿÿÿ8¬»Ê°¤.
+fjavascript:S1481">Remove the declaration of the unused 'setSearchItem' variable.(ØÕÀÈşÿÿÿÿ8¬»Ê°¤.

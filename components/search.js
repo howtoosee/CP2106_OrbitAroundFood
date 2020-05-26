@@ -1,12 +1,16 @@
 import React, {useState} from 'react';
 import {StyleSheet, Text, TextInput, Button, View, ScrollView, TouchableOpacity} from 'react-native';
+import Colors from '../constants/Colors';
 
-
-function Search() {
+function Search(props) {
     const [searchString, setSearchString] = useState('');
     const [searchHist, setSearchHist] = useState([]);
 
-    const searchInputHandler = input => setSearchString(input);
+
+    const searchInputHandler = (input) => {
+        setSearchString(input);
+    }
+
 
     const searchHandler = () => {
         if (isValidString(searchString)) {
@@ -16,6 +20,7 @@ function Search() {
         }
         // else ignore the search string
     }
+
 
     const search = searchKey => {
         console.log("Searching for: " + searchKey);
@@ -34,11 +39,14 @@ function Search() {
         // reset search item box to empty
     };
 
+
     const clearHistory = () => setSearchHist([]);
     // clears search history
 
+
     const isValidString = str => str.length > 0 && str.trim().length > 0;
     // checks if string is valid
+
 
     const getKey = objType => objType + "_" + Math.floor(Math.random() * 10000);
     // creates key for object
@@ -47,7 +55,6 @@ function Search() {
     return (
         <View style={styles.screen}>
 
-            {/* search bar */}
             <View style={styles.searchBar}>
 
                 <View style={styles.inputContainer}>
@@ -58,39 +65,39 @@ function Search() {
                     />
                 </View>
 
-                <View style={styles.searchButton}>
-                    <Button title="Find" onPress={searchHandler}/>
+                <View style={styles.buttons}>
+                    <Button title="FIND" color={Colors.button} onPress={searchHandler}/>
+                    <Button title="BACK" color={Colors.darkerButton} onPress={() => props.onPressBack(true)}/>
                 </View>
 
             </View>
 
-            {/*search history */}
             <View>
                 <View style={styles.searchHistoryTitle}>
-                    <Text>Search history</Text>
+                    <Text style={styles.searchHistory}>Search History</Text>
                 </View>
 
                 <ScrollView style={styles.searchHistoryContainer}>
                     {searchHist.map(item => (
-
                         <TouchableOpacity
                             key={getKey("touchable_opacity")}
                             onPress={() => searchInputHandler(item)}>
 
                             <View style={styles.searchHistoryText}>
-                                <Text key={getKey("search_history_text")}>
+                                <Text style={styles.text} key={getKey("search_history_text")}>
                                     {item}
                                 </Text>
                             </View>
 
                         </TouchableOpacity>
-
                     ))}
                 </ScrollView>
 
-                <Button title="Clear search history" onPress={clearHistory}/>
-            </View>
+                <View style={styles.searchHistoryClearButton}>
+                    <Button title="Clear search history" color={Colors.button} onPress={clearHistory}/>
+                </View>
 
+            </View>
 
         </View>
 
@@ -106,51 +113,59 @@ const styles = StyleSheet.create({
     },
 
     searchBar: {
-        paddingLeft: 10,
         flexDirection: 'row',
         justifyContent: 'space-between',
         alignItems: 'center',
     },
 
+    buttons: {
+        flex: 1,
+        flexDirection: 'row',
+        width: '98%',
+        justifyContent: 'space-around'
+    },
+
     inputContainer: {
-        width: '80%',
+        flex: 2,
         borderWidth: 2,
         borderColor: 'grey',
         borderRadius: 5,
-        padding: 10,
-    },
-
-    searchButton: {
-        width: '20%',
-        // borderWidth: 2,
-        // borderColor: 'black',
+        padding: 8,
     },
 
     searchHistoryTitle: {
         paddingLeft: 1,
         marginTop: 15,
-        marginBottom: 5,
         fontWeight: 'bold',
+    },
+
+    searchHistory: {
+        color: Colors.words
     },
 
     searchHistoryContainer: {
         marginLeft: 10,
     },
 
+    text: {
+        color: Colors.words
+    },
+
     searchHistoryText: {
-        marginTop: 10,
-        padding: 10,
-        borderWidth: 1,
-        borderColor: '#aaa',
-        borderRadius: 5,
-        width: '80%',
+        marginTop: 5,
+        padding: 7,
+        borderWidth: 3,
+        borderColor: Colors.card,
+        borderRadius: 2,
+        width: '78%',
+        color: Colors.words
     },
 
     searchHistoryClearButton: {
-        justifyContent: 'space-around',
+        paddingTop: 5,
+        justifyContent: 'space-around'
     }
 })
 
 
 export default Search;
-

@@ -1,56 +1,106 @@
-import React, {useState} from 'react';
-import {StyleSheet, View} from 'react-native';
+import React, { useState } from 'react';
+import { StyleSheet, View } from 'react-native';
 
-import StartScreen from './components/StartScreen';
 import Recommendation from './components/Recommendation';
+import Favourite from './components/Favourite';
+import StartScreen from './components/StartScreen';
 import Search from './components/Search';
-import SaveFavourite from './components/SaveFavourite';
+
+import Screen from './constants/Screen';
+
 
 
 export default function App() {
+    // const [recScreen, setRecScreen] = useState(false);
+    // const [startScreen, setStartScreen] = useState(true);
+    // const [searchScreen, setSearch] = useState(false);
+    // const [saveScreen, setSaveFavourite] = useState(false);
+    //
+    // const showRecScreen = (boo) => {
+    //     setRecScreen(boo);
+    //     setStartScreen(false);
+    // }
+    //
+    // const showStartScreen = (boo) => {
+    //     setStartScreen(boo);
+    //     setRecScreen(false);
+    //     setSearch(false);
+    //     setSaveFavourite(false);
+    // }
+    //
+    //
+    // const showSearch = (boo) => {
+    //     setSearch(boo);
+    //     setStartScreen(false);
+    // }
+    //
+    //
+    // const showSaveFavourite = (boo) => {
+    //     setSaveFavourite(boo);
+    //     setStartScreen(false);
+    // }
 
-    const [recScreen, setRecScreen] = useState(false);
-    const [startScreen, setStartScreen] = useState(true);
-    const [searchScreen, setSearch] = useState(false);
-    const [saveScreen, setSaveFavourite] = useState(false);
+    const [currScreen, setCurrScreen] = useState(Screen.START_SCREEN);
 
+    function showScreen(scrn) {
+        let newScreen: any;
 
-    const showRecScreen = (boo) => {
-        setRecScreen(boo);
-        setStartScreen(false);
+        switch (scrn) {
+            case "favourite":
+                newScreen = Screen.FAVOURITE;
+                break;
+            case "recommendation":
+                newScreen = Screen.RECOMMENDATION;
+                break;
+            case "search":
+                newScreen = Screen.SEARCH;
+                break;
+            case "start_screen":
+                newScreen = Screen.START_SCREEN;
+                break;
+            default:
+                newScreen = Screen.START_SCREEN;
+                break;
+        }
+        setCurrScreen(newScreen);
     }
 
-    const showStartScreen = (boo) => {
-        setStartScreen(boo);
-        setRecScreen(false);
-        setSearch(false);
-        setSaveFavourite(false);
-    }
-
-
-    const showSearch = (boo) => {
-        setSearch(boo);
-        setStartScreen(false);
-    }
-
-
-    const showSaveFavourite = (boo) => {
-        setSaveFavourite(boo);
-        setStartScreen(false);
-    }
 
 
     let content;
+    switch (currScreen) {
+        case Screen.FAVOURITE:
+            content = <Favourite onPressBack={() => showScreen('start_screen')}/>;
+            break;
+        case Screen.RECOMMENDATION:
+            content = <Recommendation onPressBack={() => showScreen('start_screen')}/>;
+            break;
+        case Screen.SEARCH:
+            content = <Search onPressBack={() => showScreen('start_screen')}/>;
+            break;
+        case Screen.START_SCREEN:
+            content = <StartScreen onPressRec = {() => showScreen('recommendation')}
+                                   onPressSearch = {() => showScreen('search')}
+                                   onPressFav = {() => showScreen('favourite')}/>
+            break;
+        default:
+            content = <StartScreen onPressRec = {() => showScreen('recommendation')}
+                                   onPressSearch = {() => showScreen('search')}
+                                   onPressFav = {() => showScreen('favourite')}/>
+            break;
 
-    if (recScreen && !startScreen) {
-        content = <Recommendation onPressBack={showStartScreen}/>
-    } else if (!recScreen && startScreen && !searchScreen && !saveScreen) {
-        content = <StartScreen onPressRec={showRecScreen} onPressSearch={showSearch} onPressFav={showSaveFavourite}/>
-    } else if (searchScreen && !startScreen) {
-        content = <Search onPressBack={showStartScreen}/>
-    } else if (saveScreen && !startScreen) {
-        content = <SaveFavourite onPressBack={showStartScreen}/>
     }
+
+
+    // if (recScreen && !startScreen) {
+    //     content = <Recommendation onPressBack={showStartScreen}/>
+    // } else if (!recScreen && startScreen && !searchScreen && !saveScreen) {
+    //     content = <StartScreen onPressRec={showRecScreen} onPressSearch={showSearch} onPressFav={showSaveFavourite}/>
+    // } else if (searchScreen && !startScreen) {
+    //     content = <Search onPressBack={showStartScreen}/>
+    // } else if (saveScreen && !startScreen) {
+    //     content = <SaveFavourite onPressBack={showStartScreen}/>
+    // }
 
 
     return (

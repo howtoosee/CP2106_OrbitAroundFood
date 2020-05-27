@@ -1,31 +1,26 @@
 import React from 'react';
-import { StyleSheet, View, Text, Button } from 'react-native';
-import Colors from '../constants/Colors';
+import {StyleSheet, View, Text} from 'react-native';
+
+import Colors from "../constants/Colors";
+import DefaultStyles from "../constants/DefaultStyles";
+import DefaultHeader from "./DefaultHeader";
 
 
 function Recommendation(props) {
 
     return (
 
-        <View style={styles.screen}>
+        <View style={DefaultStyles.screen}>
 
-            <View style={styles.header}>
-                <Text style={styles.title}>FOOD OF THE DAY</Text>
-            </View>
+            <DefaultHeader headerText="FoodOTD" onPress={() => props.onPressBack()}/>
 
-            <View style={styles.food}>
-                <Text style={styles.text}>Chicken Rice</Text>
-                <Text style={styles.text}>Price: $2.00</Text>
-                <Text style={styles.text}>Stall: Chickenlicious</Text>
-                <Text style={styles.text}>Location: The Deck at FASS</Text>
-            </View>
-
-            <View style={styles.button}>
-
-                <Button title="BACK" color={Colors.darkerButton} onPress={() => {
-                    props.onPressBack(true)
-                }}/>
-
+            <View style={DefaultStyles.contentContainer}>
+                <View style={styles.content}>
+                    <Text style={styles.text}>Chicken Rice</Text>
+                    <Text style={styles.text}>Price: $2.00</Text>
+                    <Text style={styles.text}>Stall: Chickenlicious</Text>
+                    <Text style={styles.text}>Location: The Deck at FASS</Text>
+                </View>
             </View>
 
         </View>
@@ -34,47 +29,21 @@ function Recommendation(props) {
 
 
 const styles = StyleSheet.create({
-    screen: {
+
+    content: {
         flex: 1,
-        justifyContent: 'center',
-        alignItems: 'center'
-    },
-
-    header: {
-        flex: 1,
-        paddingTop: 50,
-        alignItems: 'center',
-        justifyContent: 'flex-end'
-    },
-
-    title: {
-        borderWidth: 4,
-        borderColor: Colors.button,
-        padding: 20,
-        borderRadius: 10,
-        marginVertical: 10,
-        alignItems: 'center',
-        justifyContent: 'center',
-        fontSize: 25
-    },
-
-    food: {
-        flex: 0.9,
-        paddingTop: 20,
+        flexDirection: 'column',
+        paddingTop: 150,
         justifyContent: 'space-evenly',
-        alignItems: 'center'
+        alignItems: 'center',
+        paddingBottom: 250,
     },
 
     text: {
-        fontSize: 22
+        fontSize: 25,
+        color: Colors.TEXT,
     },
 
-    button: {
-        flex: 1,
-        paddingTop: 30,
-        justifyContent: 'flex-start',
-        width: '20%'
-    }
 });
 
 

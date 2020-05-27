@@ -1,6 +1,10 @@
 import React, {useState} from 'react';
 import {StyleSheet, Text, TextInput, Button, View, ScrollView, TouchableOpacity} from 'react-native';
+
 import Colors from '../constants/Colors';
+import DefaultStyles from "../constants/DefaultStyles";
+import DefaultHeader from "./DefaultHeader";
+
 
 function Search(props) {
     const [searchString, setSearchString] = useState('');
@@ -53,119 +57,125 @@ function Search(props) {
 
 
     return (
-        <View style={styles.screen}>
+        <View style={DefaultStyles.screen}>
 
-            <View style={styles.searchBar}>
+            <DefaultHeader headerText="Search" onPress={() => props.onPressBack()}/>
 
-                <View style={styles.inputContainer}>
-                    <TextInput
-                        placeholder="What do you wanna eat?"
-                        onChangeText={searchInputHandler}
-                        value={searchString}
-                    />
+            <View style={DefaultStyles.contentContainer}>
+
+                <View style={styles.searchBar}>
+
+                    <View style={styles.inputContainer}>
+                        <TextInput style={styles.inputText}
+                            placeholder="What do you wanna eat?"
+                            onChangeText={searchInputHandler}
+                            value={searchString}
+                        />
+                    </View>
+
+                    <View style={styles.searchButton}>
+                        <Button title="FIND" color={Colors.BUTTON} onPress={searchHandler}/>
+                    </View>
+
                 </View>
 
-                <View style={styles.buttons}>
-                    <Button title="FIND" color={Colors.button} onPress={searchHandler}/>
-                    <Button title="BACK" color={Colors.darkerButton} onPress={() => props.onPressBack(true)}/>
+                <View style={styles.searchHistoryContainer}>
+                    <View style={styles.searchHistoryTitle}>
+                        <Text style={styles.searchHistoryTitleText}>Search History</Text>
+                    </View>
+
+                    <ScrollView style={styles.searchHistoryContainer}>
+                        {searchHist.map(item => (
+                            <TouchableOpacity
+                                key={getKey("touchable_opacity")}
+                                onPress={() => searchInputHandler(item)}>
+
+                                <View style={styles.searchHistoryText}>
+                                    <Text style={styles.searchHistoryResultText} key={getKey("search_history_text")}>
+                                        {item}
+                                    </Text>
+                                </View>
+
+                            </TouchableOpacity>
+                        ))}
+                    </ScrollView>
+
+                    <View style={styles.searchHistoryClearButton}>
+                        <Button title="Clear search history" color={Colors.BUTTON} onPress={clearHistory}/>
+                    </View>
+
                 </View>
-
-            </View>
-
-            <View>
-                <View style={styles.searchHistoryTitle}>
-                    <Text style={styles.searchHistory}>Search History</Text>
-                </View>
-
-                <ScrollView style={styles.searchHistoryContainer}>
-                    {searchHist.map(item => (
-                        <TouchableOpacity
-                            key={getKey("touchable_opacity")}
-                            onPress={() => searchInputHandler(item)}>
-
-                            <View style={styles.searchHistoryText}>
-                                <Text style={styles.text} key={getKey("search_history_text")}>
-                                    {item}
-                                </Text>
-                            </View>
-
-                        </TouchableOpacity>
-                    ))}
-                </ScrollView>
-
-                <View style={styles.searchHistoryClearButton}>
-                    <Button title="Clear search history" color={Colors.button} onPress={clearHistory}/>
-                </View>
-
             </View>
 
         </View>
-
-
     );
 }
 
 
 const styles = StyleSheet.create({
-    screen: {
-        paddingVertical: 50,
-        paddingHorizontal: 30,
-    },
 
     searchBar: {
+        paddingTop: 10,
         flexDirection: 'row',
         justifyContent: 'space-between',
         alignItems: 'center',
     },
 
-    buttons: {
+    searchButton: {
         flex: 1,
         flexDirection: 'row',
         width: '98%',
-        justifyContent: 'space-around'
+        justifyContent: 'space-around',
+        alignItems: 'center',
     },
 
     inputContainer: {
-        flex: 2,
+        flex: 4,
         borderWidth: 2,
         borderColor: 'grey',
         borderRadius: 5,
         padding: 8,
     },
 
+    inputText: {
+        fontSize: 16,
+    },
+
     searchHistoryTitle: {
-        paddingLeft: 1,
-        marginTop: 15,
+        paddingLeft: 3,
+        marginTop: 25,
+    },
+
+    searchHistoryTitleText: {
+        color: Colors.TEXT,
+        fontSize: 15,
         fontWeight: 'bold',
     },
 
-    searchHistory: {
-        color: Colors.words
-    },
-
     searchHistoryContainer: {
-        marginLeft: 10,
+        marginLeft: 0,
+        paddingTop: 10,
     },
 
-    text: {
-        color: Colors.words
+    searchHistoryResultText: {
+        color: Colors.TEXT,
     },
 
     searchHistoryText: {
-        marginTop: 5,
+        marginTop: 8,
         padding: 7,
-        borderWidth: 3,
-        borderColor: Colors.card,
-        borderRadius: 2,
-        width: '78%',
-        color: Colors.words
+        borderWidth: 2,
+        borderColor: Colors.CARD,
+        borderRadius: 5,
+        width: '97%',
+        color: Colors.TEXT,
     },
 
     searchHistoryClearButton: {
-        paddingTop: 5,
-        justifyContent: 'space-around'
+        paddingTop: 25,
+        justifyContent: 'center',
     }
-})
+});
 
 
 export default Search;

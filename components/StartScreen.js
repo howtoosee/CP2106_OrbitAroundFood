@@ -1,13 +1,14 @@
 import React from 'react';
-import { StyleSheet, View, Button, Image } from 'react-native';
-import Colors from '../constants/Colors';
+import {StyleSheet, View, Image} from 'react-native';
 
+import DefaultStyles from "../constants/DefaultStyles";
+import StartScreenButton from "./StartScreenButton";
 
 
 function StartScreen(props) {
 
     return (
-        <View>
+        <View style={DefaultStyles.screen}>
 
             <View style={styles.imageContainer}>
                 <Image
@@ -18,17 +19,9 @@ function StartScreen(props) {
 
             <View style={styles.buttonContainer}>
 
-                <View style={styles.button}>
-                    <Button title="SEARCH" color={Colors.button} onPress={() => props.onPressSearch(true)}/>
-                </View>
-
-                <View style={styles.button}>
-                    <Button title="RECOMMENDATION" color={Colors.button} onPress={() => props.onPressRec(true)}/>
-                </View>
-
-                <View style={styles.button}>
-                    <Button title="FAVOURITES" color={Colors.button} onPress={() => props.onPressFav(true)}/>
-                </View>
+                <StartScreenButton title="SEARCH" onPress={() => props.onPressSearch()}/>
+                <StartScreenButton title="RECOMMENDATION" onPress={() => props.onPressRec()}/>
+                <StartScreenButton title="FAVOURITES" onPress={() => props.onPressFav()}/>
 
             </View>
 
@@ -39,27 +32,24 @@ function StartScreen(props) {
 
 const styles = StyleSheet.create({
     imageContainer: {
+        flex: 5,
         paddingTop: 80,
-        alignItems: 'center'
+        alignItems: 'center',
     },
 
     image: {
         width: 350,
-        height: 350
+        height: 350,
     },
 
     buttonContainer: {
+        flex: 7,
         flexDirection: 'column',
         alignItems: 'center',
-        paddingHorizontal: 15
+        paddingHorizontal: 15,
     },
 
-    button: {
-        width: '55%',
-        paddingTop: 10
-    }
 });
 
 
 export default StartScreen;
-

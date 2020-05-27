@@ -24,3 +24,9 @@ G
 components/Favourite.js,e/f/efbf145e1bd2850969c19b0a23bd824679130dac
 K
 components/SearchResults.js,6/b/6b4ed58de337aabb39f60a85971989c4b34a2cea
+O
+components/StartScreenButton.js,2/0/209c3227ce9afd1930a1a7bbf5a7992a753ee17c
+K
+components/DefaultHeader.js,1/8/181edc8e859ae3213b97ac1b26c9c3131a62f64f
+J
+constants/DefaultStyles.js,b/c/bc470f59c2df8755608fe30845fca8bd6fcef757

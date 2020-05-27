@@ -11,34 +11,6 @@ import Screen from './constants/Screen';
 
 
 export default function App() {
-    // const [recScreen, setRecScreen] = useState(false);
-    // const [startScreen, setStartScreen] = useState(true);
-    // const [searchScreen, setSearch] = useState(false);
-    // const [saveScreen, setSaveFavourite] = useState(false);
-    //
-    // const showRecScreen = (boo) => {
-    //     setRecScreen(boo);
-    //     setStartScreen(false);
-    // }
-    //
-    // const showStartScreen = (boo) => {
-    //     setStartScreen(boo);
-    //     setRecScreen(false);
-    //     setSearch(false);
-    //     setSaveFavourite(false);
-    // }
-    //
-    //
-    // const showSearch = (boo) => {
-    //     setSearch(boo);
-    //     setStartScreen(false);
-    // }
-    //
-    //
-    // const showSaveFavourite = (boo) => {
-    //     setSaveFavourite(boo);
-    //     setStartScreen(false);
-    // }
 
     const [currScreen, setCurrScreen] = useState(Screen.START_SCREEN);
 

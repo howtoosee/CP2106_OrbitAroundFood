@@ -23,7 +23,7 @@ const DefaultStyles = StyleSheet.create({
     headerTextBox: {
         width: '65%',
         alignItems: 'center',
-        paddingTop: 10,
+        paddingTop: 0,
         borderBottomWidth: 3,
         borderBottomColor: Colors.BUTTON,
         justifyContent: 'flex-start',

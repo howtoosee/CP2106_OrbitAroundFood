@@ -2,7 +2,6 @@ import React from 'react';
 import { View, Text, StyleSheet, ScrollView, Button } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 
-import DefaultHeader from './DefaultHeader';
 import DefaultStyles from '../constants/DefaultStyles';
 import Fonts from '../constants/Fonts';
 import Colors from '../constants/Colors';
@@ -36,7 +35,6 @@ const styles = StyleSheet.create({
         flex: 1
     },
     content: {
-        flex: 1,
         flexDirection: 'column',
         paddingBottom: 10,
         paddingHorizontal: 20,

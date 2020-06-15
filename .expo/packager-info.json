@@ -1,14 +1,8 @@
 {
   "devToolsPort": 19002,
-<<<<<<< Updated upstream
   "expoServerPort": null,
   "packagerPort": null,
   "packagerPid": null,
-=======
-  "expoServerPort": 19000,
-  "packagerPort": 19001,
-  "packagerPid": 20020,
->>>>>>> Stashed changes
   "expoServerNgrokUrl": null,
   "packagerNgrokUrl": null,
   "ngrokPid": null,

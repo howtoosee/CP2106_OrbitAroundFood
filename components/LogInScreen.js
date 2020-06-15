@@ -83,11 +83,11 @@ const styles = StyleSheet.create({
     },
 
     content: {
-        paddingBottom: 15
+        paddingBottom: 10
     },
 
     inputContainer: {
-        paddingVertical: 15
+        paddingVertical: 10
     },
 
     buttonContainer: {

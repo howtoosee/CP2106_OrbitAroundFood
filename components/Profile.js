@@ -35,7 +35,7 @@ function Profile({navigation}) {
 
                 </View>
                 <View style={styles.button}>
-                    <Button title="Log Out" color={Colors.DARKER_BUTTON} onPress={() => navigation.navigate('StartScreen')} />
+                    <Button title="Log Out" color={Colors.DARKER_BUTTON} onPress={() => navigation.navigate('Welcome')} />
                 </View>
             </View>
         </SafeAreaView>

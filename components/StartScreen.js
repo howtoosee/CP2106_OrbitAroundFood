@@ -24,7 +24,7 @@ function StartScreen({ navigation }) {
                     <StartScreenButton title="RECOMMENDATION" onPress={() => navigation.navigate('Recommendation')}/>
                 </View>
                 <View style={styles.logInContainer}>
-                    <StartScreenButton title="Log In" onPress={() => navigation.navigate('LogIn')}/>
+                    <StartScreenButton title="Log In" onPress={() => navigation.navigate('Sign In')}/>
                 </View>
 
             </View>

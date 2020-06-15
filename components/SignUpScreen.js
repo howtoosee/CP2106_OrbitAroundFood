@@ -1,8 +1,6 @@
 import React, { useState } from 'react';
 import { View, TextInput, Text, Button, StyleSheet } from 'react-native';
 import { CheckBox } from 'react-native-elements';
-import { NavigationContainer } from '@react-navigation/native';
-import { createStackNavigator } from '@react-navigation/stack';
 
 import StartScreenButton from './StartScreenButton';
 import Colors from '../constants/Colors';

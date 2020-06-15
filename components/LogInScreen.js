@@ -45,14 +45,14 @@ function LogInScreen({navigation}) {
                     </View>
                 </View>
                 <View style={styles.buttonContainer}>
-                    <StartScreenButton color={Colors.BUTTON} title="SIGN IN" onPress={() => navigation.navigate('Navigation')} />
+                    <StartScreenButton color={Colors.BUTTON} title="Confirm" onPress={() => navigation.navigate('Orbit Around Food')} />
                     <View style={styles.helpContainer}> 
                         <Button title="Forget Password?" color={Colors.ALT_BUTTON} onPress={()=>{}}/>
-                        <Button title="Sign Up"color={Colors.ALT_BUTTON} onPress={() => navigation.navigate('SignUp')}/>
+                        <Button title="Sign Up"color={Colors.ALT_BUTTON} onPress={() => navigation.navigate('Sign Up')}/>
                     </View>
-                    <View style={styles.back}>
+                    {/* <View style={styles.back}>
                         <Button title="BACK"color={Colors.ALT_BUTTON} onPress={() => navigation.goBack()} />
-                    </View>
+                    </View> */}
                 </View>
             </View>
         </View>

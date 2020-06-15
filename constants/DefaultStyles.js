@@ -1,5 +1,6 @@
 import {StyleSheet} from 'react-native';
 import Colors from "./Colors";
+import Fonts from "./Fonts";
 
 
 const DefaultStyles = StyleSheet.create({
@@ -29,7 +30,7 @@ const DefaultStyles = StyleSheet.create({
     },
 
     headerTitle: {
-        fontSize: 35,
+        fontSize: Fonts.XL,
         color: Colors.BUTTON,
         fontStyle: 'italic',
         fontWeight: "bold",

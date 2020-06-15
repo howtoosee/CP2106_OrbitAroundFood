@@ -6,7 +6,7 @@ import DefaultStyles from "../constants/DefaultStyles";
 import DefaultHeader from "./DefaultHeader";
 
 
-function Search(props) {
+function Search({navigation}) {
     const [searchString, setSearchString] = useState('');
     const [searchHist, setSearchHist] = useState([]);
 
@@ -59,7 +59,7 @@ function Search(props) {
     return (
         <View style={DefaultStyles.screen}>
 
-            <DefaultHeader headerText="Search" onPress={() => props.onPressBack()}/>
+            <DefaultHeader headerText="Search" onPress={() => navigation.goBack()}/>
 
             <View style={DefaultStyles.contentContainer}>
 

@@ -6,13 +6,13 @@ import DefaultStyles from "../constants/DefaultStyles";
 import DefaultHeader from "./DefaultHeader";
 
 
-function Recommendation(props) {
+function Recommendation({navigation}) {
 
     return (
 
         <View style={DefaultStyles.screen}>
 
-            <DefaultHeader headerText="FoodOTD" onPress={() => props.onPressBack()}/>
+            <DefaultHeader headerText="FoodOTD" onPress={() => navigation.goBack()}/>
 
             <View style={DefaultStyles.contentContainer}>
                 <View style={styles.content}>

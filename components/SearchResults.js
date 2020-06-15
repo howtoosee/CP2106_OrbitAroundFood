@@ -22,7 +22,7 @@ function SearchResults(props) {
             </View>
 
             <View style={DefaultStyles.contentContainer}>
-                <View styl={Styles.searchResults}>
+                <View style={Styles.searchResults}>
                     <Text>something something 1</Text>
                     <Text>something something 2</Text>
                     <Text>something something 3</Text>

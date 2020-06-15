@@ -1,13 +1,17 @@
-import React, { useState } from 'react';
-import { StyleSheet, View } from 'react-native';
+import React from 'react';
+import { StyleSheet} from 'react-native';
+import { NavigationContainer } from '@react-navigation/native';
+import { createStackNavigator } from '@react-navigation/stack';
 
 import Recommendation from './components/Recommendation';
-import Favourite from './components/Favourite';
 import StartScreen from './components/StartScreen';
 import Search from './components/Search';
+import Navigation from './components/Navigation';
+import { SafeAreaProvider } from 'react-native-safe-area-context';
 
-import Screen from './constants/Screen';
+function App() {
 
+<<<<<<< Updated upstream
 
 
 export default function App() {
@@ -62,6 +66,9 @@ export default function App() {
             break;
 
     }
+=======
+    const Stack = createStackNavigator();
+>>>>>>> Stashed changes
 
 
     // if (recScreen && !startScreen) {
@@ -76,9 +83,18 @@ export default function App() {
 
 
     return (
-        <View style={styles.screen}>
-            {content}
-        </View>
+        <SafeAreaProvider>
+            <NavigationContainer>
+                <Stack.Navigator initialRouteName="StartScreen">
+                    <Stack.Screen name="StartScreen" component={StartScreen} />
+                    <Stack.Screen name="LogIn" component={LogInScreen} />
+                    <Stack.Screen name="SignUp" component={SignUpScreen} />
+                    <Stack.Screen name="Search" component={Search} />
+                    <Stack.Screen name="Recommendation" component={Recommendation} />
+                    <Stack.Screen name="Navigation" component={Navigation} />
+                </Stack.Navigator>
+            </NavigationContainer>
+        </SafeAreaProvider>
     );
 }
 
@@ -88,3 +104,5 @@ const styles = StyleSheet.create({
         flex: 1
     }
 });
+
+export default App;

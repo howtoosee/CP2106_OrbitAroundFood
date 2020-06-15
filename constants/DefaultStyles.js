@@ -1,13 +1,12 @@
 import {StyleSheet} from 'react-native';
 import Colors from "./Colors";
-import Fonts from "./Fonts";
 
 
 const DefaultStyles = StyleSheet.create({
 
     screen: {
         flex: 1,
-        paddingTop: 50,
+        paddingTop: 40,
         paddingHorizontal: 30,
         flexDirection: 'column',
         justifyContent: 'space-between',
@@ -22,15 +21,16 @@ const DefaultStyles = StyleSheet.create({
 
     headerTextBox: {
         width: '65%',
+        height: 52,
         alignItems: 'center',
-        paddingTop: 0,
+        paddingTop: 10,
         borderBottomWidth: 3,
         borderBottomColor: Colors.BUTTON,
         justifyContent: 'flex-start',
     },
 
     headerTitle: {
-        fontSize: Fonts.XL,
+        fontSize: 35,
         color: Colors.BUTTON,
         fontStyle: 'italic',
         fontWeight: "bold",
@@ -44,6 +44,7 @@ const DefaultStyles = StyleSheet.create({
     contentContainer: {
         flex: 14,
     },
+
 });
 
 

@@ -10,9 +10,9 @@ import LemmeHelpContainer from './LemmeHelpContainer';
 function HelpBuyPls(props) {
     return (
         <SafeAreaView style={styles.container}>
-            <View style={DefaultStyles.headerTextBox}>
+            {/* <View style={DefaultStyles.headerTextBox}>
                 <Text style={DefaultStyles.headerTitle}>Lemme Help</Text>
-            </View>
+            </View> */}
             <View style={styles.noteContainer}>
                 <Text style={styles.note}>*Note: Help Fee $1 (on top of food fee) ,
                         {'\n'} pay helper directly upon receival of goods</Text>
@@ -40,8 +40,8 @@ const styles = StyleSheet.create({
         paddingHorizontal: 20,
     },
     noteContainer: {
-        paddingHorizontal:10,
-        paddingTop: 5,
+        paddingHorizontal:40,
+        paddingTop: 0,
         paddingBottom:15
     },
     note: {

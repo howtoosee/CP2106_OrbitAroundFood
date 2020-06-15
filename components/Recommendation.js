@@ -12,7 +12,7 @@ function Recommendation({navigation}) {
 
         <View style={DefaultStyles.screen}>
 
-            <DefaultHeader headerText="FoodOTD" onPress={() => navigation.goBack()}/>
+            {/* <DefaultHeader headerText="FoodOTD" onPress={() => navigation.goBack()}/> */}
 
             <View style={DefaultStyles.contentContainer}>
                 <View style={styles.content}>

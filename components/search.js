@@ -59,7 +59,7 @@ function Search({navigation}) {
     return (
         <View style={DefaultStyles.screen}>
 
-            <DefaultHeader headerText="Search" onPress={() => navigation.goBack()}/>
+            {/* <DefaultHeader headerText="Search" onPress={() => navigation.goBack()}/> */}
 
             <View style={DefaultStyles.contentContainer}>
 

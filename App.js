@@ -1,5 +1,6 @@
-import React, { useState } from 'react';
-import { StyleSheet, View } from 'react-native';
+import React, {useState} from 'react';
+import {StyleSheet, View, SafeAreaView} from 'react-native';
+
 
 import Recommendation from './components/Recommendation';
 import Favourite from './components/Favourite';
@@ -9,36 +10,7 @@ import Search from './components/Search';
 import Screen from './constants/Screen';
 
 
-
 export default function App() {
-    // const [recScreen, setRecScreen] = useState(false);
-    // const [startScreen, setStartScreen] = useState(true);
-    // const [searchScreen, setSearch] = useState(false);
-    // const [saveScreen, setSaveFavourite] = useState(false);
-    //
-    // const showRecScreen = (boo) => {
-    //     setRecScreen(boo);
-    //     setStartScreen(false);
-    // }
-    //
-    // const showStartScreen = (boo) => {
-    //     setStartScreen(boo);
-    //     setRecScreen(false);
-    //     setSearch(false);
-    //     setSaveFavourite(false);
-    // }
-    //
-    //
-    // const showSearch = (boo) => {
-    //     setSearch(boo);
-    //     setStartScreen(false);
-    // }
-    //
-    //
-    // const showSaveFavourite = (boo) => {
-    //     setSaveFavourite(boo);
-    //     setStartScreen(false);
-    // }
 
     const [currScreen, setCurrScreen] = useState(Screen.START_SCREEN);
 
@@ -66,7 +38,6 @@ export default function App() {
     }
 
 
-
     let content;
     switch (currScreen) {
         case Screen.FAVOURITE:
@@ -79,28 +50,17 @@ export default function App() {
             content = <Search onPressBack={() => showScreen('start_screen')}/>;
             break;
         case Screen.START_SCREEN:
-            content = <StartScreen onPressRec = {() => showScreen('recommendation')}
-                                   onPressSearch = {() => showScreen('search')}
-                                   onPressFav = {() => showScreen('favourite')}/>
+            content = <StartScreen onPressRec={() => showScreen('recommendation')}
+                                   onPressSearch={() => showScreen('search')}
+                                   onPressFav={() => showScreen('favourite')}/>
             break;
         default:
-            content = <StartScreen onPressRec = {() => showScreen('recommendation')}
-                                   onPressSearch = {() => showScreen('search')}
-                                   onPressFav = {() => showScreen('favourite')}/>
+            content = <StartScreen onPressRec={() => showScreen('recommendation')}
+                                   onPressSearch={() => showScreen('search')}
+                                   onPressFav={() => showScreen('favourite')}/>
             break;
 
     }
-
-
-    // if (recScreen && !startScreen) {
-    //     content = <Recommendation onPressBack={showStartScreen}/>
-    // } else if (!recScreen && startScreen && !searchScreen && !saveScreen) {
-    //     content = <StartScreen onPressRec={showRecScreen} onPressSearch={showSearch} onPressFav={showSaveFavourite}/>
-    // } else if (searchScreen && !startScreen) {
-    //     content = <Search onPressBack={showStartScreen}/>
-    // } else if (saveScreen && !startScreen) {
-    //     content = <SaveFavourite onPressBack={showStartScreen}/>
-    // }
 
 
     return (

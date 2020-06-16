@@ -1,7 +1,7 @@
 # OrbitAroundFood 
 NUS CP2106 Independent Software Development Project (Orbital)  
 
-![logo](https://raw.githubusercontent.com/howtoosee/CP2106_OrbitAroundFood/master/project_logo.png)
+![logo](./project_logo.png)
 
 ## Team members
 - [Chen Xihao](https://github.com/howtoosee/)
@@ -26,5 +26,6 @@ To develop an application which collates all the food options in NUS (May limit 
 
 #### Tech Stack
 - ReactNative for app development
+- Metro for ReactNative
 - JavaScript
 - FireBase for backend database

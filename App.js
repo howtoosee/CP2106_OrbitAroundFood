@@ -4,15 +4,8 @@ import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
 import { SafeAreaProvider } from 'react-native-safe-area-context';
 
-import LogInScreen from './components/LogInScreen';
-import SignUpScreen from './components/SignUpScreen';
-import Recommendation from './components/Recommendation';
-import StartScreen from './components/StartScreen';
-import Search from './components/search';
-import Favourite from './components/Favourite';
-import HelpBuyPls from './components/HelpBuyPls';
-import Profile from './components/Profile';
-import Home from './components/Home';
+import {LogInScreen, SignUpScreen, Recommendation, StartScreen, Search,
+        Favourite, HelpBuyPls, Profile, Home } from './components';
 
 function App() {
 

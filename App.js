@@ -13,24 +13,29 @@ import Favourite from './components/Favourite';
 import HelpBuyPls from './components/HelpBuyPls';
 import Profile from './components/Profile';
 import Home from './components/Home';
-import Colors from './constants/Colors';
 
 function App() {
+
+    const forFade = ({ current }) => ({
+        cardStyle: {
+            opacity: current.progress
+        }
+    });
 
     const Stack = createStackNavigator();
 
     return (
         <SafeAreaProvider>
             <NavigationContainer>
-                <Stack.Navigator initialRouteName="Welcome">
+                <Stack.Navigator initialRouteName="Welcome" mode={Platform.OS === 'ios' ? "modal" : "card"}>
                     <Stack.Screen name="Welcome" component={StartScreen} />
-                    <Stack.Screen name="Sign In" component={LogInScreen} />
-                    <Stack.Screen name="Sign Up" component={SignUpScreen} />
-                    <Stack.Screen name="Search" component={Search} />
-                    <Stack.Screen name="Recommendation" component={Recommendation} />
-                    <Stack.Screen name="Favourite" component={Favourite} />
-                    <Stack.Screen name="Profile" component={Profile} />
-                    <Stack.Screen name="Lemme Help" component={HelpBuyPls} />
+                    <Stack.Screen name="Sign In" component={LogInScreen} options={{ cardStyleInterpolator: forFade }} />
+                    <Stack.Screen name="Sign Up" component={SignUpScreen} options={{ cardStyleInterpolator: forFade }} />
+                    <Stack.Screen name="Search" component={Search} options={{ cardStyleInterpolator: forFade }} />
+                    <Stack.Screen name="Recommendation" component={Recommendation} options={{ cardStyleInterpolator: forFade }} />
+                    <Stack.Screen name="Favourite" component={Favourite} options={{ cardStyleInterpolator: forFade }} />
+                    <Stack.Screen name="Profile" component={Profile} options={{ cardStyleInterpolator: forFade }} />
+                    <Stack.Screen name="Lemme Help" component={HelpBuyPls} options={{ cardStyleInterpolator: forFade }} />
                     <Stack.Screen
                         name="Orbit Around Food"
                         component={Home}

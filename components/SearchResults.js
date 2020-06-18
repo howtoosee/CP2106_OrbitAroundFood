@@ -1,47 +1,24 @@
 import React, {useState} from 'react';
-import {StyleSheet, Text, View, ScrollView, Modal} from 'react-native';
+import {StyleSheet, Text, View, ScrollView, Modal, ActivityIndicator} from 'react-native';
 
 import DefaultStyles from "../constants/DefaultStyles";
 import DefaultHeader from "./DefaultHeader";
 import Colors from "../constants/Colors";
 import {searchQueryFood} from "../api/SearchApi";
 
-
 function SearchResults(props) {
 
-    const closeResults = () => {
-        props.onPress();
-    }
+    const closeResults = props.onPress;
 
     const [isLoading, setLoading] = useState(true);
     const [results, setResList] = useState([]);
 
-    searchQueryFood(props.searchKey, setResList, setLoading).then(r => setLoading(false));
+    if (props.showResults) {
+        searchQueryFood(props.searchKey, setResList, setLoading);
+    }
 
+    const getKey = (name, objType) => name + '_' + objType + "_" + Math.floor(Math.random() * 10000);
 
-    // placeholder results to test frontend
-    // const results = {
-    //     data: [
-    //         {
-    //             id: 0,
-    //             key: props.searchKey,
-    //             location: "com1",
-    //             price: 1.11,
-    //         },
-    //         {
-    //             id: 1,
-    //             key: props.searchKey,
-    //             location: "com2",
-    //             price: 2.22,
-    //         },
-    //         {
-    //             id: 2,
-    //             key: props.searchKey,
-    //             location: "as1",
-    //             price: 3.33,
-    //         }
-    //     ]
-    // };
 
 
     return (
@@ -49,18 +26,20 @@ function SearchResults(props) {
 
             <View style={DefaultStyles.screen}>
 
-                <DefaultHeader headerText="Results" onPress={() => closeResults()}/>
+                <DefaultHeader headerText="Results" onPress={closeResults}/>
 
                 <View style={DefaultStyles.contentContainer}>
-                    {isLoading
-                        ? <Text>Loading</Text>
+                    {(isLoading || !props.showResults || results === null)
+                        ? <ActivityIndicator/>
                         : <ScrollView style={styles.searchResults}>
-                            {results.data.map(item => (
-                                <View style={styles.searchResultContainer} key={item.id}>
-                                    <Text style={styles.searchResultKey}>{item.key}</Text>
-                                    <Text style={styles.searchResultInfo}>{item.location}</Text>
-                                    <Text style={styles.searchResultInfo}>{item.store_name}</Text>
-                                    <Text style={styles.searchResultInfo}>${item.price}</Text>
+                            {results.map(item => (
+                                <View style={styles.searchResultContainer} key={getKey(item.name, 'list')}>
+                                    <Text style={styles.searchResultKey}>{item.name}</Text>
+                                    <Text style={styles.searchResultInfo}>{item.price}</Text>
+                                    <Text style={styles.searchResultInfo}>{item.store}</Text>
+                                    {/*<Text style={styles.searchResultInfo}>{item.store.location}</Text>*/}
+                                    {/*<Text style={styles.searchResultInfo}>{item.store.open_hours}</Text>*/}
+                                    {/*<Text style={styles.searchResultInfo}>{item.store.close_house}</Text>*/}
                                 </View>
                             ))}
                         </ScrollView>

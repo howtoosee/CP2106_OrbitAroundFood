@@ -7,3 +7,4 @@ node_modules
 google-services.json
 GoogleService-Info.plist
 adminSDK.json
+__pycache__

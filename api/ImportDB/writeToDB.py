@@ -3,6 +3,8 @@ from getDB import *
 from collectionEnum import Collections
 from openpyxl import *
 
+
+
 class dbWriter():
     def __init__(self, wb, db):
         self.__wb = wb
@@ -17,7 +19,6 @@ class dbWriter():
     def __getID(self, *args):
         returnStr = '-'.join(args)
         return "".join(c.lower() for c in returnStr if (c.isalpha() or c in (' ', '-', "_")))
-
 
 
     def __getDataFromRow(self, collection, row):
@@ -65,7 +66,6 @@ class dbWriter():
             else:
                 raise NameError("Illegal sheet name:", collection.name)
 
-
             dataSet = {}
 
             for row in sheet.iter_rows(min_row=2, max_row=sheet.max_row):
@@ -81,7 +81,6 @@ class dbWriter():
             traceback.print_exc()
 
 
-
     def __updateFirestore(self, collection):
         try:
             print("Updating {} collection".format(collection.name))
@@ -89,7 +88,6 @@ class dbWriter():
             coll = db.collection(collection.name)
 
             dataSet = self.__readSheet(collection)
-
 
             for key, value in dataSet.items():
                 print(key, value)
@@ -102,7 +100,6 @@ class dbWriter():
 
         except Exception as err:
             raise Exception(err)
-
 
 
     def writeToFood(self):

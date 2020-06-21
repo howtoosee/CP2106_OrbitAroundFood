@@ -6,3 +6,4 @@ node_modules
 .idea
 google-services.json
 GoogleService-Info.plist
+adminSDK.json

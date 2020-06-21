@@ -8,7 +8,11 @@ import searchQueryFood from "../api/SearchApi";
 
 
 function SearchResults(props) {
-    const closeResults = props.onPress;
+    const closeResults = () => {
+        props.onPress();
+        setLoading(true);
+        setResList([]);
+    }
 
     const [isLoading, setLoading] = useState(true);
     const [results, setResList] = useState([]);

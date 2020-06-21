@@ -4,21 +4,20 @@ import {StyleSheet, Text, View, ScrollView, Modal, ActivityIndicator} from 'reac
 import DefaultStyles from "../constants/DefaultStyles";
 import DefaultHeader from "./DefaultHeader";
 import Colors from "../constants/Colors";
-import {searchQueryFood} from "../api/SearchApi";
+import searchQueryFood from "../api/SearchApi";
+
 
 function SearchResults(props) {
-
     const closeResults = props.onPress;
 
     const [isLoading, setLoading] = useState(true);
     const [results, setResList] = useState([]);
 
-    if (props.showResults) {
+    if (props.showResults && results.length === 0 && isLoading) {
         searchQueryFood(props.searchKey, setResList, setLoading);
     }
 
     const getKey = (name, objType) => name + '_' + objType + "_" + Math.floor(Math.random() * 10000);
-
 
 
     return (
@@ -29,20 +28,24 @@ function SearchResults(props) {
                 <DefaultHeader headerText="Results" onPress={closeResults}/>
 
                 <View style={DefaultStyles.contentContainer}>
-                    {(isLoading || !props.showResults || results === null)
+                    {(isLoading && (!props.showResults || results.length === 0))
                         ? <ActivityIndicator/>
-                        : <ScrollView style={styles.searchResults}>
-                            {results.map(item => (
-                                <View style={styles.searchResultContainer} key={getKey(item.name, 'list')}>
-                                    <Text style={styles.searchResultKey}>{item.name}</Text>
-                                    <Text style={styles.searchResultInfo}>{item.price}</Text>
-                                    <Text style={styles.searchResultInfo}>{item.store}</Text>
-                                    {/*<Text style={styles.searchResultInfo}>{item.store.location}</Text>*/}
-                                    {/*<Text style={styles.searchResultInfo}>{item.store.open_hours}</Text>*/}
-                                    {/*<Text style={styles.searchResultInfo}>{item.store.close_house}</Text>*/}
-                                </View>
-                            ))}
-                        </ScrollView>
+                        : (results.length === 0)
+                            ? <View><Text>No results found</Text></View>
+                            : <ScrollView style={styles.searchResults}>
+                                <Text>Results found: {results.length}</Text>
+                                {results.map(item => (
+                                    <View style={styles.searchResultContainer} key={getKey(item.name, 'list')}>
+                                        <Text style={styles.searchResultKey}>{item.name}</Text>
+                                        <Text style={styles.searchResultInfo}>{item.price}</Text>
+                                        <Text
+                                            style={styles.searchResultInfo}>{item.store.store_name} ({item.store.location})</Text>
+                                        <Text
+                                            style={styles.searchResultInfo}>{item.store.open_hours} - {item.store.close_hours}</Text>
+                                    </View>
+                                ))}
+                            </ScrollView>
+
                     }
 
                 </View>

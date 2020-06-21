@@ -5,44 +5,78 @@ const foodCollection = firebaseDB.firestore().collection('foods')
 
 
 async function combineAllData(foodData) {
+    // template for newData
     let newData = {
         name: foodData.name,
-        price: foodData.price,
-        store: {}
+        price: '$' + foodData.price.toPrecision(2),
     };
 
-    storeCollection
-        .doc(foodData.store)
+    await storeCollection
+        .doc(foodData.store) // access doc (docID of store = foodData.store)
         .get()
-        .then(doc => {
-                if (doc.exists) {
-                    newData.store = doc.data();
-                    // console.log('//new: ', newData);
-                } else {
-                    console.log('Store does not exist: ', foodData.store);
-                }
+        .then(docSnapShot => {
+            if (docSnapShot.exists) {
+                // update newData
+                newData.store = docSnapShot.data();
+            } else {
+                console.log('Store does not exist: ', foodData.store);
             }
-        )
-        // .then(console.log("new food data:", newData))
-        .catch(err => console.log("Error gertting store data:", err));
+        })
+        .catch(err => console.log("Error getting store data:", err));
 
     return newData;
+
 }
 
-export async function searchQueryFood(food, setResList, setLoading) {
+
+export default async function searchQueryFood(searchKey, setResList, setLoading) {
+
+    // custom async forEach function
+    async function forEachDoc(docs, callback) {
+        for (let i = 0; i < docs.length; i++) {
+            await callback(docs[i]);
+        }
+    }
+
+
+    // checks if a given foodDoc matches the searchKey
+    function matchKeyword(keyword, docData) {
+        const lowerCaseKw = keyword.toLowerCase();
+        const docFoodName = docData.name.toLowerCase();
+        const docStoreName = docData.store.toLowerCase();
+        return docFoodName.includes(lowerCaseKw) || docStoreName.includes(lowerCaseKw);
+    }
+
+
+    // result array
     let res = []
 
-    foodCollection
-        .orderBy('name')
-        .get()
-        .then(querySnapshot => {
-            querySnapshot.docs.map(
-                docSnapShot => res.push((docSnapShot.data()))
-                // docSnapShot => res.push(combineAllData(docSnapShot.data()))
-            );
-        })
-        .then(() => setResList(res))
-        .then(() => setLoading(false))
-        .catch(err => console.log('Error getting food data:', err));
+    try {
+        // get query of all food
+        const querySnapshot = await foodCollection.orderBy('name').get();
+
+        await forEachDoc(querySnapshot.docs, async function (docSnapShot) {
+            const snapshotData = await docSnapShot.data();
+            // console.log(snapshotData);
+
+            if (matchKeyword(searchKey, snapshotData)) {
+                const newData = await combineAllData(snapshotData);
+
+                if (newData !== null) {
+                    // if newData exists, include it in the results
+                    res.push(newData);
+                }
+            }
+        });
+
+        // console.log("Results:", res)
+        // console.log("number of results:", res.length)
+        setResList(res)
+        setLoading(false)
+    } catch (err) {
+        console.log('Error getting food data:', err);
+    }
 
 }
+
+

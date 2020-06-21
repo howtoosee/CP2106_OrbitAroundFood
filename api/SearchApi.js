@@ -1,7 +1,7 @@
 import firebaseDB from "../constants/firebaseDB";
 
-const storeCollection = firebaseDB.firestore().collection("stores");
-const foodCollection = firebaseDB.firestore().collection("foods");
+const storeCollection = firebaseDB.firestore().collection("STORES");
+const foodCollection = firebaseDB.firestore().collection("FOODS");
 
 
 async function combineAllData(foodData) {

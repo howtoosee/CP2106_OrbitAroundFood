@@ -1,6 +1,7 @@
 *.icloud
 .DS_Store
 .idea
+.expo
 firebaseDB.js
 node_modules
 .idea

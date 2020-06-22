@@ -8,7 +8,9 @@ async function combineAllData(foodData) {
     // template for newData
     let newData = {
         name: foodData.name,
-        price: "$" + foodData.price.toPrecision(2),
+        price: isNaN(foodData.price)
+            ? 'not available'
+            : '$' + foodData.price.toFixed(2),
         storeID: foodData.storeID
     };
 
@@ -20,6 +22,7 @@ async function combineAllData(foodData) {
             if (docSnapShot.exists) {
                 // update newData
                 newData.store = docSnapShot.data();
+                console.log(newData);
             } else {
                 console.log("Store does not exist: ", foodData.store);
             }

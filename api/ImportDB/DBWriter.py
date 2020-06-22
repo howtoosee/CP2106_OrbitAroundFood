@@ -1,11 +1,12 @@
 import json, traceback
-from getDB import *
-from collectionEnum import Collections
 from openpyxl import *
 
+from InitializeDB import *
+from CollectionsEnum import Collections
 
 
-class dbWriter():
+
+class DBWriter():
     def __init__(self, wb, db):
         self.__wb = wb
         self.__db = db
@@ -119,9 +120,9 @@ class dbWriter():
 
 if __name__ == '__main__':
     try:
-        db = getDB()
+        db = InitializeDB()
         wb = load_workbook(filename="./Utown Food Menu Dataset.xlsx")
-        writer = dbWriter(wb, db)
+        writer = DBWriter(wb, db)
         writer.writeToFood()
         writer.writeToStore()
 

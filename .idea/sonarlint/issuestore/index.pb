@@ -38,3 +38,13 @@ J
 api/SearchApi.js,2/f/2ff342ec7928b547acdf014ba7ce0ac8d2a50864
 G
 constants/firebaseDB.js,1/1/113e647508d501c7342a47257818415c18f900bc
+I
+api/ImportDB/writeToDB.py,6/2/6235e72b431b1ce3dad72f323edb9d644c8cbbc8
+E
+api/ImportDB/getDB.py,0/c/0cfdffc50a24a1fbd0e7ab531ca573757e22ff81
+L
+api/ImportDB/InitializeDB.py,2/3/237bf8c27f80f76206531af09478dd714617a08d
+H
+api/ImportDB/DBWriter.py,3/a/3a05f9019a8b8fc3c001c6dd8d598141476b5d1e
+O
+api/ImportDB/CollectionsEnum.py,a/4/a43f497b7e934b5a7f54aba53b7f419cc49640a3

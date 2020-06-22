@@ -32,10 +32,11 @@ function SearchResults(props) {
                 <DefaultHeader headerText="Results" onPress={closeResults}/>
 
                 <View style={DefaultStyles.contentContainer}>
+                    <View style={styles.searchResultInfo}><Text>Searching for: "{props.searchKey}"</Text></View>
                     {(isLoading && (!props.showResults || results.length === 0))
                         ? <ActivityIndicator/>
                         : (results.length === 0)
-                            ? <View><Text>No results found</Text></View>
+                            ? <View style={styles.searchResultInfo}><Text>No results found</Text></View>
                             : <ScrollView style={styles.searchResults}>
                                 <Text>Results found: {results.length}</Text>
                                 {results.map(item => (

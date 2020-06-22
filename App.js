@@ -13,6 +13,7 @@ import Screen from './constants/Screen';
 export default function App() {
 
     const [currScreen, setCurrScreen] = useState(Screen.START_SCREEN);
+    const [searchHist, setSearchHist] = useState([]);
 
     function showScreen(scrn) {
         let newScreen: any;
@@ -47,7 +48,9 @@ export default function App() {
             content = <Recommendation onPressBack={() => showScreen('start_screen')}/>;
             break;
         case Screen.SEARCH:
-            content = <Search onPressBack={() => showScreen('start_screen')}/>;
+            content = <Search onPressBack={() => showScreen('start_screen')}
+                              searchHistory={searchHist}
+                              setSearchHistory={setSearchHist}/>;
             break;
         case Screen.START_SCREEN:
             content = <StartScreen onPressRec={() => showScreen('recommendation')}

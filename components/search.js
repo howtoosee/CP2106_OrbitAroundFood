@@ -9,8 +9,9 @@ import SearchResults from "./SearchResults";
 
 function Search(props) {
     const [searchString, setSearchString] = useState('');
-    const [searchHist, setSearchHist] = useState([]);
     const [isResultScreen, setShowResults] = useState(false);
+    let searchHist = props.searchHistory;
+    const setSearchHist = props.setSearchHistory;
 
 
     const searchInputHandler = (input) => {
@@ -102,7 +103,10 @@ function Search(props) {
 
                 <SearchResults showResults={isResultScreen}
                                searchKey={searchString}
-                               onPress={() => {setShowResults(false); addSearchHist();}}/>
+                               onPress={() => {
+                                   setShowResults(false);
+                                   addSearchHist();
+                               }}/>
 
             </View>
 

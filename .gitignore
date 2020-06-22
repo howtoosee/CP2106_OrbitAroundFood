@@ -1,3 +1,10 @@
 *.icloud
 .DS_Store
+.idea
+firebaseDB.js
 node_modules
+.idea
+google-services.json
+GoogleService-Info.plist
+adminSDK.json
+__pycache__

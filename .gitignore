@@ -1,11 +1,15 @@
+# macOS specific
 *.icloud
 .DS_Store
+
+# project files
 .idea
 .expo
-firebaseDB.js
 node_modules
-.idea
+__pycache__
+
+# SDK and sensitive stuff
+firebaseDB.js
 google-services.json
 GoogleService-Info.plist
 adminSDK.json
-__pycache__

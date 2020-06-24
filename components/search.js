@@ -3,63 +3,53 @@ import {StyleSheet, Text, TextInput, Button, View, ScrollView, TouchableOpacity}
 
 import Colors from '../constants/Colors';
 import DefaultStyles from "../constants/DefaultStyles";
-import DefaultHeader from "./DefaultHeader";
 
 
 function Search({navigation}) {
     const [searchString, setSearchString] = useState('');
     const [searchHist, setSearchHist] = useState([]);
 
-
-    const searchInputHandler = (input) => {
-        setSearchString(input);
+    const searchInputHandler = (inputStr) => {
+        setSearchString(inputStr);
     }
-
 
     const searchHandler = () => {
         if (isValidString(searchString)) {
-            search(searchString);
+            console.log("Searching for: " + searchString);
             addSearchHist();
-            // do other stuff here
+            navigation.navigate('SearchResults', {searchKey: searchString});
         }
         // else ignore the search string
     }
 
-
-    const search = searchKey => {
-        console.log("Searching for: " + searchKey);
-        return null;
-    };
-
+    const isValidString = str => str.length > 0 && str.trim().length > 0;
+    // checks if string is valid
 
     const addSearchHist = () => {
-        setSearchHist(searchHist.filter(item => item !== searchString));
-        // removes preexisting items that are identical in search history
-
-        setSearchHist(currHist => [searchString, ...currHist].slice(0, 10));
-        // pre-append item to list
+        setSearchHist([searchString, ...(searchHist.filter(item => item !== searchString))]
+            .slice(0, 10));
+        // remove pre-existing items identical to searchString and pre-append searchString to list
 
         setSearchString("");
         // reset search item box to empty
     };
 
-
     const clearHistory = () => setSearchHist([]);
     // clears search history
 
-
-    const isValidString = str => str.length > 0 && str.trim().length > 0;
-    // checks if string is valid
-
+    const closeSearch = () => {
+        navigation.navigate('Welcome', {
+            searchHist: searchHist
+        })
+    }
 
     const getKey = objType => objType + "_" + Math.floor(Math.random() * 10000);
     // creates key for object
 
 
     return (
-        <View style={DefaultStyles.screen}>
 
-            {/* <DefaultHeader headerText="Search" onPress={() => navigation.goBack()}/> */}
+        <View style={DefaultStyles.screen}>
 
             <View style={DefaultStyles.contentContainer}>
 
@@ -67,9 +57,9 @@ function Search({navigation}) {
 
                     <View style={styles.inputContainer}>
                         <TextInput style={styles.inputText}
-                            placeholder="What do you wanna eat?"
-                            onChangeText={searchInputHandler}
-                            value={searchString}
+                                   placeholder="What do you wanna eat?"
+                                   onChangeText={searchInputHandler}
+                                   value={searchString}
                         />
                     </View>
 
@@ -90,8 +80,8 @@ function Search({navigation}) {
                                 key={getKey("touchable_opacity")}
                                 onPress={() => searchInputHandler(item)}>
 
-                                <View style={styles.searchHistoryText}>
-                                    <Text style={styles.searchHistoryResultText} key={getKey("search_history_text")}>
+                                <View style={styles.searchHistoryTextContainer}>
+                                    <Text style={styles.searchHistoryText} key={getKey("search_hist")}>
                                         {item}
                                     </Text>
                                 </View>
@@ -105,6 +95,7 @@ function Search({navigation}) {
                     </View>
 
                 </View>
+
             </View>
 
         </View>
@@ -157,11 +148,11 @@ const styles = StyleSheet.create({
         paddingTop: 10,
     },
 
-    searchHistoryResultText: {
+    searchHistoryText: {
         color: Colors.TEXT,
     },
 
-    searchHistoryText: {
+    searchHistoryTextContainer: {
         marginTop: 8,
         padding: 7,
         borderWidth: 2,

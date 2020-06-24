@@ -6,7 +6,7 @@ const DefaultStyles = StyleSheet.create({
 
     screen: {
         flex: 1,
-        paddingTop: 40,
+        paddingTop: 5,
         paddingHorizontal: 30,
         flexDirection: 'column',
         justifyContent: 'space-between',

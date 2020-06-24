@@ -15,6 +15,7 @@ import {
     SignUpScreen,
     StartScreen
 } from './components';
+import {Platform} from "react-native";
 
 
 export default function App() {
@@ -85,7 +86,6 @@ export default function App() {
     });
 
     const Stack = createStackNavigator();
-// >>>>>>> main_logic
 
     return (
         <SafeAreaProvider>
@@ -130,9 +130,11 @@ export default function App() {
                     <Stack.Screen name="Orbit Around Food"
                                   component={Home}
                                   options={{headerLeft: null}}
+
                     />
                 </Stack.Navigator>
             </NavigationContainer>
         </SafeAreaProvider>
     );
+
 }

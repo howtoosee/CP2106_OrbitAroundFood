@@ -1,12 +1,25 @@
-import LogInScreen from './LogInScreen';
-import SignUpScreen from './SignUpScreen';
-import Recommendation from './Recommendation';
-import StartScreen from './StartScreen';
-import Search from './search';
 import Favourite from './Favourite';
 import HelpBuyPls from './HelpBuyPls';
-import Profile from './Profile';
 import Home from './Home';
+import LemmeHelpContainer from './LemmeHelpContainer';
+import LogInScreen from './LogInScreen';
+import Profile from './Profile';
+import Recommendation from './Recommendation';
+import Search from './Search';
+import SearchResults from './SearchResults';
+import SignUpScreen from './SignUpScreen';
+import StartScreen from './StartScreen';
 
-export {LogInScreen, SignUpScreen, Recommendation, StartScreen, 
-    Search, Favourite, HelpBuyPls, Profile, Home}
+export {
+    Favourite,
+    HelpBuyPls,
+    Home,
+    LemmeHelpContainer,
+    LogInScreen,
+    Profile,
+    Recommendation,
+    Search,
+    SearchResults,
+    SignUpScreen,
+    StartScreen
+};

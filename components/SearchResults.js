@@ -30,8 +30,6 @@ function SearchResults({route, navigation}) {
 
         <View style={DefaultStyles.screen}>
 
-            {/*<DefaultHeader headerText="Results" onPress={closeResults}/>*/}
-
             <View style={DefaultStyles.contentContainer}>
 
                 <View style={styles.resultStatInfo}>

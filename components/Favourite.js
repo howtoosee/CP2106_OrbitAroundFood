@@ -11,7 +11,7 @@ function Favourite(props) {
     return (
         <View style={DefaultStyles.screen}>
 
-            <DefaultHeader headerText="Favourites" onPress={() => props.onPressBack()}/>
+            {/* <DefaultHeader headerText="Favourites" onPress={() => props.onPressBack()}/> */}
 
             <View style={DefaultStyles.contentContainer}>
                 <View style={styles.content}>
@@ -30,7 +30,7 @@ const styles = StyleSheet.create({
     content: {
         flex: 1,
         flexDirection: 'column',
-    }
+    },
 });
 
 

@@ -6,7 +6,7 @@ const DefaultStyles = StyleSheet.create({
 
     screen: {
         flex: 1,
-        paddingTop: 50,
+        paddingTop: 5,
         paddingHorizontal: 30,
         flexDirection: 'column',
         justifyContent: 'space-between',
@@ -21,6 +21,7 @@ const DefaultStyles = StyleSheet.create({
 
     headerTextBox: {
         width: '65%',
+        height: 52,
         alignItems: 'center',
         paddingTop: 10,
         borderBottomWidth: 3,
@@ -43,6 +44,7 @@ const DefaultStyles = StyleSheet.create({
     contentContainer: {
         flex: 14,
     },
+
 });
 
 

@@ -3,39 +3,33 @@ import {StyleSheet, Text, TextInput, Button, View, ScrollView, TouchableOpacity}
 
 import Colors from '../constants/Colors';
 import DefaultStyles from "../constants/DefaultStyles";
-import DefaultHeader from "./DefaultHeader";
-import SearchResults from "./SearchResults";
 
 
-function Search(props) {
+function Search({navigation}) {
     const [searchString, setSearchString] = useState('');
-    const [isResultScreen, setShowResults] = useState(false);
-    let searchHist = props.searchHistory;
-    const setSearchHist = props.setSearchHistory;
+    const [searchHist, setSearchHist] = useState([]);
 
-
-    const searchInputHandler = (input) => {
-        setSearchString(input);
+    const searchInputHandler = (inputStr) => {
+        setSearchString(inputStr);
     }
 
     const searchHandler = () => {
         if (isValidString(searchString)) {
-            search(searchString);
-            // addSearchHist();
+            console.log("Searching for: " + searchString);
+            addSearchHist();
+            navigation.navigate('SearchResults', {searchKey: searchString});
         }
         // else ignore the search string
     }
 
-    const search = searchKey => {
-        console.log("Searching for: " + searchKey);
-        setShowResults(true);
-    };
+    const isValidString = str => str.length > 0 && str.trim().length > 0;
+    // checks if string is valid
 
     const addSearchHist = () => {
-        setSearchHist(searchHist.filter(item => item !== searchString));
-        // removes pre-existing items that are identical in search history
-        setSearchHist(currHist => [searchString, ...currHist].slice(0, 10));
-        // pre-append item to list
+        setSearchHist([searchString, ...(searchHist.filter(item => item !== searchString))]
+            .slice(0, 10));
+        // remove pre-existing items identical to searchString and pre-append searchString to list
+
         setSearchString("");
         // reset search item box to empty
     };
@@ -43,8 +37,11 @@ function Search(props) {
     const clearHistory = () => setSearchHist([]);
     // clears search history
 
-    const isValidString = str => str.length > 0 && str.trim().length > 0;
-    // checks if string is valid
+    const closeSearch = () => {
+        navigation.navigate('Welcome', {
+            searchHist: searchHist
+        })
+    }
 
     const getKey = objType => objType + "_" + Math.floor(Math.random() * 10000);
     // creates key for object
@@ -53,8 +50,6 @@ function Search(props) {
     return (
 
         <View style={DefaultStyles.screen}>
-
-            <DefaultHeader headerText="Search" onPress={() => props.onPressBack()}/>
 
             <View style={DefaultStyles.contentContainer}>
 
@@ -100,13 +95,6 @@ function Search(props) {
                     </View>
 
                 </View>
-
-                <SearchResults showResults={isResultScreen}
-                               searchKey={searchString}
-                               onPress={() => {
-                                   setShowResults(false);
-                                   addSearchHist();
-                               }}/>
 
             </View>
 

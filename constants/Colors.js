@@ -1,8 +1,10 @@
 const Colors = {
-    BUTTON: '#E49C94',
-    DARKER_BUTTON: '#CF4039',
 
-    CARD: '#FEDBCA',
+    BUTTON: '#F85F6A',
+    DARKER_BUTTON: '#CF4039',
+    ALT_BUTTON: '#DA8664',
+
+    CARD: '#FFEEE5',
     TEXT: '#606060',
 }
 

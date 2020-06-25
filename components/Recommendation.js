@@ -1,25 +1,78 @@
-import React from 'react';
-import {StyleSheet, View, Text} from 'react-native';
+import React, {useState, useEffect} from 'react';
+import {StyleSheet, View, Text, ActivityIndicator, Button} from 'react-native';
 
 import Colors from "../constants/Colors";
 import DefaultStyles from "../constants/DefaultStyles";
-import DefaultHeader from "./DefaultHeader";
+
+import getRandomFood from "../api/RecommApi";
+import {get} from "react-native/Libraries/TurboModule/TurboModuleRegistry";
 
 
 function Recommendation({navigation}) {
+
+    const [foodObj, setFoodObj] = useState(null);
+    const [isLoading, setLoading] = useState(true);
+
+    const refresh = () => {
+        setLoading(true);
+        setFoodObj(null);
+    }
+
+
+    useEffect(() => {
+        if (isLoading) {
+            getRandomFood(setLoading, setFoodObj)
+                .then(() => setLoading(false))
+                .catch(err => console.log("Error getting recommendation:", err));
+        }
+    }, [foodObj, isLoading, getRandomFood()]);
+
 
     return (
 
         <View style={DefaultStyles.screen}>
 
-            {/* <DefaultHeader headerText="FoodOTD" onPress={() => navigation.goBack()}/> */}
-
             <View style={DefaultStyles.contentContainer}>
                 <View style={styles.content}>
-                    <Text style={styles.text}>Chicken Rice</Text>
-                    <Text style={styles.text}>Price: $2.00</Text>
-                    <Text style={styles.text}>Stall: Chickenlicious</Text>
-                    <Text style={styles.text}>Location: The Deck at FASS</Text>
+                    {(isLoading || foodObj === null)
+                        ?
+                        <View style={styles.loadingContainer}>
+                            <ActivityIndicator size='large' color='black'/>
+                        </View>
+                        :
+                        <View>
+                            <View style={styles.recommendationContainer}>
+
+                                <View style={styles.resultsKeyContainer}>
+                                    <Text style={styles.resultKey}>
+                                        {foodObj.name}
+                                    </Text>
+                                </View>
+
+                                <View style={styles.resultsInfoContainer}>
+                                    <Text style={styles.resultInfo}>
+                                        {foodObj.price}
+                                    </Text>
+
+                                    <Text style={styles.resultInfo}>
+                                        {foodObj.store.store_name} ({foodObj.store.location})
+                                    </Text>
+
+                                    <Text style={styles.resultInfo}>
+                                        {foodObj.store.open_hours} - {foodObj.store.close_hours}
+                                    </Text>
+                                </View>
+
+                            </View>
+
+                            <View style={styles.refreshButtonContainer}>
+                                <Button title={"Another one!"}
+                                        onPress={refresh}
+                                />
+                            </View>
+                        </View>
+                    }
+
                 </View>
             </View>
 
@@ -33,16 +86,59 @@ const styles = StyleSheet.create({
     content: {
         flex: 1,
         flexDirection: 'column',
-        paddingTop: 150,
-        justifyContent: 'space-evenly',
+        paddingVertical: 100,
         alignItems: 'center',
-        paddingBottom: 250,
+        justifyContent: 'space-around',
     },
 
-    text: {
-        fontSize: 25,
-        color: Colors.TEXT,
+    loadingContainer: {
+        flex: 1,
+        paddingBottom: 100,
+        alignItems: 'flex-start',
+        justifyContent: 'center',
     },
+
+    recommendationContainer: {
+        flex: 18,
+        paddingLeft: 0,
+        alignItems: 'flex-start',
+        justifyContent: 'space-around',
+    },
+
+    resultsKeyContainer: {
+        paddingTop: 50,
+        flex: 5,
+        flexWrap: 'wrap',
+        alignItems: 'flex-start',
+        justifyContent: 'center',
+    },
+
+    resultsInfoContainer: {
+        paddingBottom: 150,
+        flex: 6,
+        flexWrap: 'wrap',
+        alignItems: 'flex-start',
+        justifyContent: 'space-around',
+    },
+
+    resultKey: {
+        color: Colors.TEXT,
+        fontSize: 26,
+        fontWeight: 'bold',
+    },
+
+    resultInfo: {
+        color: Colors.TEXT,
+        fontSize: 24,
+    },
+
+    refreshButtonContainer: {
+        flex: 2,
+        alignItems: 'center',
+        justifyContent: 'center',
+        paddingHorizontal: 15,
+    }
+
 
 });
 

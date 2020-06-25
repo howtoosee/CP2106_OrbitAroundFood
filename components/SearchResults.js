@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useState, useEffect} from 'react';
 import {StyleSheet, Text, View, ScrollView, ActivityIndicator} from 'react-native';
 
 import DefaultStyles from "../constants/DefaultStyles";
@@ -18,12 +18,13 @@ function SearchResults({route, navigation}) {
     const [isLoading, setLoading] = useState(true);
     const [results, setResList] = useState([]);
 
-
-    if (isLoading) {
-        searchQueryFood(searchKey, setResList)
-            .then(() => setLoading(false))
-            .catch(err => console.log('Error querying:', err));
-    }
+    useEffect(() => {
+        if (isLoading) {
+            searchQueryFood(searchKey, setResList)
+                .then(() => setLoading(false))
+                .catch(err => console.log('Error querying:', err));
+        }
+    }, [isLoading, searchKey, searchQueryFood]);
 
 
     return (
@@ -38,7 +39,7 @@ function SearchResults({route, navigation}) {
 
                 {(isLoading)
 
-                    ? <View style={styles.loadingIndicatorContainer}>
+                    ? <View style={styles.loadingContainer}>
                         <ActivityIndicator size='large' color='black'/>
                     </View>
 
@@ -132,10 +133,12 @@ const styles = StyleSheet.create({
         fontSize: 14,
     },
 
-    loadingIndicatorContainer: {
+    loadingContainer: {
+        flex: 1,
+        paddingBottom: 100,
         flexDirection: 'row',
+        alignItems: 'center',
         justifyContent: 'center',
-        marginTop: 100,
     },
 
     noResultsContainer: {

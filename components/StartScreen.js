@@ -70,7 +70,6 @@ const styles = StyleSheet.create({
 
     infoContainer: {
         alignItems: 'center',
-
     },
 
     logInContainer: {}

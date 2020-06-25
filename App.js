@@ -15,6 +15,7 @@ import {
     SignUpScreen,
     StartScreen
 } from './components';
+
 import {Platform} from "react-native";
 
 

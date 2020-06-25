@@ -1,5 +1,5 @@
 import React, {useState, useEffect} from 'react';
-import {StyleSheet, View, Text, ActivityIndicator} from 'react-native';
+import {StyleSheet, View, Text, ActivityIndicator, Button} from 'react-native';
 
 import Colors from "../constants/Colors";
 import DefaultStyles from "../constants/DefaultStyles";
@@ -12,6 +12,12 @@ function Recommendation({navigation}) {
     const [foodObj, setFoodObj] = useState(null);
     const [isLoading, setLoading] = useState(true);
 
+    const refresh = () => {
+        setLoading(true);
+        setFoodObj(null);
+    }
+
+
     useEffect(() => {
         if (isLoading) {
             getRandomFood(setLoading, setFoodObj)
@@ -19,6 +25,7 @@ function Recommendation({navigation}) {
                 .catch(err => console.log("Error getting recommendation:", err));
         }
     });
+
 
     return (
 
@@ -28,33 +35,43 @@ function Recommendation({navigation}) {
                 <View style={styles.content}>
                     {(isLoading || foodObj === null)
                         ?
-                        <ActivityIndicator size='large' color='black'/>
-                        :
-                        <View style={styles.recommendationContainer}>
-
-                            <View style={styles.resultsKeyContainer}>
-                                <Text style={styles.resultKey}>
-                                    {foodObj.name}
-                                </Text>
-                            </View>
-
-                            <View style={styles.resultsInfoContainer}>
-                                <Text style={styles.resultInfo}>
-                                    {foodObj.price}
-                                </Text>
-
-                                <Text style={styles.resultInfo}>
-                                    {foodObj.store.store_name} ({foodObj.store.location})
-                                </Text>
-
-                                <Text style={styles.resultInfo}>
-                                    {foodObj.store.open_hours} - {foodObj.store.close_hours}
-                                </Text>
-                            </View>
-
+                        <View style={styles.loadingContainer}>
+                            <ActivityIndicator size='large' color='black'/>
                         </View>
+                        :
+                        <View>
+                            <View style={styles.recommendationContainer}>
 
+                                <View style={styles.resultsKeyContainer}>
+                                    <Text style={styles.resultKey}>
+                                        {foodObj.name}
+                                    </Text>
+                                </View>
+
+                                <View style={styles.resultsInfoContainer}>
+                                    <Text style={styles.resultInfo}>
+                                        {foodObj.price}
+                                    </Text>
+
+                                    <Text style={styles.resultInfo}>
+                                        {foodObj.store.store_name} ({foodObj.store.location})
+                                    </Text>
+
+                                    <Text style={styles.resultInfo}>
+                                        {foodObj.store.open_hours} - {foodObj.store.close_hours}
+                                    </Text>
+                                </View>
+
+                            </View>
+
+                            <View style={styles.refreshButtonContainer}>
+                                <Button title={"Another one!"}
+                                        onPress={refresh}
+                                />
+                            </View>
+                        </View>
                     }
+
                 </View>
             </View>
 
@@ -69,26 +86,36 @@ const styles = StyleSheet.create({
         flex: 1,
         flexDirection: 'column',
         paddingVertical: 100,
-        justifyContent: 'space-around',
         alignItems: 'center',
+        justifyContent: 'space-around',
+    },
+
+    loadingContainer: {
+        flex: 1,
+        paddingBottom: 100,
+        alignItems: 'flex-start',
+        justifyContent: 'center',
     },
 
     recommendationContainer: {
-        flex: 1,
-        justifyContent: 'center',
-        alignItems: 'stretch',
-    },
-
-    resultsKeyContainer: {
-        paddingTop: 80,
-        flex: 4,
+        flex: 18,
+        paddingLeft: 0,
         alignItems: 'flex-start',
         justifyContent: 'space-around',
     },
 
+    resultsKeyContainer: {
+        paddingTop: 50,
+        flex: 5,
+        flexWrap: 'wrap',
+        alignItems: 'flex-start',
+        justifyContent: 'center',
+    },
+
     resultsInfoContainer: {
-        paddingBottom: 200,
+        paddingBottom: 150,
         flex: 6,
+        flexWrap: 'wrap',
         alignItems: 'flex-start',
         justifyContent: 'space-around',
     },
@@ -103,6 +130,14 @@ const styles = StyleSheet.create({
         color: Colors.TEXT,
         fontSize: 24,
     },
+
+    refreshButtonContainer: {
+        flex: 2,
+        alignItems: 'center',
+        justifyContent: 'center',
+        paddingHorizontal: 15,
+    }
+
 
 });
 

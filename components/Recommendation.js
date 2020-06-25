@@ -5,6 +5,7 @@ import Colors from "../constants/Colors";
 import DefaultStyles from "../constants/DefaultStyles";
 
 import getRandomFood from "../api/RecommApi";
+import {get} from "react-native/Libraries/TurboModule/TurboModuleRegistry";
 
 
 function Recommendation({navigation}) {
@@ -24,7 +25,7 @@ function Recommendation({navigation}) {
                 .then(() => setLoading(false))
                 .catch(err => console.log("Error getting recommendation:", err));
         }
-    });
+    }, [foodObj, isLoading, getRandomFood()]);
 
 
     return (

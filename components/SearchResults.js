@@ -1,5 +1,5 @@
 import React, {useState, useEffect} from 'react';
-import {StyleSheet, Text, View, ScrollView, ActivityIndicator} from 'react-native';
+import {StyleSheet, Text, View, ScrollView, ActivityIndicator, Button} from 'react-native';
 
 import DefaultStyles from "../constants/DefaultStyles";
 import Colors from "../constants/Colors";
@@ -59,7 +59,7 @@ function SearchResults({route, navigation}) {
 
                             <ScrollView style={styles.searchResults}>
                                 {
-                                    results.map(item => getResultItemElement(item))
+                                    results.map(item => getResultItemElement(item, navigation))
                                 }
 
                                 <View style={styles.endOfResultsText}>
@@ -78,27 +78,40 @@ function SearchResults({route, navigation}) {
 }
 
 
-function getResultItemElement(item) {
+function getResultItemElement(item, navigation) {
     const getKey = (name, objType) => name + '_' + objType + "_" + Math.floor(Math.random() * 10000);
 
     return (
         <View style={styles.searchResultContainer} key={getKey(item.name, 'list')}>
 
-            <Text style={styles.searchResultKey}>
-                {item.name}
-            </Text>
+            <View style={styles.searchResultInfoContainer}>
+                <Text style={styles.searchResultKey}>
+                    {item.name}
+                </Text>
 
-            <Text style={styles.searchResultInfo}>
-                {item.price}
-            </Text>
+                <Text style={styles.searchResultInfo}>
+                    {item.price}
+                </Text>
 
-            <Text style={styles.searchResultInfo}>
-                {item.store.store_name} ({item.store.location})
-            </Text>
+                <Text style={styles.searchResultInfo}>
+                    {item.store.store_name} ({item.store.location})
+                </Text>
 
-            <Text style={styles.searchResultInfo}>
-                {item.store.open_hours} - {item.store.close_hours}
-            </Text>
+                <Text style={styles.searchResultInfo}>
+                    {item.store.open_hours} - {item.store.close_hours}
+                </Text>
+            </View>
+
+            <View style={styles.detailsButtonContainer}>
+                <Button title={'More'}
+                        titleStyle={styles.detailsButton}
+                        onPress={() => navigation.navigate('FoodDetails',
+                            {
+                                foodObj: item
+                            })
+                        }
+                />
+            </View>
 
         </View>
     );
@@ -120,6 +133,7 @@ const styles = StyleSheet.create({
         borderRadius: 4,
         width: '97%',
         color: Colors.TEXT,
+        flexDirection: 'row',
     },
 
     searchResultKey: {
@@ -145,6 +159,21 @@ const styles = StyleSheet.create({
         paddingTop: 250,
         alignItems: 'center',
         justifyContent: 'center'
+    },
+
+    searchResultInfoContainer: {
+        flex: 10,
+    },
+
+    detailsButtonContainer: {
+        flex: 4,
+        justifyContent: 'space-around',
+        alignItems: 'flex-end',
+
+    },
+
+    detailsButton: {
+        fontSize: 12,
     },
 
     resultStatInfo: {

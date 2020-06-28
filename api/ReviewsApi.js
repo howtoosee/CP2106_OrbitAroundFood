@@ -9,7 +9,10 @@ export async function readReviews(foodObjID, setReviews) {
 
     let reviewsArr = [];
 
-    const snapshot = await reviewsCollection.where('foodID', '==', foodObjID).get();
+    const snapshot = await reviewsCollection
+        .where('foodID', '==', foodObjID)
+        .orderBy('timestamp', 'desc')
+        .get();
 
     await forEachField(snapshot.docs, async function (docSnapshot) {
 

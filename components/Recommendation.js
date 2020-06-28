@@ -5,7 +5,6 @@ import Colors from "../constants/Colors";
 import DefaultStyles from "../constants/DefaultStyles";
 
 import getRandomFood from "../api/RecommApi";
-import {get} from "react-native/Libraries/TurboModule/TurboModuleRegistry";
 
 
 function Recommendation({navigation}) {
@@ -25,7 +24,7 @@ function Recommendation({navigation}) {
                 .then(() => setLoading(false))
                 .catch(err => console.log("Error getting recommendation:", err));
         }
-    }, [foodObj, isLoading, getRandomFood()]);
+    }, [foodObj, isLoading, getRandomFood(), setLoading, setFoodObj]);
 
 
     return (
@@ -63,9 +62,23 @@ function Recommendation({navigation}) {
                                     </Text>
                                 </View>
 
+                                <View>
+
+                                </View>
+
+                            </View>
+
+                            <View style={styles.detailsButtonContainer}>
+                                <Button title={'Details'}
+                                        onPress={() => navigation.navigate('FoodDetails',
+                                            {
+                                                foodObj: foodObj
+                                            })}
+                                />
                             </View>
 
                             <View style={styles.refreshButtonContainer}>
+
                                 <Button title={"Another one!"}
                                         onPress={refresh}
                                 />
@@ -132,10 +145,18 @@ const styles = StyleSheet.create({
         fontSize: 24,
     },
 
+    detailsButtonContainer: {
+        flex: 4,
+        alignItems: 'center',
+        justifyContent: 'center',
+        paddingHorizontal: 15,
+    },
+
     refreshButtonContainer: {
         flex: 2,
         alignItems: 'center',
         justifyContent: 'center',
+        paddingTop: 20,
         paddingHorizontal: 15,
     }
 

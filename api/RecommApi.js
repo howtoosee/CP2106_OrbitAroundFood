@@ -4,14 +4,15 @@ import combineAllData from "./combineAllData";
 const foodCollection = firebaseDB.firestore().collection("FOODS");
 
 // global variable local db snapshot
-var localSnapshot = null;
+let localSnapshot = null;
+
 
 export default async function getRandomFood(setLoading, setFood) {
 
     // if localSnapshot is not initialised, initialise it
     if (localSnapshot === null) {
-        localSnapshot = await foodCollection.get();
-        // console.log("QUERYING DB");
+        localSnapshot = await foodCollection.get()
+            .catch(err => console.log("Error getting food collection:", err));
     }
 
     const querySnapshot = localSnapshot;
@@ -26,13 +27,18 @@ export default async function getRandomFood(setLoading, setFood) {
     const foodObj = await foodSnapshot.data();
 
     // combine food object with store object
-    const combinedFoodObj = await combineAllData(foodObj, foodSnapshot.id);
+    await combineAllData(foodObj, foodSnapshot.id)
+        .then(res => {
+            setLoading(false);
+            setFood(res);
+        })
+        .catch(err => console.log(err));
 
     // console.log(combinedFoodObj);
 
     // update states
-    setLoading(false);
-    setFood(combinedFoodObj);
+    // setLoading(false);
+    // setFood(combinedFoodObj);
 
 }
 

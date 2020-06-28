@@ -10,7 +10,8 @@ export default async function combineAllData(foodData, id) {
         price: isNaN(foodData.price)
             ? 'not available'
             : '$' + foodData.price.toFixed(2),
-        storeID: foodData.storeID
+        storeID: foodData.storeID,
+        reviews: foodData.reviews
     };
 
     await storeCollection

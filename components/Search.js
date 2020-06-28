@@ -56,11 +56,13 @@ function Search({navigation}) {
                 <View style={styles.searchBar}>
 
                     <View style={styles.inputContainer}>
+
                         <TextInput style={styles.inputText}
                                    placeholder="What do you wanna eat?"
                                    onChangeText={searchInputHandler}
                                    value={searchString}
                         />
+
                     </View>
 
                     <View style={styles.searchButton}>
@@ -70,6 +72,7 @@ function Search({navigation}) {
                 </View>
 
                 <View style={styles.searchHistoryContainer}>
+
                     <View style={styles.searchHistoryTitle}>
                         <Text style={styles.searchHistoryTitleText}>Search History</Text>
                     </View>

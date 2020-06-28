@@ -1,11 +1,11 @@
 import React from 'react';
-import { StyleSheet, View, Image } from 'react-native';
+import {StyleSheet, View, Image} from 'react-native';
 
 import DefaultStyles from "../constants/DefaultStyles";
 import StartScreenButton from "./StartScreenButton";
 
 
-function Home({ navigation }) {
+function Home({navigation}) {
 
     return (
         <View style={DefaultStyles.screen}>
@@ -20,13 +20,25 @@ function Home({ navigation }) {
             <View style={styles.buttonContainer}>
 
                 <View style={styles.infoContainer}>
-                    <StartScreenButton title="SEARCH" onPress={() => navigation.navigate('Search')}/>
-                    <StartScreenButton title="RECOMMENDATION" onPress={() => navigation.navigate('Recommendation')}/>
-                    <StartScreenButton title="FAVOURITE" onPress={() => navigation.navigate('Favourite')}/>
-                    <StartScreenButton title="LEMME HELP" onPress={() => navigation.navigate('Lemme Help')}/>
+                    <StartScreenButton title="SEARCH"
+                                       onPress={() => navigation.navigate('Search')}
+                    />
+                    <StartScreenButton title="RECOMMENDATION"
+                                       onPress={() => navigation.navigate('Recommendation')}
+                    />
+                    <StartScreenButton title="FAVOURITE"
+                                       onPress={() => navigation.navigate('Favourite')}
+                    />
+                    <StartScreenButton title="LEMME HELP"
+                                       onPress={() => navigation.navigate('Lemme Help')}
+                    />
                 </View>
+
                 <View style={styles.user}>
-                    <StartScreenButton title="< user >" onPress={() => navigation.navigate('Profile')}/>
+                    <StartScreenButton
+                        title="< user >"
+                        onPress={() => navigation.navigate('Profile')}
+                    />
                 </View>
 
             </View>
@@ -58,7 +70,7 @@ const styles = StyleSheet.create({
 
     infoContainer: {
         alignItems: 'center',
-        
+
     },
 
     user: {

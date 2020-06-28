@@ -5,8 +5,10 @@ import {SafeAreaProvider} from 'react-native-safe-area-context';
 
 import {
     Favourite,
+    FoodDetails,
     HelpBuyPls,
     Home,
+    LeaveReview,
     LogInScreen,
     Profile,
     Recommendation,
@@ -21,64 +23,6 @@ import {Platform} from "react-native";
 
 export default function App() {
 
-// <<<<<<< HEAD
-//
-// export default function App() {
-//
-//     const [currScreen, setCurrScreen] = useState(Screen.START_SCREEN);
-//     const [searchHist, setSearchHist] = useState([]);
-//
-//     function showScreen(scrn) {
-//         let newScreen: any;
-//
-//         switch (scrn) {
-//             case "favourite":
-//                 newScreen = Screen.FAVOURITE;
-//                 break;
-//             case "recommendation":
-//                 newScreen = Screen.RECOMMENDATION;
-//                 break;
-//             case "search":
-//                 newScreen = Screen.SEARCH;
-//                 break;
-//             case "start_screen":
-//                 newScreen = Screen.START_SCREEN;
-//                 break;
-//             default:
-//                 newScreen = Screen.START_SCREEN;
-//                 break;
-//         }
-//         setCurrScreen(newScreen);
-//     }
-//
-//
-//     let content;
-//     switch (currScreen) {
-//         case Screen.FAVOURITE:
-//             content = <Favourite onPressBack={() => showScreen('start_screen')}/>;
-//             break;
-//         case Screen.RECOMMENDATION:
-//             content = <Recommendation onPressBack={() => showScreen('start_screen')}/>;
-//             break;
-//         case Screen.SEARCH:
-//             content = <Search onPressBack={() => showScreen('start_screen')}
-//                               searchHistory={searchHist}
-//                               setSearchHistory={setSearchHist}/>;
-//             break;
-//         case Screen.START_SCREEN:
-//             content = <StartScreen onPressRec={() => showScreen('recommendation')}
-//                                    onPressSearch={() => showScreen('search')}
-//                                    onPressFav={() => showScreen('favourite')}/>
-//             break;
-//         default:
-//             content = <StartScreen onPressRec={() => showScreen('recommendation')}
-//                                    onPressSearch={() => showScreen('search')}
-//                                    onPressFav={() => showScreen('favourite')}/>
-//             break;
-//
-//     }
-//
-// =======
 
     const forFade = ({current}) => ({
         cardStyle: {
@@ -86,55 +30,70 @@ export default function App() {
         }
     });
 
-    const Stack = createStackNavigator();
+    const stack = createStackNavigator();
+
 
     return (
         <SafeAreaProvider>
+
             <NavigationContainer>
-                <Stack.Navigator initialRouteName="Welcome"
+
+                <stack.Navigator initialRouteName="Welcome"
                                  mode={Platform.OS === 'ios' ? "modal" : "card"}>
-                    <Stack.Screen name="Welcome"
+
+                    <stack.Screen name="Welcome"
                                   component={StartScreen}
                     />
-                    <Stack.Screen name="Sign In"
+                    <stack.Screen name="Sign In"
                                   component={LogInScreen}
                                   options={{cardStyleInterpolator: forFade}}
                     />
-                    <Stack.Screen name="Sign Up"
+                    <stack.Screen name="Sign Up"
                                   component={SignUpScreen}
                                   options={{cardStyleInterpolator: forFade}}
                     />
-                    <Stack.Screen name="Search"
+                    <stack.Screen name="Search"
                                   component={Search}
                                   options={{cardStyleInterpolator: forFade}}
                     />
-                    <Stack.Screen name="SearchResults"
+                    <stack.Screen name="SearchResults"
                                   component={SearchResults}
                                   options={{cardStyleInterpolator: forFade}}
                     />
-                    <Stack.Screen name="Recommendation"
+                    <stack.Screen name="FoodDetails"
+                                  component={FoodDetails}
+                                  options={{cardStyleInterpolator: forFade}}
+                    />
+                    <stack.Screen name="LeaveReview"
+                                  component={LeaveReview}
+                                  options={{cardStyleInterpolator: forFade}}
+                    />
+                    <stack.Screen name="Recommendation"
                                   component={Recommendation}
                                   options={{cardStyleInterpolator: forFade}}
                     />
-                    <Stack.Screen name="Favourite"
+                    <stack.Screen name="Favourite"
                                   component={Favourite}
                                   options={{cardStyleInterpolator: forFade}}
                     />
-                    <Stack.Screen name="Profile"
+                    <stack.Screen name="Profile"
                                   component={Profile}
                                   options={{cardStyleInterpolator: forFade}}
                     />
-                    <Stack.Screen name="Lemme Help"
+                    <stack.Screen name="Lemme Help"
                                   component={HelpBuyPls}
                                   options={{cardStyleInterpolator: forFade}}
                     />
-                    <Stack.Screen name="Orbit Around Food"
+                    <stack.Screen name="Orbit Around Food"
                                   component={Home}
                                   options={{headerLeft: null}}
 
                     />
-                </Stack.Navigator>
+
+                </stack.Navigator>
+
             </NavigationContainer>
+
         </SafeAreaProvider>
     );
 

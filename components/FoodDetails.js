@@ -1,7 +1,8 @@
 import React, {useEffect, useState} from 'react';
-import {StyleSheet, Text, View, ScrollView, ActivityIndicator, Button} from 'react-native';
+import {StyleSheet, Text, View, ScrollView, ActivityIndicator, Button, Image} from 'react-native';
 
 import {readReviews} from "../api/ReviewsApi";
+import getImage from "../api/FoodImage";
 import DefaultStyles from "../constants/DefaultStyles";
 import Colors from "../constants/Colors";
 
@@ -11,15 +12,22 @@ function FoodDetails({route, navigation}) {
 
     const foodObj = route.params?.foodObj;
     const [reviews, setReviews] = useState(null);
+    const [photoUri, setPhotoUri] = useState('');
 
 
     useEffect(() => {
         if (isLoading) {
             readReviews(foodObj.id, setReviews)
+                .catch(err => console.log("Error getting reviews:", err))
+
+                // set image uri
+                .then(() => getImage(foodObj.imageURL, setPhotoUri))
+                .catch(err => console.log("Error getting image uri:", err))
+
+                // finish loading everything, rerender
                 .then(() => setLoading(false))
-                .catch(err => console.log("Error getting reviews:", err));
         }
-    }, [readReviews, foodObj, isLoading, setReviews, setLoading]);
+    }, [readReviews, foodObj, setReviews, getImage, setPhotoUri, setLoading]);
 
 
     return (
@@ -46,6 +54,17 @@ function FoodDetails({route, navigation}) {
                         {foodObj.store.open_hours} - {foodObj.store.close_hours}
                     </Text>
 
+                </View>
+
+                <View style={styles.imageContainer}>
+                    {(isLoading || photoUri === '')
+                        ? <ActivityIndicator size='large' color='black'/>
+                        :
+                        <Image
+                            style={styles.image}
+                            source={{uri: photoUri}}
+                        />
+                    }
                 </View>
 
                 <View style={styles.reviewResultContainer}>
@@ -124,8 +143,23 @@ function displayReview(rev) {
 
 const styles = StyleSheet.create({
 
+    imageContainer: {
+        flex: 8,
+        paddingTop: 20,
+        paddingBottom: 10,
+        paddingRight: 20,
+        alignItems: 'center',
+        overflow: 'visible',
+    },
+
+    image: {
+        width: '90%',
+        height: 200,
+    },
+
     foodInfoContainer: {
-        flex: 2,
+        flex: 1,
+        paddingBottom: 40,
     },
 
     searchResultKey: {
@@ -141,10 +175,11 @@ const styles = StyleSheet.create({
 
     reviewResultContainer: {
         flex: 18,
+        overflow: 'hidden',
     },
 
     addReviewContainer: {
-        flex: 2,
+        flex: 3,
     },
 
     reviewResultIndivContainer: {
@@ -161,7 +196,7 @@ const styles = StyleSheet.create({
         color: Colors.TEXT,
         fontSize: 16,
         fontWeight: "bold",
-        paddingBottom: 4,
+        paddingBottom: 2,
     },
 
     reviewResultInfo: {
@@ -187,7 +222,7 @@ const styles = StyleSheet.create({
     },
 
     noResultsContainer: {
-        paddingTop: 250,
+        paddingTop: 150,
         alignItems: 'center',
         justifyContent: 'center'
     },

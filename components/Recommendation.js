@@ -24,7 +24,7 @@ function Recommendation({navigation}) {
                 .then(() => setLoading(false))
                 .catch(err => console.log("Error getting recommendation:", err));
         }
-    }, [foodObj, isLoading, getRandomFood(), setLoading, setFoodObj]);
+    }, [foodObj, isLoading, getRandomFood, setLoading, setFoodObj]);
 
 
     return (
@@ -54,11 +54,11 @@ function Recommendation({navigation}) {
                                     </Text>
 
                                     <Text style={styles.resultInfo}>
-                                        {foodObj.store.store_name} ({foodObj.store.location})
+                                        {foodObj.store.store_name}{'\n'}{foodObj.store.location}
                                     </Text>
 
                                     <Text style={styles.resultInfo}>
-                                        {foodObj.store.open_hours} - {foodObj.store.close_hours}
+                                        {foodObj.store.open_hours} - {foodObj.store.close_hours} hrs
                                     </Text>
                                 </View>
 
@@ -113,9 +113,10 @@ const styles = StyleSheet.create({
 
     recommendationContainer: {
         flex: 18,
-        paddingLeft: 0,
+        paddingLeft: 10,
+        width: '90%',
         alignItems: 'flex-start',
-        justifyContent: 'space-around',
+        justifyContent: 'flex-start',
     },
 
     resultsKeyContainer: {

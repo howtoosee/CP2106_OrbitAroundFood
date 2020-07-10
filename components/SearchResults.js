@@ -24,7 +24,7 @@ function SearchResults({route, navigation}) {
                 .then(() => setLoading(false))
                 .catch(err => console.log('Error querying:', err));
         }
-    }, [isLoading, searchKey, searchQueryFood]);
+    }, [isLoading, searchKey, searchQueryFood, setResList, setLoading]);
 
 
     return (

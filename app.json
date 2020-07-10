@@ -1,6 +1,6 @@
 {
   "expo": {
-    "name": "orbit_around_food",
+    "name": "OrbitAroundFood",
     "slug": "orbit_around_food",
     "platforms": [
       "ios",
@@ -23,6 +23,8 @@
     ],
     "ios": {
       "supportsTablet": true
-    }
+    },
+    "description": "A prototype app for searching for food around NUS.",
+    "githubUrl": "https://github.com/howtoosee/CP2106_OrbitAroundFood"
   }
 }

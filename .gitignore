@@ -5,8 +5,11 @@
 # project files
 .idea
 .expo
+.expo-shared
 node_modules
 __pycache__
+venv
+app.json
 
 # SDK and sensitive stuff
 firebaseDB.js

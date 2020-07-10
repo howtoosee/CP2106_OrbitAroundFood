@@ -1,12 +1,11 @@
-import json, traceback
+import traceback
+
+from CollectionsEnum import Collections
+from InitializeDB import *
 from openpyxl import *
 
-from InitializeDB import *
-from CollectionsEnum import Collections
 
-
-
-class DBWriter():
+class DBWriter:
     def __init__(self, wb, db):
         self.__wb = wb
         self.__db = db
@@ -27,13 +26,15 @@ class DBWriter():
             name = row[0].value
             price = row[1].value
             storeID = row[2].value
+            url = row[3].value
 
             foodID = self.__getID(storeID, name)
 
             foodObj = {
                 u'name': name,
                 u'price': price,
-                u'storeID': storeID
+                u'storeID': storeID,
+                u'imageURL': url
             }
             
             return foodID, foodObj
@@ -124,7 +125,7 @@ if __name__ == '__main__':
         wb = load_workbook(filename="./Utown Food Menu Dataset.xlsx")
         writer = DBWriter(wb, db)
         writer.writeToFood()
-        writer.writeToStore()
+        # writer.writeToStore()
 
     except:
         traceback.print_exc()

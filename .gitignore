@@ -10,6 +10,7 @@ node_modules
 __pycache__
 venv
 app.json
+web-build
 
 # SDK and sensitive stuff
 firebaseDB.js

@@ -25,8 +25,7 @@ class DBWriter:
             price = row[1].value
             storeID = row[2].value
             url = row[3].value
-            keywords = (re.sub(r'[^a-z0-9 ]', '', name.lower())).split(' ') + storeID.split('_')[1:]
-            filters = None if row[4].value is None else row[4].value.split(',')
+            filters = [] if row[4].value is None else row[4].value.strip(' ').split(',')
 
             foodID = self.__getID(storeID, name)
 
@@ -35,7 +34,6 @@ class DBWriter:
                 u'price': price,
                 u'storeID': storeID,
                 u'imageURL': url,
-                u'keywords': keywords,
                 u'filterKeywords': filters,
             }
 

@@ -1,5 +1,8 @@
 import React, {useState} from 'react';
-import {StyleSheet, Text, TextInput, Button, View, ScrollView, TouchableOpacity} from 'react-native';
+import {StyleSheet, Text, TextInput, Button, View, ScrollView, TouchableOpacity, Modal} from 'react-native';
+import Icon from 'react-native-vector-icons/FontAwesome';
+
+import Filter from './Filter';
 
 import Colors from '../constants/Colors';
 import DefaultStyles from "../constants/DefaultStyles";
@@ -9,6 +12,10 @@ function Search({navigation}) {
     const [searchString, setSearchString] = useState('');
     const [searchHist, setSearchHist] = useState([]);
 
+    const [isFilterVisible, setFilterVisible] = useState(false);
+    const [filters, setFilters] = useState([]);
+    const [filterNames, setFilterNames] = useState([]);
+
     const searchInputHandler = (inputStr) => {
         setSearchString(inputStr);
     }
@@ -17,9 +24,21 @@ function Search({navigation}) {
         if (isValidString(searchString)) {
             console.log("Searching for: " + searchString);
             addSearchHist();
-            navigation.navigate('SearchResults', {searchKey: searchString});
+
+            console.log("Active filters:", filters);
+            navigation.navigate('SearchResults',
+                {
+                    searchKey: searchString,
+                    filters: filters,
+                    filterNames: filterNames
+                }
+            );
         }
         // else ignore the search string
+    }
+
+    const filterHandler = () => {
+        setFilterVisible(true);
     }
 
     const isValidString = str => str.length > 0 && str.trim().length > 0;
@@ -37,12 +56,6 @@ function Search({navigation}) {
     const clearHistory = () => setSearchHist([]);
     // clears search history
 
-    const closeSearch = () => {
-        navigation.navigate('Welcome', {
-            searchHist: searchHist
-        })
-    }
-
     const getKey = objType => objType + "_" + Math.floor(Math.random() * 10000);
     // creates key for object
 
@@ -52,6 +65,17 @@ function Search({navigation}) {
         <View style={DefaultStyles.screen}>
 
             <View style={DefaultStyles.contentContainer}>
+
+                <Modal animationType="slide"
+                       transparent={false}
+                       visible={isFilterVisible}>
+                    <Filter filters={filters}
+                            filterNames={filterNames}
+                            setFilters={setFilters}
+                            setFilterNames={setFilterNames}
+                            setVisible={setFilterVisible}
+                    />
+                </Modal>
 
                 <View style={styles.searchBar}>
 
@@ -66,25 +90,56 @@ function Search({navigation}) {
                     </View>
 
                     <View style={styles.searchButton}>
-                        <Button title="FIND" color={Colors.BUTTON} onPress={searchHandler}/>
+                        <Button
+                            icon={
+                                <Icon
+                                    name="search"
+                                    size={15}
+                                    color={Colors.BUTTON}
+                                />
+                            }
+                            title='Find'
+                            color={Colors.BUTTON}
+                            onPress={searchHandler}
+                        />
                     </View>
+
+                    <View style={styles.filterButton}>
+                        <Button
+                            icon={
+                                <Icon
+                                    name="filter"
+                                    size={15}
+                                    color={Colors.BUTTON}
+                                />
+                            }
+                            title="Filters"
+                            color={Colors.BUTTON}
+                            onPress={filterHandler}
+                        />
+                    </View>
+
 
                 </View>
 
-                <View style={styles.searchHistoryContainer}>
+
+                <View style={styles.searchHistoryOverallContainer}>
 
                     <View style={styles.searchHistoryTitle}>
                         <Text style={styles.searchHistoryTitleText}>Search History</Text>
                     </View>
 
-                    <ScrollView style={styles.searchHistoryContainer}>
+                    <View  style={styles.searchHistoryContainer}>
+                    <ScrollView>
                         {searchHist.map(item => (
+
                             <TouchableOpacity
                                 key={getKey("touchable_opacity")}
                                 onPress={() => searchInputHandler(item)}>
 
                                 <View style={styles.searchHistoryTextContainer}>
-                                    <Text style={styles.searchHistoryText} key={getKey("search_hist")}>
+                                    <Text style={styles.searchHistoryText}
+                                          key={getKey("search_hist")}>
                                         {item}
                                     </Text>
                                 </View>
@@ -92,13 +147,14 @@ function Search({navigation}) {
                             </TouchableOpacity>
                         ))}
                     </ScrollView>
-
-                    <View style={styles.searchHistoryClearButton}>
-                        <Button title="Clear search history" color={Colors.BUTTON} onPress={clearHistory}/>
                     </View>
+
 
                 </View>
 
+                <View style={styles.searchHistoryClearButton}>
+                    <Button title="Clear search history" color={Colors.BUTTON} onPress={clearHistory}/>
+                </View>
             </View>
 
         </View>
@@ -109,22 +165,29 @@ function Search({navigation}) {
 const styles = StyleSheet.create({
 
     searchBar: {
+        flex: 2,
         paddingTop: 10,
         flexDirection: 'row',
         justifyContent: 'space-between',
         alignItems: 'center',
     },
 
+    filterButton: {
+        flex: 3,
+        width: '90%',
+        justifyContent: 'center',
+        alignItems: 'flex-end',
+    },
+
     searchButton: {
-        flex: 1,
-        flexDirection: 'row',
-        width: '98%',
+        flex: 3,
+        width: '90%',
         justifyContent: 'space-around',
-        alignItems: 'center',
+        alignItems: 'flex-end',
     },
 
     inputContainer: {
-        flex: 4,
+        flex: 9,
         borderWidth: 2,
         borderColor: 'grey',
         borderRadius: 5,
@@ -135,21 +198,32 @@ const styles = StyleSheet.create({
         fontSize: 16,
     },
 
+    searchHistoryOverallContainer: {
+        flex: 18,
+        marginLeft: 0,
+        // paddingTop: 10,
+    },
+
+    searchHistoryContainer: {
+        flex: 18,
+        marginLeft: 0,
+        paddingTop: 10,
+        justifyContent: 'space-around'
+    },
+
     searchHistoryTitle: {
+        flex: 1,
         paddingLeft: 3,
         marginTop: 25,
     },
 
     searchHistoryTitleText: {
+        flex: 8,
         color: Colors.TEXT,
         fontSize: 15,
         fontWeight: 'bold',
     },
 
-    searchHistoryContainer: {
-        marginLeft: 0,
-        paddingTop: 10,
-    },
 
     searchHistoryText: {
         color: Colors.TEXT,
@@ -166,6 +240,7 @@ const styles = StyleSheet.create({
     },
 
     searchHistoryClearButton: {
+        flex: 4,
         paddingTop: 25,
         justifyContent: 'center',
     }

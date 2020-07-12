@@ -8,19 +8,16 @@ import searchQueryFood from "../api/SearchApi";
 
 function SearchResults({route, navigation}) {
     const {searchKey} = route.params;
-
-    const closeResults = () => {
-        setLoading(true);
-        setResList([]);
-        navigation.goBack();
-    }
+    const {filters} = route.params;
+    const {filterNames} = route.params;
+    const filterString = filterNames.join(", ");
 
     const [isLoading, setLoading] = useState(true);
     const [results, setResList] = useState([]);
 
     useEffect(() => {
         if (isLoading) {
-            searchQueryFood(searchKey, setResList)
+            searchQueryFood(searchKey, setResList, filters)
                 .then(() => setLoading(false))
                 .catch(err => console.log('Error querying:', err));
         }
@@ -35,6 +32,7 @@ function SearchResults({route, navigation}) {
 
                 <View style={styles.resultStatInfo}>
                     <Text>Searching for: "{searchKey}"</Text>
+                    <Text>Filters: {filterString}</Text>
                 </View>
 
                 {(isLoading)

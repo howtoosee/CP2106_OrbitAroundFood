@@ -69,8 +69,8 @@ function Recommendation({navigation}) {
                             </View>
 
                             <View style={styles.detailsButtonContainer}>
-                                <Button title={'Details'}
-                                        onPress={() => navigation.navigate('FoodDetails',
+                                <Button title={'More'}
+                                        onPress={() => navigation.navigate('Food Details',
                                             {
                                                 foodObj: foodObj
                                             })}

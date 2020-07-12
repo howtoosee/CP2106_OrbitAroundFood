@@ -26,7 +26,7 @@ function Search({navigation}) {
             addSearchHist();
 
             console.log("Active filters:", filters);
-            navigation.navigate('SearchResults',
+            navigation.navigate('Search Results',
                 {
                     searchKey: searchString,
                     filters: filters,

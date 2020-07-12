@@ -10,7 +10,7 @@ function SearchResults({route, navigation}) {
     const {searchKey} = route.params;
     const {filters} = route.params;
     const {filterNames} = route.params;
-    const filterString = filterNames.join(", ");
+    const filterString = filterNames.length === 0 ? "none" : filterNames.join(", ");
 
     const [isLoading, setLoading] = useState(true);
     const [results, setResList] = useState([]);
@@ -103,7 +103,7 @@ function getResultItemElement(item, navigation) {
             <View style={styles.detailsButtonContainer}>
                 <Button title={'More'}
                         titleStyle={styles.detailsButton}
-                        onPress={() => navigation.navigate('FoodDetails',
+                        onPress={() => navigation.navigate('Food Details',
                             {
                                 foodObj: item
                             })

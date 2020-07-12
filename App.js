@@ -56,15 +56,15 @@ export default function App() {
                                   component={Search}
                                   options={{cardStyleInterpolator: forFade}}
                     />
-                    <stack.Screen name="SearchResults"
+                    <stack.Screen name="Search Results"
                                   component={SearchResults}
                                   options={{cardStyleInterpolator: forFade}}
                     />
-                    <stack.Screen name="FoodDetails"
+                    <stack.Screen name="Food Details"
                                   component={FoodDetails}
                                   options={{cardStyleInterpolator: forFade}}
                     />
-                    <stack.Screen name="LeaveReview"
+                    <stack.Screen name="Leave Review"
                                   component={LeaveReview}
                                   options={{cardStyleInterpolator: forFade}}
                     />

@@ -1,4 +1,4 @@
-import traceback
+import traceback, re
 
 from CollectionsEnum import Collections
 from InitializeDB import *
@@ -15,11 +15,9 @@ class DBWriter:
         except Exception as err:
             print("Error opening sheets:", err)
 
-
     def __getID(self, *args):
         returnStr = '-'.join(args)
         return "".join(c.lower() for c in returnStr if (c.isalpha() or c in (' ', '-', "_")))
-
 
     def __getDataFromRow(self, collection, row):
         if (collection == Collections.FOODS):
@@ -27,6 +25,7 @@ class DBWriter:
             price = row[1].value
             storeID = row[2].value
             url = row[3].value
+            filters = [] if row[4].value is None else row[4].value.strip(' ').split(',')
 
             foodID = self.__getID(storeID, name)
 
@@ -34,9 +33,10 @@ class DBWriter:
                 u'name': name,
                 u'price': price,
                 u'storeID': storeID,
-                u'imageURL': url
+                u'imageURL': url,
+                u'filterKeywords': filters,
             }
-            
+
             return foodID, foodObj
 
 
@@ -56,7 +56,6 @@ class DBWriter:
 
             return store_ID, storeObj
 
-
     def __readSheet(self, collection):
         try:
             sheet = None
@@ -73,7 +72,7 @@ class DBWriter:
             for row in sheet.iter_rows(min_row=2, max_row=sheet.max_row):
                 if (row[0].value is None):
                     break
-                
+
                 dataID, dataObj = self.__getDataFromRow(collection, row)
                 dataSet[dataID] = dataObj
 
@@ -81,7 +80,6 @@ class DBWriter:
 
         except:
             traceback.print_exc()
-
 
     def __updateFirestore(self, collection):
         try:
@@ -103,20 +101,17 @@ class DBWriter:
         except Exception as err:
             raise Exception(err)
 
-
     def writeToFood(self):
         try:
             self.__updateFirestore(Collections.FOODS)
         except:
             traceback.print_exc()
 
-
     def writeToStore(self):
         try:
             dataSet = self.__updateFirestore(Collections.STORES)
         except:
             traceback.print_exc()
-
 
 
 if __name__ == '__main__':
@@ -129,4 +124,3 @@ if __name__ == '__main__':
 
     except:
         traceback.print_exc()
-

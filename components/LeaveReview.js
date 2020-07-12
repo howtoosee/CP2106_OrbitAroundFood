@@ -58,7 +58,7 @@ function LeaveReview({route, navigation}) {
                     </Text>
 
                     <Text style={styles.searchResultInfo}>
-                        {foodObj.store.open_hours} - {foodObj.store.close_hours}
+                        {foodObj.store.open_hours} - {foodObj.store.close_hours} hrs
                     </Text>
 
                 </View>

@@ -88,7 +88,7 @@ function FoodDetails({route, navigation}) {
                                 </View>
                                 <ScrollView>
                                     {
-                                        reviews.map(rev => displayReview(rev))
+                                        reviews.map(rev => reviewElement(rev))
                                     }
 
                                     <View style={styles.endOfResultsText}>
@@ -117,7 +117,7 @@ function FoodDetails({route, navigation}) {
 }
 
 
-function displayReview(rev) {
+function reviewElement(rev) {
 
     const getKey = (name, objType) => name + '_' + objType + '_' + Math.floor(Math.random() * 10000);
 

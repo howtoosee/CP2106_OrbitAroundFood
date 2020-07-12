@@ -4,25 +4,45 @@ import combineAllData from './combineAllData';
 const foodCollection = firebaseDB.firestore().collection("FOODS");
 
 
-export default async function searchQueryFood(searchKey, setResList) {
+export default async function searchQueryFood(searchKey, setResList, filters) {
 
     // checks if a given foodDoc matches the searchKey
     function matchKeyword(keyword, docData) {
-        const cleanKeyword = keyword.toLowerCase().replace(/[^0-9a-z]/gi, '')
+        const cleanKeyword = keyword.toLowerCase().replace(/[^0-9a-z]/gi, '');
         const docFoodName = docData.name.toLowerCase().replace(/[^0-9a-z]/gi, '');
-        const docStoreName = docData.storeID.toLowerCase().replace(/[^0-9a-z]/gi, '');
+        // const docStoreName = docData.storeID.toLowerCase().replace(/[^0-9a-z]/gi, '');
 
         return (
-            docFoodName.includes(cleanKeyword) ||
-            docStoreName.includes(cleanKeyword)
+            docFoodName.includes(cleanKeyword)
+            // || docStoreName.includes(cleanKeyword)
         );
     }
+
+    function matchFilter(filterArr, docData) {
+        if (filterArr.length > docData.filterKeywords.length) {
+            return false;
+        } else {
+            let match = true;
+            let index = 0;
+            while (match && index < filterArr.length) {
+                const currFilter = filterArr[index];
+                if (!docData.filterKeywords.includes(currFilter)) {
+                    match = false;
+                }
+                index++;
+            }
+            return match;
+        }
+    }
+
 
     // result array
     let res = [];
 
     // get query of all food
-    const querySnapshot = await foodCollection.orderBy("name").get();
+    const querySnapshot = await foodCollection
+        .orderBy("name")
+        .get();
     // console.log("Successfully got query snapshot");
 
 
@@ -30,7 +50,7 @@ export default async function searchQueryFood(searchKey, setResList) {
         const snapshotData = docSnapShot.data();
         // console.log("Snapshot data:", snapshotData);
 
-        if (matchKeyword(searchKey, snapshotData)) {
+        if (matchKeyword(searchKey, snapshotData) && matchFilter(filters, snapshotData)) {
             const newData = await combineAllData(snapshotData, docSnapShot.id);
             // console.log("Combined data:", newData);
 

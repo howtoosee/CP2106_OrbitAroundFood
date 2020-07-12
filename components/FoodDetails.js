@@ -103,7 +103,7 @@ function FoodDetails({route, navigation}) {
                 <View style={styles.addReviewContainer}>
                     <Button title={'Lemme comment'}
                             onPress={() => {
-                                navigation.navigate("LeaveReview",
+                                navigation.navigate("Leave Review",
                                     {foodObj: foodObj}
                                 );
                                 setLoading(true);

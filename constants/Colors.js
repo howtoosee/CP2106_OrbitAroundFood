@@ -4,7 +4,7 @@ const Colors = {
     DARKER_BUTTON: '#CF4039',
     ALT_BUTTON: '#DA8664',
 
-    CARD: '#FFEEE5',
+    CARD: '#e0afaf',
     TEXT: '#606060',
 }
 

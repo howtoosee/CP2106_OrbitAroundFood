@@ -1,28 +1,36 @@
 import React, {useState} from 'react';
-import {StyleSheet, Text, TextInput, Button, View, ScrollView, TouchableOpacity} from 'react-native';
+import {StyleSheet, Text, TextInput, Button, View} from 'react-native';
 
 import {writeReviews} from "../api/ReviewsApi";
 
 import Colors from '../constants/Colors';
 import DefaultStyles from "../constants/DefaultStyles";
 
+import firebaseDB from '../constants/firebaseDB';
+
 
 function LeaveReview({route, navigation}) {
+
     const foodObj = route.params?.foodObj;
 
-    const [userID, setUserID] = useState('');
+    // const [userID, setUserID] = useState('');
+    const user = firebaseDB.auth().currentUser;
+    console.log(user);
+    const userID = user ? user.displayName : '';
     const [msgString, setMsgString] = useState('');
 
-    const userIDInputHandler = userIDStr => setUserID(userIDStr);
+    // const userIDInputHandler = userIDStr => setUserID(userIDStr);
     const msgInputHandler = msgStr => setMsgString(msgStr);
 
     const confirmHandler = () => {
         if (userID.trim().length === 0) {
             // error msg
-            console.log("Error, userID can not be empty!");
+            console.error("Error, userID can not be empty!");
         } else if (msgString.trim().length === 0) {
             // error msg
-            console.log("Error, comment string can not be empty!");
+            console.error("Error, comment string can not be empty!");
+        } else if (userID === '') {
+            console.error("Not signed in!");
         } else {
             // proper username and msg
             const reviewObj = {
@@ -32,7 +40,7 @@ function LeaveReview({route, navigation}) {
 
             writeReviews(foodObj.id, reviewObj)
                 .then(() => navigation.goBack())
-                .catch(err => console.log("Error writing review:", err));
+                .catch(err => console.error("Error writing review:", err));
 
         }
     }
@@ -71,17 +79,17 @@ function LeaveReview({route, navigation}) {
                     </View>
 
                     <View style={styles.usernameSectionContainer}>
-                        <Text style={styles.usernameText}>my username</Text>
+                        <Text style={styles.usernameText}>Reviewing as: {userID === '' ? 'None' : '@'+userID}</Text>
 
-                        <View style={styles.usernameInputContainer}>
+                        {/*<View style={styles.usernameInputContainer}>*/}
 
-                            <TextInput style={styles.textInput}
-                                       placeholder="your username"
-                                       onChangeText={userIDInputHandler}
-                                       value={userID}
-                            />
+                        {/*    <TextInput style={styles.textInput}*/}
+                        {/*               placeholder="your username"*/}
+                        {/*               onChangeText={userIDInputHandler}*/}
+                        {/*               value={userID}*/}
+                        {/*    />*/}
 
-                        </View>
+                        {/*</View>*/}
 
                     </View>
 
@@ -143,7 +151,7 @@ const styles = StyleSheet.create({
     },
 
     usernameText: {
-        fontSize: 16,
+        fontSize: 14,
     },
 
     usernameSectionContainer: {

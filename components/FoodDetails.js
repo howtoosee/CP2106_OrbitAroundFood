@@ -1,10 +1,16 @@
 import React, {useEffect, useState} from 'react';
 import {StyleSheet, Text, View, ScrollView, ActivityIndicator, Button, Image} from 'react-native';
 
+import Dialog, {DialogContent, DialogFooter, DialogButton} from 'react-native-popup-dialog';
+
+
 import {readReviews} from "../api/ReviewsApi";
 import getImage from "../api/FoodImage";
 import DefaultStyles from "../constants/DefaultStyles";
 import Colors from "../constants/Colors";
+import NoSignInWarningDialogue from "./NoSignInWarningDialogue";
+
+import firebaseDB from '../constants/firebaseDB';
 
 
 function FoodDetails({route, navigation}) {
@@ -13,6 +19,23 @@ function FoodDetails({route, navigation}) {
     const foodObj = route.params?.foodObj;
     const [reviews, setReviews] = useState(null);
     const [photoUri, setPhotoUri] = useState('');
+
+    const user = firebaseDB.auth().currentUser;
+    const [openNoSignWarning, setOpenNoSignWarning] = useState(false);
+
+    const addReviewHandler = () => {
+        if (user) {
+            navigation.navigate("Leave Review",
+                {
+                    foodObj: foodObj,
+                    user: user
+                }
+            );
+            setLoading(true);
+        } else {
+            setOpenNoSignWarning(true);
+        }
+    }
 
 
     useEffect(() => {
@@ -33,84 +56,81 @@ function FoodDetails({route, navigation}) {
     return (
 
         <View style={DefaultStyles.screen}>
+            <NoSignInWarningDialogue visible={openNoSignWarning}
+                                     setVisible={setOpenNoSignWarning}
+                                     navigation={navigation}
+            />
 
-            <View style={DefaultStyles.contentContainer}>
 
-                <View style={styles.foodInfoContainer}>
+            <View style={styles.foodInfoContainer}>
 
-                    <Text style={styles.searchResultKey}>
-                        {foodObj.name}
-                    </Text>
+                <Text style={styles.searchResultKey}>
+                    {foodObj.name}
+                </Text>
 
-                    <Text style={styles.searchResultInfo}>
-                        {foodObj.price}
-                    </Text>
+                <Text style={styles.searchResultInfo}>
+                    {foodObj.price}
+                </Text>
 
-                    <Text style={styles.searchResultInfo}>
-                        {foodObj.store.store_name} ({foodObj.store.location})
-                    </Text>
+                <Text style={styles.searchResultInfo}>
+                    {foodObj.store.store_name} ({foodObj.store.location})
+                </Text>
 
-                    <Text style={styles.searchResultInfo}>
-                        {foodObj.store.open_hours} - {foodObj.store.close_hours} hrs
-                    </Text>
+                <Text style={styles.searchResultInfo}>
+                    {foodObj.store.open_hours} - {foodObj.store.close_hours} hrs
+                </Text>
 
-                </View>
+            </View>
 
-                <View style={styles.imageContainer}>
-                    {(isLoading || photoUri === '')
-                        ? <ActivityIndicator size='large' color='black'/>
-                        :
-                        <Image
-                            style={styles.image}
-                            source={{uri: photoUri}}
-                        />
-                    }
-                </View>
+            <View style={styles.imageContainer}>
+                {(isLoading || photoUri === '')
+                    ? <ActivityIndicator size='large' color='black'/>
+                    :
+                    <Image
+                        style={styles.image}
+                        source={{uri: photoUri}}
+                    />
+                }
+            </View>
 
-                <View style={styles.reviewResultContainer}>
+            <View style={styles.reviewResultContainer}>
 
-                    {(isLoading && reviews === null)
+                {(isLoading && reviews === null)
 
-                        ? <View style={styles.loadingContainer}>
-                            <ActivityIndicator size='large' color='black'/>
+                    ? <View style={styles.loadingContainer}>
+                        <ActivityIndicator size='large' color='black'/>
+                    </View>
+
+                    : reviews.length === 0
+                        ? <View style={styles.noResultsContainer}>
+                            <Text>
+                                No reviews yet.
+                            </Text>
                         </View>
 
-                        : reviews.length === 0
-                            ? <View style={styles.noResultsContainer}>
-                                <Text>
-                                    No reviews yet.
-                                </Text>
+                        : <View>
+                            <View style={styles.reviewsHeader}>
+                                <Text>Reviews:</Text>
                             </View>
+                            <ScrollView>
+                                {
+                                    reviews.map(rev => reviewElement(rev))
+                                }
 
-                            : <View>
-                                <View style={styles.reviewsHeader}>
-                                    <Text>Reviews:</Text>
+                                <View style={styles.endOfResultsText}>
+                                    <Text>No more liao!</Text>
                                 </View>
-                                <ScrollView>
-                                    {
-                                        reviews.map(rev => reviewElement(rev))
-                                    }
 
-                                    <View style={styles.endOfResultsText}>
-                                        <Text>No more liao!</Text>
-                                    </View>
+                            </ScrollView>
+                        </View>
+                }
+            </View>
 
-                                </ScrollView>
-                            </View>
-                    }
-                </View>
-
-                <View style={styles.addReviewContainer}>
-                    <Button title={'Lemme comment'}
-                            onPress={() => {
-                                navigation.navigate("Leave Review",
-                                    {foodObj: foodObj}
-                                );
-                                setLoading(true);
-                            }
-                            }
-                    />
-                </View>
+            <View style={styles.addReviewContainer}>
+                <Button title={'Lemme comment'}
+                        color={Colors.BUTTON}
+                        onPress={addReviewHandler}
+                />
             </View>
         </View>
     );
@@ -149,6 +169,7 @@ const styles = StyleSheet.create({
         paddingBottom: 10,
         paddingRight: 20,
         alignItems: 'center',
+        justifyContent: 'center',
         overflow: 'visible',
     },
 

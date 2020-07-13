@@ -1,12 +1,12 @@
 import React from 'react';
 import {StyleSheet, View, Image, TouchableOpacity, Text} from 'react-native';
 
+import * as firebase from 'firebase';
 import { Colors, Fonts, DefaultStyles } from "../constants";
 import StartScreenButton from "./StartScreenButton";
 
-import * as firebase from 'firebase';
 
-function Home({navigation}) {
+function StartScreenLoggedIn({navigation}) {
 
     const { displayName } = firebase.auth().currentUser;
     
@@ -39,7 +39,7 @@ function Home({navigation}) {
 
                 <View style={styles.userContainer}>
                     <TouchableOpacity style={styles.userButton} onPress={() => navigation.navigate('Profile')}>
-                        <Text style={{ color: 'white', fontSize: Fonts.M }}>{"-  " + displayName + "  -"}</Text>
+                        <Text style={{ color: 'white', fontSize: Fonts.M }}>{"@" + displayName}</Text>
                     </TouchableOpacity>
                 </View>
 
@@ -92,4 +92,4 @@ const styles = StyleSheet.create({
 });
 
 
-export default Home;
+export default StartScreenLoggedIn;

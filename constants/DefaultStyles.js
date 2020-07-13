@@ -42,7 +42,7 @@ const DefaultStyles = StyleSheet.create({
     },
 
     contentContainer: {
-        flex: 14,
+        flex: 16,
     },
 
 });

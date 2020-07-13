@@ -7,13 +7,13 @@ import {
     Favourite,
     FoodDetails,
     HelpBuyPls,
-    Home,
+    StartScreenLoggedIn,
     LeaveReview,
-    LogInScreen,
     Profile,
     Recommendation,
     Search,
     SearchResults,
+    SignInScreen,
     SignUpScreen,
     StartScreen
 } from './components';
@@ -44,50 +44,61 @@ export default function App() {
                     <stack.Screen name="Welcome"
                                   component={StartScreen}
                     />
+
+                    <stack.Screen name="Home"
+                                  component={StartScreenLoggedIn}
+                                  options={{headerLeft: null}}
+                    />
+
                     <stack.Screen name="Sign In"
-                                  component={LogInScreen}
+                                  component={SignInScreen}
                                   options={{cardStyleInterpolator: forFade}}
                     />
+
                     <stack.Screen name="Sign Up"
                                   component={SignUpScreen}
                                   options={{cardStyleInterpolator: forFade}}
                     />
+
                     <stack.Screen name="Search"
                                   component={Search}
                                   options={{cardStyleInterpolator: forFade}}
                     />
+
                     <stack.Screen name="Search Results"
                                   component={SearchResults}
                                   options={{cardStyleInterpolator: forFade}}
                     />
+
                     <stack.Screen name="Food Details"
                                   component={FoodDetails}
                                   options={{cardStyleInterpolator: forFade}}
                     />
+
                     <stack.Screen name="Leave Review"
                                   component={LeaveReview}
                                   options={{cardStyleInterpolator: forFade}}
                     />
+
                     <stack.Screen name="Recommendation"
                                   component={Recommendation}
                                   options={{cardStyleInterpolator: forFade}}
                     />
+
                     <stack.Screen name="Favourite"
                                   component={Favourite}
                                   options={{cardStyleInterpolator: forFade}}
                     />
-                    <stack.Screen name="Profile"
-                                  component={Profile}
-                                  options={{cardStyleInterpolator: forFade}}
-                    />
+
+
                     <stack.Screen name="Lemme Help"
                                   component={HelpBuyPls}
                                   options={{cardStyleInterpolator: forFade}}
                     />
-                    <stack.Screen name="Orbit Around Food"
-                                  component={Home}
-                                  options={{headerLeft: null}}
 
+                    <stack.Screen name="Profile"
+                                  component={Profile}
+                                  options={{cardStyleInterpolator: forFade}}
                     />
 
                 </stack.Navigator>

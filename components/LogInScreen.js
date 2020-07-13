@@ -1,23 +1,48 @@
 import React, { useState } from 'react';
-import { View, TextInput, Text, Button, StyleSheet, Image } from 'react-native';
+import { View, TextInput, Text, Button, StyleSheet, Image, ScrollView } from 'react-native';
 
-import StartScreenButton from './StartScreenButton';
 import Colors from '../constants/Colors';
 import Fonts from '../constants/Fonts';
 
-function LogInScreen({navigation}) {
+import * as firebase from 'firebase';
+
+function LogInScreen({ navigation }) {
 
     const [email, enteredEmail] = useState('');
     const [password, enteredPassword] = useState('');
 
+    const handleLogIn = () => {
 
+        firebase.
+            auth().
+            signInWithEmailAndPassword(email, password).
+            then.apply(navigation.navigate('Orbit Around Food')).
+            then(() => {
+                enteredEmail('');
+                enteredPassword('');
+            }).
+            catch(error => console.log(error) );
+
+    }
     return (
-        <View style={styles.screen}>
+        <ScrollView style={styles.screen}>
             <View style={styles.imageContainer}>
                 <Image
                     style={styles.image}
                     source={require('../assets/icon.png')}
                 />
+                {/* {this.state.errorMessage &&
+                    <Text
+                        style={
+                            {
+                                color: "tomato",
+                                textAlign: "center",
+                                fontSize: Fonts.S,
+                                fontWeight: "600"
+                            }}>
+                        {this.state.errorMessage}
+                    </Text>
+                } */}
             </View>
             <View style={styles.contentContainer}>
                 <View style={styles.content}>
@@ -27,35 +52,34 @@ function LogInScreen({navigation}) {
                     </View>
                     <View style={styles.inputContainer}>
                         <Text style={styles.accDetails}>Email</Text>
-                        <TextInput 
-                            placeholder=" Type your email address here"
+                        <TextInput
+                            placeholder=" Email"
                             style={styles.textInput}
-                            enteredEmail={text => enteredEmail(text)}
+                            autoCapitalize="none"
+                            onChangeText={email => enteredEmail(email)}
                             value={email}
                         />
                         <View style={styles.inputContainer}>
                             <Text style={styles.accDetails}>Password</Text>
-                            <TextInput 
-                                placeholder=" Type your password here"
+                            <TextInput
+                                placeholder=" Password"
                                 style={styles.textInput}
-                                enteredPassword={text => enteredPassword(text)}
-                                value={password}    
+                                autoCapitalize="none"
+                                onChangeText={password => enteredPassword(password)}
+                                value={password}
                             />
                         </View>
                     </View>
                 </View>
                 <View style={styles.buttonContainer}>
-                    <StartScreenButton color={Colors.BUTTON} title="Confirm" onPress={() => navigation.navigate('Orbit Around Food')} />
-                    <View style={styles.helpContainer}> 
-                        <Button title="Forget Password?" color={Colors.ALT_BUTTON} onPress={()=>{}}/>
-                        <Button title="Sign Up"color={Colors.ALT_BUTTON} onPress={() => navigation.navigate('Sign Up')}/>
+                    <Button color={Colors.BUTTON} title="Confirm" onPress={handleLogIn} />
+                    <View style={styles.helpContainer}>
+                        <Text style={{ fontSize: Fonts.S, paddingTop: 6 }}>Have not created an account?  </Text>
+                        <Button title="Sign Up" color={Colors.ALT_BUTTON} onPress={() => navigation.navigate('Sign Up')} />
                     </View>
-                    {/* <View style={styles.back}>
-                        <Button title="BACK"color={Colors.ALT_BUTTON} onPress={() => navigation.goBack()} />
-                    </View> */}
                 </View>
             </View>
-        </View>
+        </ScrollView>
     );
 }
 
@@ -131,3 +155,4 @@ const styles = StyleSheet.create({
 });
 
 export default LogInScreen;
+

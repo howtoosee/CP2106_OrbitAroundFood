@@ -1,12 +1,15 @@
 import React from 'react';
-import {StyleSheet, View, Image} from 'react-native';
+import {StyleSheet, View, Image, TouchableOpacity, Text} from 'react-native';
 
-import DefaultStyles from "../constants/DefaultStyles";
+import { Colors, Fonts, DefaultStyles } from "../constants";
 import StartScreenButton from "./StartScreenButton";
 
+import * as firebase from 'firebase';
 
 function Home({navigation}) {
 
+    const { displayName } = firebase.auth().currentUser;
+    
     return (
         <View style={DefaultStyles.screen}>
 
@@ -34,11 +37,10 @@ function Home({navigation}) {
                     />
                 </View>
 
-                <View style={styles.user}>
-                    <StartScreenButton
-                        title="< user >"
-                        onPress={() => navigation.navigate('Profile')}
-                    />
+                <View style={styles.userContainer}>
+                    <TouchableOpacity style={styles.userButton} onPress={() => navigation.navigate('Profile')}>
+                        <Text style={{ color: 'white', fontSize: Fonts.M }}>{"-  " + displayName + "  -"}</Text>
+                    </TouchableOpacity>
                 </View>
 
             </View>
@@ -73,9 +75,18 @@ const styles = StyleSheet.create({
 
     },
 
-    user: {
+    userContainer: {
         flex: 1,
-        paddingTop: 15
+        paddingTop: 35
+    },
+
+    userButton: {
+        alignItems: "center",
+        backgroundColor: Colors.DARKER_BUTTON,
+        borderRadius: 4,
+        width: '100%',
+        padding: 8,
+        borderColor: 'tomato'
     }
 
 });

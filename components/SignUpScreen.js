@@ -1,12 +1,14 @@
-import React, { useEffect, useState } from 'react';
-import { View, TextInput, Text, Button, StyleSheet, ScrollView } from 'react-native';
+import React, {useEffect, useState} from 'react';
+import {View, TextInput, Text, Button, StyleSheet} from 'react-native';
 
 import Colors from '../constants/Colors';
 import Fonts from '../constants/Fonts';
+import DefaultStyles from '../constants/DefaultStyles';
 
-import * as firebase from 'firebase';
+import firebaseDB from '../constants/firebaseDB';
 
-function SignUpScreen({ navigation }) {
+
+function SignUpScreen({navigation}) {
 
     const [username, enteredUsername] = useState('');
     const [number, enteredNumber] = useState('');
@@ -15,141 +17,148 @@ function SignUpScreen({ navigation }) {
     const [isSignUpSuccessful, setSignUpSuccessful] = useState(false);
 
     useEffect(() => {
-        firebase.
-            auth().
-            onAuthStateChanged(user => {
-                navigation.navigate(user ? 'Sign In' : 'Sign Up');
-            });
-            // catch(error => console.log(error));
-    });
+        firebaseDB.auth()
+            .onAuthStateChanged(user => {
+                    navigation.navigate(user ? 'Sign In' : 'Sign Up');
+                }
+            );
+        // catch(error => console.log(error));
+    }, [firebaseDB]);
 
-    const handleSignUp = () => {
+    const signUpHandler = () => {
 
-        firebase.
-            auth().
-            createUserWithEmailAndPassword(email, password).
-            then(userCredentials => {
+        firebaseDB.auth()
+            .createUserWithEmailAndPassword(email, password)
+            .then(userCredentials => {
                 return userCredentials.user.updateProfile({
                     displayName: username
                 });
-            }).
-            then(() => {
-                firebase.firestore()
+            })
+            .then(() => {
+                firebaseDB.firestore()
                     .collection('users')
                     .add({
                         username: username,
                         contact: number,
                         email: email
-                    });
-            }).
-            then(() => {
+                    })
+                    .then(() => console.log("Successfully signed up:", username))
+            })
+            .then(() => {
                 enteredUsername('');
                 enteredNumber('');
                 enteredEmail('');
                 enteredPassword('');
                 setSignUpSuccessful(true);
-            }).
-            catch(error => console.log(error));
+            })
+            .catch(error => console.error("Failed to register user:", error));
 
     };
 
     return (
-        <ScrollView style={styles.screen}>
-            <View style={styles.contentContainer}>
-                <View style={styles.content}>
-                    <Text style={styles.signUp}>Sign Up</Text>
-                    {/* {this.state.errorMessage &&
-                        <Text
-                            style={
-                                {
-                                    color: "tomato",
-                                    textAlign: "center",
-                                    fontSize: Fonts.S,
-                                    fontWeight: "600"
-                                }}>
-                            {this.state.errorMessage}
-                        </Text>
-                    } */}
-                    <View style={styles.inputContainer}>
-                        <Text style={styles.accDetails}>Username</Text>
-                        <TextInput
-                            placeholder=" Username"
-                            style={styles.textInput}
-                            autoCapitalize="none"
-                            onChangeText={username => enteredUsername(username)}
-                            value={username}
-                        />
-                    </View>
-                    <View style={styles.inputContainer}>
-                        <Text style={styles.accDetails}>Contact Number</Text>
-                        <TextInput
-                            placeholder=" Contact Number"
-                            style={styles.textInput}
-                            autoCapitalize="none"
-                            onChangeText={number => enteredNumber(number)}
-                            value={number}
-                        />
-                    </View>
-                    <View style={styles.inputContainer}>
-                        <Text style={styles.accDetails}>Email</Text>
-                        <TextInput
-                            placeholder=" Email"
-                            style={styles.textInput}
-                            autoCapitalize="none"
-                            onChangeText={email => enteredEmail(email)}
-                            value={email}
-                        />
-                    </View>
-                    <View style={styles.inputContainer}>
-                        <Text style={styles.accDetails}>Password</Text>
-                        <TextInput
-                            placeholder=" Password (min. 6 chars)"
-                            style={styles.textInput}
-                            autoCapitalize="none"
-                            onChangeText={password => enteredPassword(password)}
-                            value={password}
-                        />
-                    </View>
-                </View>
-                <View style={styles.buttonContainer}>
-                    <Button color={Colors.BUTTON} title="CONTINUE" onPress={() => {
-                        if (username.length && number.length && email.length && (password.length > 5)) {
-                            handleSignUp();
-                        }
-                    }} />
-                    {
-                        isSignUpSuccessful ? (
-                            <Text style={styles.text}>Sign Up Successful!</Text>
-                        ) : null
-                    }
-                    <View style={styles.helpContainer}>
-                        <Text style={styles.signInText}>Have an Account?   </Text>
-                        <Button title="Sign In" color={Colors.ALT_BUTTON} onPress={() => navigation.goBack()} />
-                    </View>
-                </View>
+        <View style={DefaultStyles.screen}>
+
+            <View style={styles.titleTextContainer}>
+                <Text style={styles.signUpTitleText}>Sign Up</Text>
+                <Text>Create an account to use OrbitAroundFood</Text>
             </View>
-        </ScrollView>
+
+            <View styles={styles.inputContainer}>
+
+                <View style={styles.inputIndivContainer}>
+                    <Text style={styles.accDetails}>Username</Text>
+                    <TextInput
+                        placeholder=" Username"
+                        style={styles.textInput}
+                        autoCapitalize="none"
+                        onChangeText={username => enteredUsername(username)}
+                        value={username}
+                    />
+                </View>
+
+                <View style={styles.inputIndivContainer}>
+                    <Text style={styles.accDetails}>Contact Number</Text>
+                    <TextInput
+                        placeholder=" Contact Number"
+                        style={styles.textInput}
+                        autoCapitalize="none"
+                        onChangeText={number => enteredNumber(number)}
+                        value={number}
+                    />
+                </View>
+
+                <View style={styles.inputIndivContainer}>
+                    <Text style={styles.accDetails}>Email</Text>
+                    <TextInput
+                        placeholder=" Email"
+                        style={styles.textInput}
+                        autoCapitalize="none"
+                        onChangeText={email => enteredEmail(email)}
+                        value={email}
+                    />
+                </View>
+
+                <View style={styles.inputIndivContainer}>
+                    <Text style={styles.accDetails}>Password</Text>
+                    <TextInput
+                        placeholder=" Password (min. 6 chars)"
+                        style={styles.textInput}
+                        autoCapitalize="none"
+                        onChangeText={password => enteredPassword(password)}
+                        value={password}
+                    />
+                </View>
+
+            </View>
+
+            <View style={styles.buttonContainer}>
+                <View style={styles.confirmButtonContainer}>
+                    <Button color={Colors.BUTTON}
+                            title="Confirm"
+                            onPress={() => {
+                                if (username.length && number.length && email.length && (password.length > 5)) {
+                                    signUpHandler();
+                                }
+                            }}
+                    />
+
+                    {
+                        isSignUpSuccessful
+                            ? <Text style={styles.text}>Sign Up Successful!</Text>
+                            : null
+                    }
+                </View>
+
+                <View style={styles.signInContainer}>
+                    <Text style={styles.signInText}>Have an account? </Text>
+                    <Button title="Sign In"
+                            color={Colors.ALT_BUTTON}
+                            onPress={() => navigation.goBack()}
+                    />
+                </View>
+
+            </View>
+
+        </View>
     );
 }
 
+
 const styles = StyleSheet.create({
-    screen: {
-        flex: 1,
-        flexDirection: 'column'
-    },
 
-    contentContainer: {
-        paddingTop: 50,
-        paddingHorizontal: 40,
-        justifyContent: 'center',
-        width: '100%'
-    },
-
-    content: {
-        paddingBottom: 12
+    titleTextContainer: {
+        flex: 2,
+        paddingTop: 0,
+        paddingBottom: 20,
+        justifyContent: 'flex-end',
     },
 
     inputContainer: {
+        flex: 8,
+        justifyContent: 'center',
+    },
+
+    inputIndivContainer: {
         paddingTop: 20
     },
 
@@ -159,20 +168,27 @@ const styles = StyleSheet.create({
     },
 
     buttonContainer: {
+        flex: 4,
         width: '100%',
-        paddingHorizontal: 20
+        paddingTop: 18,
+        paddingHorizontal: 20,
+        justifyContent: 'flex-start',
     },
 
-    helpContainer: {
-        paddingTop: 10,
+    confirmButtonContainer: {
+        paddingTop: 20,
+    },
+
+    signInContainer: {
+        paddingVertical: 10,
         flexDirection: 'row',
         justifyContent: 'center'
     },
 
-    signUp: {
+    signUpTitleText: {
         fontSize: Fonts.XL,
-        fontWeight: 'bold'
-
+        fontWeight: 'bold',
+        paddingBottom: 4,
     },
 
     accDetails: {
@@ -184,14 +200,15 @@ const styles = StyleSheet.create({
     signInText: {
         paddingTop: 10,
         fontSize: Fonts.S,
-        color: Colors.ALT_BUTTON
+        color: Colors.TEXT
     },
 
     textInput: {
         height: 32,
         width: '100%',
         borderColor: 'grey',
-        borderWidth: 3,
+        borderWidth: 2,
+        borderRadius: 4,
         padding: 5
     }
 

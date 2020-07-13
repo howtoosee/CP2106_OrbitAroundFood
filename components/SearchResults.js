@@ -103,6 +103,7 @@ function getResultItemElement(item, navigation) {
             <View style={styles.detailsButtonContainer}>
                 <Button title={'More'}
                         titleStyle={styles.detailsButton}
+                        color={Colors.BUTTON}
                         onPress={() => navigation.navigate('Food Details',
                             {
                                 foodObj: item

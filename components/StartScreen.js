@@ -1,28 +1,27 @@
 import React from 'react';
-import { StyleSheet, View, Image } from 'react-native';
+import {StyleSheet, View, Image} from 'react-native';
 
 import DefaultStyles from "../constants/DefaultStyles";
 
 import StartScreenButton from "./StartScreenButton";
 
 
-export default function StartScreen({navigation}) {
-
+function StartScreen({navigation}) {
 
     return (
 
         <View style={DefaultStyles.screen}>
+            <View style={DefaultStyles.contentContainer}>
 
-            <View style={styles.imageContainer}>
-                <Image
-                    style={styles.image}
-                    source={require('../assets/icon.png')}
-                />
-            </View>
+                <View style={styles.imageContainer}>
+                    <Image
+                        style={styles.image}
+                        source={require('../assets/icon.png')}
+                    />
+                </View>
 
-            <View style={styles.buttonContainer}>
+                <View style={styles.buttonContainer}>
 
-                <View style={styles.infoContainer}>
                     <StartScreenButton title="SEARCH"
                                        onPress={() => navigation.navigate('Search')}
                     />
@@ -32,14 +31,12 @@ export default function StartScreen({navigation}) {
                     <StartScreenButton title="FAVOURITE"
                                        onPress={() => navigation.navigate('Favourite')}
                     />
-                </View>
 
-                <View style={styles.logInContainer}>
                     <StartScreenButton title="Log In"
                                        onPress={() => navigation.navigate('Sign In')}
                     />
-                </View>
 
+                </View>
             </View>
 
         </View>
@@ -50,7 +47,7 @@ export default function StartScreen({navigation}) {
 
 const styles = StyleSheet.create({
     imageContainer: {
-        flex: 6,
+        flex: 4,
         paddingTop: 40,
         paddingBottom: 30,
         alignItems: 'center',
@@ -62,16 +59,14 @@ const styles = StyleSheet.create({
     },
 
     buttonContainer: {
-        flex: 7,
+        flex: 6,
         flexDirection: 'column',
         alignItems: 'center',
         paddingHorizontal: 15,
     },
 
-    infoContainer: {
-        alignItems: 'center',
-    },
-
-    logInContainer: {}
 
 });
+
+export default StartScreen;
+

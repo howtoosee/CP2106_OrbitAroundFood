@@ -1,80 +1,98 @@
 import React from 'react';
-import { Text, View, Image, StyleSheet, Button } from 'react-native';
-import { SafeAreaView } from 'react-native-safe-area-context';
+import {StyleSheet, Text, View, Image, Button} from 'react-native';
+
 
 import Fonts from '../constants/Fonts';
 import Colors from '../constants/Colors';
+import DefaultStyles from "../constants/DefaultStyles";
 
 import * as firebase from 'firebase';
 
 function Profile({navigation}) {
-    
-    const { displayName } = firebase.auth().currentUser;
+
+    const {displayName, email} = firebase.auth().currentUser
 
     const signOutUser = () => {
-        firebase.auth().signOut().then(navigation.navigate('Welcome'));
+        firebase.auth()
+            .signOut()
+            .then(() => navigation.navigate('Welcome'))
+            .then(() => console.log("Successfully signed out:", displayName))
+            .catch(err => console.error("Error signing out:", err));
     };
 
     return (
-        <SafeAreaView>
-            <View style={styles.screen}>
-                <View style={styles.profile}>
+
+        <View style={DefaultStyles.screen}>
+
+            <View style={styles.profileContainer}>
+
+                <View style={styles.profileImageContainer}>
                     <Image
                         style={styles.image}
-                        source={require('../assets/potato.png')} />
-                    <Text style={styles.name}>{displayName}</Text>
+                        source={require('../assets/potato.jpg')}/>
                 </View>
-                <View style={styles.button}>
-                    <Button title="Log Out" color={Colors.DARKER_BUTTON} onPress={signOutUser} />
+
+                <View style={styles.profileNameContainer}>
+                    <Text style={styles.name}>@ {displayName}</Text>
                 </View>
+
+                <View style={styles.profileEmailContainer}>
+                    <Text style={styles.email}>{email}</Text>
+                </View>
+
             </View>
-        </SafeAreaView>
+
+            <View style={styles.buttonContainer}>
+                <Button title="Log Out"
+                        color={Colors.BUTTON}
+                        onPress={signOutUser}/>
+            </View>
+
+        </View>
     );
 }
 
 const styles = StyleSheet.create({
-    screen: {
-        justifyContent: 'space-between',
-        alignItems: 'center',
-        padding: 50,
-        flexDirection: 'column'
+    profileContainer: {
+        flex: 6,
+        paddingTop: 40,
     },
-    profile: {
+
+    profileImageContainer: {
         alignItems: 'center',
     },
+
     image: {
-        width: 170,
-        height: 200
+        width: 280,
+        height: 280,
     },
+
+    profileNameContainer: {
+        alignItems: 'center',
+        paddingTop: 40,
+        paddingBottom: 20,
+    },
+
+    profileEmailContainer: {
+        alignItems: 'center',
+    },
+
     name: {
         fontSize: Fonts.L,
         fontWeight: '600',
     },
-    button: {
-        paddingTop: 50,
-        paddingHorizontal: 75,
+
+    email: {
+        fontSize: Fonts.S,
+        fontStyle: 'italic',
+    },
+
+    buttonContainer: {
+        flex: 4,
+        justifyContent: 'flex-end',
+        paddingBottom: 120,
         width: '100%'
     },
-    content: {
-        paddingTop: 20,
-        alignItems: 'center',
-        justifyContent: 'center'
-    },
-    reviewContainer: {
-        flexDirection: 'row',
-        justifyContent: 'space-around'
-    },
-    review: {
-        fontSize: Fonts.SPECIAL,
-        fontWeight: '700',
-        padding: 20
-    },
-    rating: {
-        flexDirection: 'row',
-    },
-    stars: {
-        fontSize: Fonts.SPECIAL
-    }
 });
 
 export default Profile;

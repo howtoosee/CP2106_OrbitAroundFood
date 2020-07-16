@@ -13,15 +13,17 @@ function SignInScreen({navigation}) {
     const [email, enteredEmail] = useState('');
     const [password, enteredPassword] = useState('');
 
-    const handleLogIn = () => {
+    const signInHandler = () => {
         firebaseDB.auth()
             .signInWithEmailAndPassword(email, password)
             .then(() => console.log("Successfully signed in:", email))
-            .then.apply(navigation.navigate('Home'))
+            // .then.apply(navigation.navigate('Home'))
             .then(() => {
                 enteredEmail('');
                 enteredPassword('');
             }).catch(error => console.log(error));
+
+        navigation.navigate('Home');
     }
 
     return (
@@ -73,7 +75,7 @@ function SignInScreen({navigation}) {
 
                     <Button color={Colors.BUTTON}
                             title="Confirm"
-                            onPress={handleLogIn}
+                            onPress={signInHandler}
                     />
 
                     <View style={styles.signUpContainer}>

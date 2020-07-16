@@ -15,7 +15,7 @@
     "@react-navigation/native": "^5.5.1",
     "@react-navigation/stack": "^5.5.1",
     "expo": "~37.0.3",
-    "firebase": "^7.16.0",
+    "firebase": "7.9.0",
     "google-auth-library": "~5.10.1",
     "grpc": "^1.24.3",
     "react": "~16.9.0",

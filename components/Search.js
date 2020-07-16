@@ -3,6 +3,7 @@ import {StyleSheet, Text, TextInput, Button, View, ScrollView, TouchableOpacity,
 import Icon from 'react-native-vector-icons/FontAwesome';
 
 import Filter from './Filter';
+import {addHistory, clearHistory, getHistory} from '../api/SearchHistoryLogic';
 
 import Colors from '../constants/Colors';
 import DefaultStyles from "../constants/DefaultStyles";
@@ -10,7 +11,7 @@ import DefaultStyles from "../constants/DefaultStyles";
 
 function Search({navigation}) {
     const [searchString, setSearchString] = useState('');
-    const [searchHist, setSearchHist] = useState([]);
+    const [searchHist, setSearchHist] = useState(getHistory());
 
     const [isFilterVisible, setFilterVisible] = useState(false);
     const [filters, setFilters] = useState([]);
@@ -24,6 +25,7 @@ function Search({navigation}) {
         if (isValidString(searchString)) {
             console.log("Searching for: " + searchString);
             addSearchHist();
+            setSearchString('');
 
             console.log("Active filters:", filters);
             navigation.navigate('Search Results',
@@ -45,16 +47,10 @@ function Search({navigation}) {
     // checks if string is valid
 
     const addSearchHist = () => {
-        setSearchHist([searchString, ...(searchHist.filter(item => item !== searchString))]
-            .slice(0, 10));
-        // remove pre-existing items identical to searchString and pre-append searchString to list
-
-        setSearchString("");
-        // reset search item box to empty
+        addHistory(searchString);
+        setSearchHist(getHistory());
     };
 
-    const clearHistory = () => setSearchHist([]);
-    // clears search history
 
     const getKey = objType => objType + "_" + Math.floor(Math.random() * 10000);
     // creates key for object

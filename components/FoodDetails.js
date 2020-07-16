@@ -1,11 +1,10 @@
 import React, {useEffect, useState} from 'react';
 import {StyleSheet, Text, View, ScrollView, ActivityIndicator, Button, Image} from 'react-native';
 
-import Dialog, {DialogContent, DialogFooter, DialogButton} from 'react-native-popup-dialog';
-
-
 import {readReviews} from "../api/ReviewsApi";
 import getImage from "../api/FoodImage";
+import {isFavourite, addFavourite, removeFavourite} from "../api/FavouritesApi";
+
 import DefaultStyles from "../constants/DefaultStyles";
 import Colors from "../constants/Colors";
 import NoSignInWarningDialogue from "./NoSignInWarningDialogue";
@@ -17,6 +16,7 @@ function FoodDetails({route, navigation}) {
     const [isLoading, setLoading] = useState(true);
 
     const foodObj = route.params?.foodObj;
+    const [isSaved, setSaved] = useState(isFavourite(foodObj.id));
     const [reviews, setReviews] = useState(null);
     const [photoUri, setPhotoUri] = useState('');
 
@@ -35,6 +35,16 @@ function FoodDetails({route, navigation}) {
         } else {
             setOpenNoSignWarning(true);
         }
+    }
+
+    const addFavHandler = () => {
+        addFavourite(foodObj.id);
+        setSaved(true);
+    }
+
+    const removeFavHandler = () => {
+        removeFavourite(foodObj.id);
+        setSaved(false);
     }
 
 
@@ -61,30 +71,40 @@ function FoodDetails({route, navigation}) {
                                      navigation={navigation}
             />
 
+            <View style={{
+                flexDirection: 'row',
+            }}>
+                <View style={styles.foodInfoContainer}>
 
-            <View style={styles.foodInfoContainer}>
+                    <Text style={styles.searchResultKey}>
+                        {foodObj.name}
+                    </Text>
 
-                <Text style={styles.searchResultKey}>
-                    {foodObj.name}
-                </Text>
+                    <Text style={styles.searchResultInfo}>
+                        {foodObj.price}
+                    </Text>
 
-                <Text style={styles.searchResultInfo}>
-                    {foodObj.price}
-                </Text>
+                    <Text style={styles.searchResultInfo}>
+                        {foodObj.store.store_name} ({foodObj.store.location})
+                    </Text>
 
-                <Text style={styles.searchResultInfo}>
-                    {foodObj.store.store_name} ({foodObj.store.location})
-                </Text>
+                    <Text style={styles.searchResultInfo}>
+                        {foodObj.store.open_hours} - {foodObj.store.close_hours} hrs
+                    </Text>
+                </View>
 
-                <Text style={styles.searchResultInfo}>
-                    {foodObj.store.open_hours} - {foodObj.store.close_hours} hrs
-                </Text>
+                <View>
+                    <Button title={isSaved ? 'Remove' : 'Save'}
+                            color={Colors.BUTTON}
+                            onPress={isSaved ? removeFavHandler : addFavHandler}
+                    />
+                </View>
 
             </View>
 
             <View style={styles.imageContainer}>
                 {(isLoading || photoUri === '')
-                    ? <ActivityIndicator size='large' color='black'/>
+                    ? <ActivityIndicator size='small' color='black'/>
                     :
                     <Image
                         style={styles.image}
@@ -98,7 +118,7 @@ function FoodDetails({route, navigation}) {
                 {(isLoading && reviews === null)
 
                     ? <View style={styles.loadingContainer}>
-                        <ActivityIndicator size='large' color='black'/>
+                        <ActivityIndicator size='small' color='black'/>
                     </View>
 
                     : reviews.length === 0
@@ -207,7 +227,7 @@ const styles = StyleSheet.create({
         marginTop: 10,
         padding: 10,
         borderWidth: 2,
-        // borderColor: Colors.CARD,
+// borderColor: Colors.CARD,
         borderColor: 'grey',
         borderRadius: 5,
         width: '98%',
@@ -228,7 +248,7 @@ const styles = StyleSheet.create({
     reviewsHeader: {
         marginTop: 20,
         marginBottom: 5,
-        // paddingTop: 10,
+// paddingTop: 10,
         color: Colors.TEXT,
         fontSize: 18,
         fontWeight: "bold",
@@ -253,7 +273,7 @@ const styles = StyleSheet.create({
         paddingVertical: 20,
         fontStyle: 'italic',
         alignItems: 'center',
-        // justifyContent: 'center'
+// justifyContent: 'center'
     }
 });
 

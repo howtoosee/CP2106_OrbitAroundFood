@@ -3,8 +3,13 @@ import Favourite from './Favourite';
 import Filter from './Filter';
 import FoodDetails from './FoodDetails';
 import HelpBuyPls from './HelpBuyPls';
+import RequestDirectory from './RequestDirectory';
+import RequestResult from './RequestResult';
+import MyRequestInput from './MyRequestInput';
+import DateAndTimePicker from './DateAndTimePicker';
+import AcceptRequestInput from './AcceptRequestInput';
+import MyConfirmedRequestList from './MyConfirmedRequestList';
 import LeaveReview from './LeaveReview';
-import LemmeHelpContainer from './LemmeHelpContainer';
 import NoSignInWarningDialogue from './NoSignInWarningDialogue';
 import Profile from './Profile';
 import Recommendation from './Recommendation';
@@ -23,8 +28,10 @@ export {
     Filter,
     FoodDetails,
     HelpBuyPls,
+    RequestDirectory,
+    RequestResult,
+    MyRequestInput,
     LeaveReview,
-    LemmeHelpContainer,
     NoSignInWarningDialogue,
     Profile,
     Recommendation,
@@ -34,5 +41,8 @@ export {
     SignUpScreen,
     StartScreen,
     StartScreenButton,
-    StartScreenLoggedIn
+    StartScreenLoggedIn,
+    DateAndTimePicker,
+    AcceptRequestInput,
+    MyConfirmedRequestList
 };

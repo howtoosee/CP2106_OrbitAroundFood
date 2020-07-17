@@ -70,6 +70,7 @@ function Recommendation({navigation}) {
 
                             <View style={styles.detailsButtonContainer}>
                                 <Button title={'More'}
+                                        color={Colors.BUTTON}
                                         onPress={() => navigation.navigate('Food Details',
                                             {
                                                 foodObj: foodObj
@@ -80,6 +81,7 @@ function Recommendation({navigation}) {
                             <View style={styles.refreshButtonContainer}>
 
                                 <Button title={"Another one!"}
+                                        color={Colors.BUTTON}
                                         onPress={refresh}
                                 />
                             </View>

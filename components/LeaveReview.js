@@ -1,5 +1,5 @@
 import React, {useState} from 'react';
-import {StyleSheet, Text, TextInput, Button, View} from 'react-native';
+import {StyleSheet, Text, TextInput, Button, View, Alert} from 'react-native';
 
 import {writeReviews} from "../api/ReviewsApi";
 
@@ -23,14 +23,29 @@ function LeaveReview({route, navigation}) {
     const msgInputHandler = msgStr => setMsgString(msgStr);
 
     const confirmHandler = () => {
-        if (userID.trim().length === 0) {
+        if (msgString.trim().length === 0) {
             // error msg
-            console.error("Error, userID can not be empty!");
-        } else if (msgString.trim().length === 0) {
-            // error msg
-            console.error("Error, comment string can not be empty!");
-        } else if (userID === '') {
-            console.error("Not signed in!");
+            Alert.alert(
+                'Error',
+                'Comment can not be empty!',
+                [
+                    {
+                        text: 'Ok'
+                    }
+                ]
+            );
+            console.log("Error, comment string can not be empty!");
+        } else if (!user) {
+            Alert.alert(
+                'Error',
+                "Something's wrong with the log in!",
+                [
+                    {
+                        text: 'Ok'
+                    }
+                ]
+            );
+            console.log("Error, something's wrong with the log in!");
         } else {
             // proper username and msg
             const reviewObj = {
@@ -39,6 +54,7 @@ function LeaveReview({route, navigation}) {
             }
 
             writeReviews(foodObj.id, reviewObj)
+                .then(() => route.params.onGoBack())
                 .then(() => navigation.goBack())
                 .catch(err => console.error("Error writing review:", err));
 
@@ -79,7 +95,7 @@ function LeaveReview({route, navigation}) {
                     </View>
 
                     <View style={styles.usernameSectionContainer}>
-                        <Text style={styles.usernameText}>Reviewing as: {userID === '' ? 'None' : '@'+userID}</Text>
+                        <Text style={styles.usernameText}>Reviewing as: {userID === '' ? 'None' : '@' + userID}</Text>
 
                         {/*<View style={styles.usernameInputContainer}>*/}
 
@@ -94,10 +110,9 @@ function LeaveReview({route, navigation}) {
                     </View>
 
                     <View style={styles.msgSectionContainer}>
-                        <Text style={styles.usernameText}>my comments</Text>
+                        <Text style={styles.reviewHeaderText}>My comments:</Text>
                         <View style={styles.msgInputContainer}>
                             <TextInput style={styles.textInput}
-                                       // multiline
                                        numberOfLines={8}
                                        placeholder="nice dish!"
                                        onChangeText={msgInputHandler}
@@ -109,6 +124,7 @@ function LeaveReview({route, navigation}) {
 
                 <View style={styles.sendButtonContainer}>
                     <Button title={"Send"}
+                            color={Colors.BUTTON}
                             onPress={() => confirmHandler()}
                     />
                 </View>

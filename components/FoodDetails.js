@@ -1,13 +1,13 @@
 import React, {useEffect, useState} from 'react';
-import {StyleSheet, Text, View, ScrollView, ActivityIndicator, Button, Image} from 'react-native';
+import {StyleSheet, Text, View, ScrollView, ActivityIndicator, Button, Image, Alert} from 'react-native';
 
 import {readReviews} from "../api/ReviewsApi";
 import getImage from "../api/FoodImage";
-import {isFavourite, addFavourite, removeFavourite} from "../api/FavouritesApi";
+import {isFavourite, addFavourite, removeFavourite} from "../api/FavouritesLogic";
 
 import DefaultStyles from "../constants/DefaultStyles";
 import Colors from "../constants/Colors";
-import NoSignInWarningDialogue from "./NoSignInWarningDialogue";
+// import NoSignInWarningDialogue from "./NoSignInWarningDialogue";
 
 import firebaseDB from '../constants/firebaseDB';
 
@@ -16,7 +16,7 @@ function FoodDetails({route, navigation}) {
     const [isLoading, setLoading] = useState(true);
 
     const foodObj = route.params?.foodObj;
-    const [isSaved, setSaved] = useState(isFavourite(foodObj.id));
+    const [isSaved, setSaved] = useState(isFavourite(foodObj));
     const [reviews, setReviews] = useState(null);
     const [photoUri, setPhotoUri] = useState('');
 
@@ -28,37 +28,65 @@ function FoodDetails({route, navigation}) {
             navigation.navigate("Leave Review",
                 {
                     foodObj: foodObj,
-                    user: user
+                    user: user,
+                    onGoBack: () => refresh(),
                 }
             );
             setLoading(true);
         } else {
-            setOpenNoSignWarning(true);
+            // setOpenNoSignWarning(true);
+            Alert.alert(
+                'Error',
+                'Please sign in to review!',
+                [
+                    {
+                        text: 'Ok',
+                    },
+                    {
+                        text: 'Sign in',
+                        onPress: () => navigation.navigate('Sign In'),
+                    }
+                ]
+            );
         }
     }
 
     const addFavHandler = () => {
-        addFavourite(foodObj.id);
+        addFavourite(foodObj);
         setSaved(true);
+        if (route.params?.onGoBack) {
+            route.params?.onGoBack();
+        }
     }
 
     const removeFavHandler = () => {
-        removeFavourite(foodObj.id);
+        removeFavourite(foodObj);
         setSaved(false);
+        if (route.params?.onGoBack) {
+            route.params?.onGoBack();
+        }
     }
 
+    const loadReviews = () => {
+        readReviews(foodObj.id, setReviews)
+            .catch(err => console.log("Error getting reviews:", err))
+
+            // set image uri
+            .then(() => getImage(foodObj.imageURL, setPhotoUri))
+            .catch(err => console.log("Error getting image uri:", err))
+
+            // finish loading everything, rerender
+            .then(() => setLoading(false));
+    }
+
+    const refresh = () => {
+        setLoading(true);
+        loadReviews();
+    }
 
     useEffect(() => {
         if (isLoading) {
-            readReviews(foodObj.id, setReviews)
-                .catch(err => console.log("Error getting reviews:", err))
-
-                // set image uri
-                .then(() => getImage(foodObj.imageURL, setPhotoUri))
-                .catch(err => console.log("Error getting image uri:", err))
-
-                // finish loading everything, rerender
-                .then(() => setLoading(false))
+            loadReviews();
         }
     }, [readReviews, foodObj, setReviews, getImage, setPhotoUri, setLoading]);
 
@@ -66,10 +94,10 @@ function FoodDetails({route, navigation}) {
     return (
 
         <View style={DefaultStyles.screen}>
-            <NoSignInWarningDialogue visible={openNoSignWarning}
-                                     setVisible={setOpenNoSignWarning}
-                                     navigation={navigation}
-            />
+            {/*<NoSignInWarningDialogue visible={openNoSignWarning}*/}
+            {/*                         setVisible={setOpenNoSignWarning}*/}
+            {/*                         navigation={navigation}*/}
+            {/*/>*/}
 
             <View style={{
                 flexDirection: 'row',

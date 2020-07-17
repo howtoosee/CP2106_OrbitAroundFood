@@ -1,43 +1,32 @@
-import React, {useState, useEffect} from 'react';
-import {StyleSheet, View, Button, Text, ScrollView, ActivityIndicator} from 'react-native';
+import React, {useState} from 'react';
+import {StyleSheet, View, Button, Text, ScrollView} from 'react-native';
+
 
 import Colors from '../constants/Colors';
 import DefaultStyles from "../constants/DefaultStyles";
 
-import {readFavourites} from "../api/FavouritesApi";
+import {readFavourites} from "../api/FavouritesLogic";
 
 
 function Favourite({navigation}) {
 
     const [favsArr, setFavsArr] = useState([]);
-    const [isLoading, setLoading] = useState(true);
 
-    useEffect(() => {
-        readFavourites(setFavsArr)
-            .then(() => setLoading(false))
-            // .then(() => console.log("FavsArr:", favsArr))
-            .catch(err => console.error("Error reading favourites:", err));
-    }, [setFavsArr, setLoading]);
+    const refresh = () => setFavsArr(readFavourites());
 
     return (
         <View style={DefaultStyles.screen}>
-            {isLoading
-                ? <View style={styles.loadingContainer}>
-                    <ActivityIndicator size='large' color='black'/>
-                    {/*<ActivityIndicator size='large' color={Colors.BUTTON}/>*/}
+            {(favsArr.length === 0)
+                ? <View>
+                    <Text>No favourites yet</Text>
                 </View>
 
-                : (favsArr.length === 0)
-                    ? <View>
-                        <Text>No favourites yet</Text>
-                    </View>
 
-
-                    : <ScrollView>
-                        {
-                            favsArr.map(item => getFavsItemElement(item, navigation))
-                        }
-                    </ScrollView>
+                : <ScrollView>
+                    {
+                        favsArr.map(item => getFavsItemElement(item, navigation, refresh))
+                    }
+                </ScrollView>
             }
 
 
@@ -47,7 +36,7 @@ function Favourite({navigation}) {
 }
 
 
-function getFavsItemElement(item, navigation) {
+function getFavsItemElement(item, navigation, refresh) {
     const getKey = (name, objType) => name + '_' + objType + "_" + Math.floor(Math.random() * 10000);
 
     return (
@@ -75,10 +64,13 @@ function getFavsItemElement(item, navigation) {
                 <Button title={'More'}
                         titleStyle={styles.detailsButton}
                         color={Colors.BUTTON}
-                        onPress={() => navigation.navigate('Food Details',
-                            {
-                                foodObj: item
-                            })
+                        onPress={() => {
+                            navigation.navigate('Food Details',
+                                {
+                                    foodObj: item,
+                                    onGoBack: () => refresh()
+                                });
+                        }
                         }
                 />
             </View>

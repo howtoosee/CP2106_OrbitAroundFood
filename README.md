@@ -12,9 +12,7 @@ NUS CP2106 Independent Software Development Project (Orbital)
 - [Poster](https://i.postimg.cc/7YrsZrKh/Orbit-Around-Food.png)
 
 #### Aim
-To develop an application which collates all the food options in NUS (Currently limited to UTown due to Covid'19).
-This will allow us to make a more informed decision on our food choices. 
-The application will be very useful for incoming freshmen who wish to explore the campus and discover their favourite stores without much hassle.
+We aim to develop an application which collates all the food options in NUS (Currently limited to UTown due to Covid'19). The project will allow users to make a more informed decision on our food choices. The application will be very useful for incoming freshmen who wish to explore the campus and discover their favourite stores without much hassle.
 
 #### Possible Extensions
 - Allow the sharing of restaurants and food choice between users within the app

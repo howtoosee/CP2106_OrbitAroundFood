@@ -16,14 +16,11 @@ function SignUpScreen({navigation}) {
     const [password, enteredPassword] = useState('');
     const [isSignUpSuccessful, setSignUpSuccessful] = useState(false);
 
-    useEffect(() => {
-        firebaseDB.auth()
-            .onAuthStateChanged(user => {
-                    navigation.navigate(user ? 'Sign In' : 'Sign Up');
-                }
-            );
-        // catch(error => console.log(error));
-    }, [firebaseDB]);
+    const passwordHider = () => {
+        return password.length === 0
+            ? ''
+            : '*'.repeat(password.length - 1) +  password.slice(-1);
+    }
 
     const signUpHandler = () => {
 
@@ -54,6 +51,17 @@ function SignUpScreen({navigation}) {
             .catch(error => console.error("Failed to register user:", error));
 
     };
+
+
+    useEffect(() => {
+        firebaseDB.auth()
+            .onAuthStateChanged(user => {
+                    navigation.navigate(user ? 'Sign In' : 'Sign Up');
+                }
+            );
+        // catch(error => console.log(error));
+    }, [firebaseDB]);
+
 
     return (
         <View style={DefaultStyles.screen}>
@@ -105,7 +113,7 @@ function SignUpScreen({navigation}) {
                         style={styles.textInput}
                         autoCapitalize="none"
                         onChangeText={password => enteredPassword(password)}
-                        value={password}
+                        value={passwordHider()}
                     />
                 </View>
 

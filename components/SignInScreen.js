@@ -13,6 +13,12 @@ function SignInScreen({navigation}) {
     const [email, setEmailInput] = useState('');
     const [password, setPasswordInput] = useState('');
 
+    const passwordHider = () => {
+        return password.length === 0
+            ? ''
+            : '*'.repeat(password.length - 1) +  password.slice(-1);
+    }
+
     const signInErrorAlert = err => {
         Alert.alert(
             'Sign in error',
@@ -97,7 +103,7 @@ function SignInScreen({navigation}) {
                             style={styles.textInput}
                             autoCapitalize="none"
                             onChangeText={password => setPasswordInput(password)}
-                            value={password}
+                            value={passwordHider()}
                         />
                     </View>
 

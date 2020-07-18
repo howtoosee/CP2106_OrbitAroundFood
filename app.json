@@ -1,7 +1,7 @@
 {
   "expo": {
-    "name": "orbit_around_food",
-    "slug": "orbit_around_food",
+    "name": "OrbitAroundFood",
+    "slug": "orbitaroundfood",
     "platforms": [
       "ios",
       "android",
@@ -23,6 +23,8 @@
     ],
     "ios": {
       "supportsTablet": true
-    }
+    },
+    "description": "Xihao and Xin Yee's CP2106 Orbital Project on food in NUS.",
+    "githubUrl": "https://github.com/howtoosee/CP2106_OrbitAroundFood"
   }
 }

@@ -33,5 +33,4 @@ export {
     SignUpScreen,
     StartScreen,
     StartScreenButton,
-    StartScreenLoggedIn
 };

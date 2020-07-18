@@ -5,7 +5,6 @@ import { SafeAreaView } from 'react-native-safe-area-context';
 import DefaultStyles from '../constants/DefaultStyles';
 import Fonts from '../constants/Fonts';
 import Colors from '../constants/Colors';
-import LemmeHelpContainer from './LemmeHelpContainer';
 
 function HelpBuyPls(props) {
     return (
@@ -18,10 +17,7 @@ function HelpBuyPls(props) {
                         {'\n'} pay helper directly upon receival of goods</Text>
             </View>
             <ScrollView style={styles.content}>
-                <LemmeHelpContainer/>
-                <LemmeHelpContainer/>
-                <LemmeHelpContainer/>
-                <LemmeHelpContainer/>
+                <Text>Work in progress...</Text>
             </ScrollView>
             <View style={styles.button}>
                 <Button title="Lemme Help" color={Colors.DARKER_BUTTON} onPress={() => { }} />

@@ -1,3 +1,4 @@
+
 # macOS specific
 *.icloud
 .DS_Store
@@ -5,12 +6,14 @@
 # project files
 .idea
 .expo
+.expo-shared
 node_modules
 __pycache__
+venv
+web-build
 
 # SDK and sensitive stuff
 firebaseDB.js
 google-services.json
 GoogleService-Info.plist
 adminSDK.json
-

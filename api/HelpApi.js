@@ -16,7 +16,7 @@ async function readHelps(setHelps) {
     Returns
         (Array) helps: [
             (Object) combinedObj: {
-                        id: 'helpId',
+                        helpid: 'helpId',
                         isOpen: (boolean) whether request is open,
                         foodId: 'foodId',
                         name: 'foodName',
@@ -53,7 +53,7 @@ async function readHelps(setHelps) {
         const foodObj = await foodSnapshot.data();
         let combinedObj = await combineAllData(foodObj, docSnapshot.foodId);
 
-        combinedObj.id = docSnapshot.id;
+        combinedObj.helpid = docSnapshot.id;
         combinedObj.isOpen = docSnapshot.isOpen
 
         combinedObj.foodId = docSnapshot.foodId;

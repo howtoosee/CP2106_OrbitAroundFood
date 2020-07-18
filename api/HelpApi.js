@@ -8,7 +8,7 @@ const foodCollection = firebaseDB.firestore().collection("FOODS");
 const date = new Date();
 
 
-export async function readHelps(setHelps) {
+async function readHelps(setHelps) {
     /*
     Require:
         (function) setHelps: setter function for useState
@@ -67,12 +67,12 @@ export async function readHelps(setHelps) {
         helps.push(combinedObj);
     });
 
-    return helps;
-
+    // return helps;
+    setHelps(helps);
 }
 
 
-export async function setHelper(helpId, helperObj) {
+async function setHelper(helpId, helperObj) {
     /*
     Require:
         (String) helpId: 'help id',
@@ -94,7 +94,7 @@ export async function setHelper(helpId, helperObj) {
 }
 
 
-export async function writeHelp(foodId, userObj) {
+async function writeHelp(foodId, userObj) {
     /*
     Require:
         (string) foodId: 'foodId',
@@ -133,3 +133,5 @@ async function forEachDoc(doc, callback) {
         await callback(doc[i]);
     }
 }
+
+export {readHelps, setHelper, writeHelp};

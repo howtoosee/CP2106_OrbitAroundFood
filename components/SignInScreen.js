@@ -1,5 +1,5 @@
 import React, {useState} from 'react';
-import {View, TextInput, Text, Button, StyleSheet, Image} from 'react-native';
+import {View, TextInput, Text, Button, StyleSheet, Image, Alert} from 'react-native';
 
 import Colors from '../constants/Colors';
 import Fonts from '../constants/Fonts';
@@ -10,20 +10,52 @@ import firebaseDB from "../constants/firebaseDB";
 
 function SignInScreen({navigation}) {
 
-    const [email, enteredEmail] = useState('');
-    const [password, enteredPassword] = useState('');
+    const [email, setEmailInput] = useState('');
+    const [password, setPasswordInput] = useState('');
+
+    const signInErrorAlert = err => {
+        Alert.alert(
+            'Sign in error',
+            'Signed in failed: ' + err,
+            [
+                {
+                    text: 'Dismiss'
+                }
+            ]
+        );
+    }
+
+    const signInSuccessHandler = () => {
+        const displayName = firebaseDB.auth().currentUser.displayName;
+        console.log("Successfully signed in:", email, displayName);
+
+        Alert.alert(
+            'Success',
+            'Signed in as @' + displayName,
+            [
+                {
+                    text: 'Ok',
+                    onPress: () => {
+                        setEmailInput('');
+                        setPasswordInput('');
+                        navigation.goBack();
+                    }
+                }
+            ]);
+    }
 
     const signInHandler = () => {
         firebaseDB.auth()
             .signInWithEmailAndPassword(email, password)
-            .then(() => console.log("Successfully signed in:", email))
-            // .then.apply(navigation.navigate('Home'))
-            .then(() => {
-                enteredEmail('');
-                enteredPassword('');
-            }).catch(error => console.log(error));
+            .catch(error => {
+                    signInErrorAlert(error);
+                    console.log(error);
 
-        navigation.navigate('Home');
+                }
+            )
+            .then(() => signInSuccessHandler());
+
+        // navigation.goBack();
     }
 
     return (
@@ -53,7 +85,7 @@ function SignInScreen({navigation}) {
                             placeholder="Email"
                             style={styles.textInput}
                             autoCapitalize="none"
-                            onChangeText={email => enteredEmail(email)}
+                            onChangeText={email => setEmailInput(email)}
                             value={email}
                         />
                     </View>
@@ -64,7 +96,7 @@ function SignInScreen({navigation}) {
                             placeholder="Password"
                             style={styles.textInput}
                             autoCapitalize="none"
-                            onChangeText={password => enteredPassword(password)}
+                            onChangeText={password => setPasswordInput(password)}
                             value={password}
                         />
                     </View>

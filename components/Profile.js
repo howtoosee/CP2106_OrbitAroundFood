@@ -1,5 +1,5 @@
 import React from 'react';
-import {StyleSheet, Text, View, Image, Button} from 'react-native';
+import {StyleSheet, Text, View, Image, Button, Alert} from 'react-native';
 
 
 import Fonts from '../constants/Fonts';
@@ -12,11 +12,19 @@ function Profile({navigation}) {
 
     const {displayName, email} = firebase.auth().currentUser
 
-    const signOutUser = () => {
+    const signOutHandler = () => {
         firebase.auth()
             .signOut()
-            .then(() => navigation.navigate('Welcome'))
             .then(() => console.log("Successfully signed out:", displayName))
+            .then(() => Alert.alert(
+                'Success',
+                'Signed out from @' + displayName,
+                [
+                    {
+                        text: 'Ok',
+                        onPress: () => navigation.goBack()
+                    }
+                ]))
             .catch(err => console.error("Error signing out:", err));
     };
 
@@ -45,7 +53,7 @@ function Profile({navigation}) {
             <View style={styles.buttonContainer}>
                 <Button title="Log Out"
                         color={Colors.BUTTON}
-                        onPress={signOutUser}/>
+                        onPress={signOutHandler}/>
             </View>
 
         </View>

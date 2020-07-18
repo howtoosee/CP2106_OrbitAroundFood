@@ -38,10 +38,6 @@ export default function App() {
                                   component={StartScreen}
                     />
 
-                    <stack.Screen name="Home"
-                                  component={StartScreenLoggedIn}
-                                  options={{headerLeft: null}}
-                    />
 
                     <stack.Screen name="Sign In"
                                   component={SignInScreen}

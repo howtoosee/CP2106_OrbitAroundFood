@@ -5,11 +5,9 @@ import {readReviews} from "../api/ReviewsApi";
 import getImage from "../api/FoodImage";
 import {isFavourite, addFavourite, removeFavourite} from "../api/FavouritesLogic";
 
-import DefaultStyles from "../constants/DefaultStyles";
-import Colors from "../constants/Colors";
-// import NoSignInWarningDialogue from "./NoSignInWarningDialogue";
+import requireSignInAlert from "./ComponentRequiresSignInAlert";
 
-import firebaseDB from '../constants/firebaseDB';
+import {Colors, DefaultStyles, firebaseDB} from "../constants";
 
 
 function FoodDetails({route, navigation}) {
@@ -21,7 +19,6 @@ function FoodDetails({route, navigation}) {
     const [photoUri, setPhotoUri] = useState('');
 
     const user = firebaseDB.auth().currentUser;
-    const [openNoSignWarning, setOpenNoSignWarning] = useState(false);
 
     const addReviewHandler = () => {
         if (user) {
@@ -35,19 +32,7 @@ function FoodDetails({route, navigation}) {
             setLoading(true);
         } else {
             // setOpenNoSignWarning(true);
-            Alert.alert(
-                'Error',
-                'Please sign in to review!',
-                [
-                    {
-                        text: 'Ok',
-                    },
-                    {
-                        text: 'Sign in',
-                        onPress: () => navigation.navigate('Sign In'),
-                    }
-                ]
-            );
+            requireSignInAlert('review', navigation);
         }
     }
 
@@ -94,14 +79,9 @@ function FoodDetails({route, navigation}) {
     return (
 
         <View style={DefaultStyles.screen}>
-            {/*<NoSignInWarningDialogue visible={openNoSignWarning}*/}
-            {/*                         setVisible={setOpenNoSignWarning}*/}
-            {/*                         navigation={navigation}*/}
-            {/*/>*/}
 
-            <View style={{
-                flexDirection: 'row',
-            }}>
+            <View style={{flexDirection: 'row'}}>
+
                 <View style={styles.foodInfoContainer}>
 
                     <Text style={styles.searchResultKey}>
@@ -302,6 +282,22 @@ const styles = StyleSheet.create({
         fontStyle: 'italic',
         alignItems: 'center',
 // justifyContent: 'center'
+    },
+
+    boxContainer: {
+        shadowColor: '#000',
+        shadowOffset: {width: 0, height: 2},
+        shadowOpacity: 0.8,
+        shadowRadius: 2,
+        height: 150,
+        width: 320,
+        margin: 20,
+        flexDirection: 'column',
+        alignItems: 'flex-start',
+        justifyContent: 'space-evenly',
+        paddingHorizontal: 15,
+        paddingBottom: 8,
+        backgroundColor: Colors.CARD
     }
 });
 

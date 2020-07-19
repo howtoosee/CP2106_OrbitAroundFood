@@ -1,8 +1,7 @@
 import React, {useState, useEffect} from 'react';
 import {StyleSheet, Text, View, ScrollView, ActivityIndicator, Button} from 'react-native';
 
-import DefaultStyles from "../constants/DefaultStyles";
-import Colors from "../constants/Colors";
+import {Colors, DefaultStyles} from "../constants";
 import searchQueryFood from "../api/SearchApi";
 
 

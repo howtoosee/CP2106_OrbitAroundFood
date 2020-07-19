@@ -7,7 +7,7 @@ import {isFavourite, addFavourite, removeFavourite} from "../api/FavouritesLogic
 
 import requireSignInAlert from "./ComponentRequiresSignInAlert";
 
-import {Colors, DefaultStyles, firebaseDB} from "../constants";
+import {Colors, DefaultStyles, Fonts, firebaseDB} from "../constants";
 
 
 function FoodDetails({route, navigation}) {
@@ -36,12 +36,25 @@ function FoodDetails({route, navigation}) {
         }
     }
 
+    const favAlert = favState => {
+        Alert.alert('Success',
+            'Successfully ' + favState + ' favourite!',
+            [
+                {
+                    text: 'Dismiss',
+                    color: Colors.BUTTON
+                }
+            ]
+        );
+    }
+
     const addFavHandler = () => {
         addFavourite(foodObj);
         setSaved(true);
         if (route.params?.onGoBack) {
             route.params?.onGoBack();
         }
+        favAlert('added');
     }
 
     const removeFavHandler = () => {
@@ -50,6 +63,7 @@ function FoodDetails({route, navigation}) {
         if (route.params?.onGoBack) {
             route.params?.onGoBack();
         }
+        favAlert('removed');
     }
 
     const loadReviews = () => {
@@ -80,7 +94,7 @@ function FoodDetails({route, navigation}) {
 
         <View style={DefaultStyles.screen}>
 
-            <View style={{flexDirection: 'row'}}>
+            <View style={{flexDirection: 'row', paddingBottom: 10}}>
 
                 <View style={styles.foodInfoContainer}>
 
@@ -101,8 +115,8 @@ function FoodDetails({route, navigation}) {
                     </Text>
                 </View>
 
-                <View>
-                    <Button title={isSaved ? 'Remove' : 'Save'}
+                <View style={styles.favButtonContainer}>
+                    <Button title={isSaved ? 'Del' : 'Fav'}
                             color={Colors.BUTTON}
                             onPress={isSaved ? removeFavHandler : addFavHandler}
                     />
@@ -193,7 +207,7 @@ const styles = StyleSheet.create({
 
     imageContainer: {
         flex: 8,
-        paddingTop: 20,
+        paddingTop: 10,
         paddingBottom: 10,
         paddingRight: 20,
         alignItems: 'center',
@@ -207,8 +221,15 @@ const styles = StyleSheet.create({
     },
 
     foodInfoContainer: {
-        flex: 1,
-        paddingBottom: 40,
+        flex: 8,
+        // borderWidth: 2,
+    },
+
+    favButtonContainer: {
+        flex: 2,
+        paddingRight: 10,
+        justifyContent: 'space-around',
+        alignItems: 'center',
     },
 
     searchResultKey: {
@@ -234,10 +255,10 @@ const styles = StyleSheet.create({
     reviewResultIndivContainer: {
         marginTop: 10,
         padding: 10,
-        borderWidth: 2,
+        borderWidth: 1,
 // borderColor: Colors.CARD,
-        borderColor: 'grey',
-        borderRadius: 5,
+        borderColor: Colors.TEXT,
+        borderRadius: 4,
         width: '98%',
     },
 

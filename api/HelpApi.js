@@ -128,10 +128,20 @@ async function writeHelp(foodId, userObj) {
 }
 
 
+async function getHelpUpdates(helpId, setHelpObj) {
+    const docRef = await helpCollection.doc(helpId);
+
+    await docRef.onSnapshot(() => {
+            setHelpObj(docRef.get().data());
+        },
+        err => console.log('Error getting help doc updates:', err));
+}
+
+
 async function forEachDoc(doc, callback) {
     for (let i = 0; i < doc.length; i++) {
         await callback(doc[i]);
     }
 }
 
-export {readHelps, setHelper, writeHelp};
+export {readHelps, setHelper, writeHelp, getHelpUpdates};

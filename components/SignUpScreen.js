@@ -1,5 +1,5 @@
-import React, { useEffect, useState } from 'react';
-import { View, TextInput, Text, Button, StyleSheet, ScrollView } from 'react-native';
+import React, { useState } from 'react';
+import { View, TextInput, Text, Button, StyleSheet, Alert, ScrollView } from 'react-native';
 
 import Colors from '../constants/Colors';
 import Fonts from '../constants/Fonts';
@@ -12,17 +12,36 @@ function SignUpScreen({ navigation }) {
     const [number, enteredNumber] = useState('');
     const [email, enteredEmail] = useState('');
     const [password, enteredPassword] = useState('');
+    const [retypePassword, enteredRetypePassword] = useState('');
     const [isSignUpSuccessful, setSignUpSuccessful] = useState(false);
     const [errorMessage, setErrorMessage] = useState(null);
 
-    useEffect(() => {
-        firebase.
-            auth().
-            onAuthStateChanged(user => {
-                navigation.navigate(user ? 'Sign In' : 'Sign Up');
-            });
-        // catch(error => console.log(error));
-    });
+    const checkCanSignUp = () => {
+
+        if (username.length && number.length && email.length && password.length && retypePassword.length) {
+
+            if (password !== retypePassword) {
+                Alert.alert('Sign up error', "Passwords don't match");
+            } else {
+
+                const usersRef = firebase.firestore().collection('USERS').doc(username);
+
+                usersRef.get()
+                    .then((docSnapshot) => {
+                        if (docSnapshot.exits) {
+                            Alert.alert('Sign up error:', 'Username exists, please use another one.');
+                        } else {
+                            usersRef.set({
+                                username: username,
+                                contact: number,
+                                email: email
+                            });
+                            handleSignUp();
+                        }
+                    });
+            }
+        }
+    }
 
     const handleSignUp = () => {
 
@@ -35,22 +54,22 @@ function SignUpScreen({ navigation }) {
                 });
             }).
             then(() => {
-                firebase.firestore()
-                    .collection('users')
-                    .add({
-                        username: username,
-                        contact: number,
-                        email: email
-                    });
-            }).
-            then(() => {
                 enteredUsername('');
                 enteredNumber('');
                 enteredEmail('');
                 enteredPassword('');
+                enteredRetypePassword('');
                 setSignUpSuccessful(true);
+                if (firebase.auth().currentUser !== null) {
+                    navigation.navigate('Sign In');
+                    firebase.auth().signOut();
+                }
             }).
             catch(error => setErrorMessage(error));
+
+        errorMessage && !isSignUpSuccessful
+            ? Alert.alert('Sign Up Error', errorMessage.toString())
+            : null;
 
     };
 
@@ -97,41 +116,55 @@ function SignUpScreen({ navigation }) {
                             autoCapitalize="none"
                             onChangeText={password => enteredPassword(password)}
                             value={password}
+                            secureTextEntry={true}
+                        />
+                    </View>
+                    <View style={styles.inputContainer}>
+                        <Text style={styles.accDetails}>Confirm Password</Text>
+                        <TextInput
+                            placeholder=" Retype Password"
+                            style={styles.textInput}
+                            autoCapitalize="none"
+                            onChangeText={retypePassword => enteredRetypePassword(retypePassword)}
+                            value={retypePassword}
+                            secureTextEntry={true}
                         />
                     </View>
                 </View>
-                {errorMessage &&
-                    <View style={{ paddingBottom: 10 }}>
-                        <Text
-                            style={
-                                {
-                                    color: "tomato",
-                                    textAlign: "center",
-                                    fontSize: Fonts.XS,
-                                    fontWeight: "600"
-                                }}>
-                            {errorMessage.toString()}
-                        </Text>
-                    </View>
-                }
                 <View style={styles.buttonContainer}>
-                    <Button color={Colors.BUTTON} title="CONTINUE" onPress={() => {
-                        if (username.length && number.length && email.length && password.length) {
-                            handleSignUp();
-                        }
-                    }} />
-                    {
-                        isSignUpSuccessful ? (
-                            <Text style={styles.text}>Sign Up Successful!</Text>
-                        ) : null
+                    <Button color={Colors.BUTTON} title="CONTINUE" onPress={checkCanSignUp
+                        // () => {
+                        // if (username.length && number.length && email.length && password.length && retypePassword.length) {
+                        //     if (password !== retypePassword) {
+                        //         Alert.alert('Sign up error', "Passwords don't match");
+                        //     } else {
+                        //         // Link to database
+                        //         const usersRef = firebase.firestore().collection('USERS').doc(username);
+                        //         usersRef.get()
+                        //             .then((docSnapshot) => {
+                        //                 if (docSnapshot.exits) {
+                        //                     Alert.alert('Sign up error:', 'Username exists, please use another one.');
+                        //                 } else {
+                        //                     usersRef.set({
+                        //                         username: username,
+                        //                         contact: number,
+                        //                         email: email
+                        //                     })
+                        //                     handleSignUp();
+                        //                 }
+                        //             });
+                        //     }
+                        // }
+                        // }
                     }
+                    />
                     <View style={styles.helpContainer}>
                         <Text style={styles.signInText}>Have an Account?   </Text>
                         <Button title="Sign In" color={Colors.ALT_BUTTON} onPress={() => navigation.goBack()} />
                     </View>
                 </View>
             </View>
-        </ScrollView>
+        </ScrollView >
     );
 }
 
@@ -149,11 +182,11 @@ const styles = StyleSheet.create({
     },
 
     content: {
-        paddingBottom: 12
+        paddingBottom: 30
     },
 
     inputContainer: {
-        paddingTop: 20
+        paddingTop: 10
     },
 
     checkBox: {

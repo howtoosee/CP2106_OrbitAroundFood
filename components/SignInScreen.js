@@ -1,5 +1,5 @@
-import React, { useState, useEffect } from 'react';
-import { View, TextInput, Text, Button, StyleSheet, Image, ScrollView } from 'react-native';
+import React, { useState } from 'react';
+import { View, TextInput, Text, Button, StyleSheet, Image, Alert, ScrollView } from 'react-native';
 
 import Colors from '../constants/Colors';
 import Fonts from '../constants/Fonts';
@@ -10,25 +10,32 @@ function SignInScreen({ navigation }) {
 
     const [email, enteredEmail] = useState('');
     const [password, enteredPassword] = useState('');
-    const [errorMessage, setErrorMessage] = useState('\n');
+    const [signInSuccessful, setIsSignInSuccessful] = useState(false);
+    const [errorMessage, setErrorMessage] = useState(null);
 
     const handleLogIn = () => {
 
         firebase.
             auth().
             signInWithEmailAndPassword(email, password).
-            catch(error => setErrorMessage(error));
-
-
-        if (firebase.auth().currentUser != null) {
-            navigation.navigate('Orbit Around Food');
-            enteredEmail('');
-            enteredPassword('');
-        } else {
-            setErrorMessage('Account invalid');
-        }
-
+            then(() => {
+                enteredEmail('');
+                enteredPassword('');
+                navigation.navigate('Orbit Around Food');
+            }).
+            then(() => {
+                setIsSignInSuccessful(true);
+            }).
+            catch(error => {
+                setErrorMessage(error);
+                if (!errorMessage) {
+                    Alert.alert('Sign In Error', 'Invalid Account');
+                } else if (errorMessage) {
+                    Alert.alert('Sign In Error', errorMessage.toString());
+                }
+            });
     }
+
     return (
         <ScrollView style={styles.screen}>
             <View style={styles.imageContainer}>
@@ -60,28 +67,15 @@ function SignInScreen({ navigation }) {
                                 autoCapitalize="none"
                                 onChangeText={password => enteredPassword(password)}
                                 value={password}
+                                secureTextEntry={true}
                             />
                         </View>
                     </View>
                 </View>
-                <View style={{height: 45}}>
-                    {errorMessage &&
-                        <View style={{ paddingBottom: 10 }}>
-                            <Text
-                                style={
-                                    {
-                                        color: "tomato",
-                                        textAlign: "center",
-                                        fontSize: Fonts.XS,
-                                        fontWeight: "600"
-                                    }}>
-                                {errorMessage.toString()}
-                            </Text>
-                        </View>
-                    }
-                </View>
                 <View style={styles.buttonContainer}>
-                    <Button color={Colors.BUTTON} title="Confirm" onPress={handleLogIn} />
+                    <Button color={Colors.BUTTON} title="Confirm" onPress={() => {
+                        if (email.length && password.length) { handleLogIn() }
+                    }} />
                     <View style={styles.helpContainer}>
                         <Text style={{ fontSize: Fonts.S, paddingTop: 6 }}>Have not created an account?  </Text>
                         <Button title="Sign Up" color={Colors.ALT_BUTTON} onPress={() => navigation.navigate('Sign Up')} />

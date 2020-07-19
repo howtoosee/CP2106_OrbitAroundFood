@@ -100,24 +100,24 @@ async function writeHelp(foodId, userObj) {
         (string) foodId: 'foodId',
 
         (Object) userObj: {
-                    userid: 'asker name',
+                    userId: 'asker name',
                     contact: 'asker phone number',
                     location: 'drop off location'
                  }
      */
 
-    const genHelpID = (timestamp, userID) => timestamp + '_@' + userID;
+    const genHelpID = (timestamp, userID) => timestamp + '_by_' + userID;
     const timestamp = date.getTime();
     const today = date.getMonth() + '.' + date.getDate();
 
-    const helpId = genHelpID(timestamp, userObj.userid);
+    const helpId = genHelpID(timestamp, userObj.userId);
 
     const helpObj = {
         foodId: foodId,
         isOpen: true,
         timestamp: timestamp,
         date: today,
-        askerId: userObj.userid,
+        askerId: userObj.userId,
         askerContact: userObj.contact,
         dropOffLocation: userObj.location
     }
@@ -135,6 +135,14 @@ async function getHelpUpdates(helpId, setHelpObj) {
             setHelpObj(docRef.get().data());
         },
         err => console.log('Error getting help doc updates:', err));
+}
+
+async function closeHelpRequest(helpId) {
+    await helpCollection.doc(helpId)
+        .set({
+            isOpen: false
+        })
+        .catch(err => console.log('Error closing request:', err));
 }
 
 

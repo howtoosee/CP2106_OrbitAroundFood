@@ -1,5 +1,5 @@
 import React, {useEffect, useState} from 'react';
-import {View, TextInput, Text, Button, StyleSheet} from 'react-native';
+import {View, TextInput, Text, Button, StyleSheet, Alert} from 'react-native';
 
 import Colors from '../constants/Colors';
 import Fonts from '../constants/Fonts';
@@ -19,11 +19,10 @@ function SignUpScreen({navigation}) {
     const passwordHider = () => {
         return password.length === 0
             ? ''
-            : '*'.repeat(password.length - 1) +  password.slice(-1);
+            : '*'.repeat(password.length - 1) + password.slice(-1);
     }
 
     const signUpHandler = () => {
-
         firebaseDB.auth()
             .createUserWithEmailAndPassword(email, password)
             .then(userCredentials => {
@@ -39,28 +38,45 @@ function SignUpScreen({navigation}) {
                         contact: number,
                         email: email
                     })
-                    .then(() => console.log("Successfully signed up:", username))
+                    .then(() => console.log("Successfully stored user data:", username))
             })
             .then(() => {
-                enteredUsername('');
-                enteredNumber('');
-                enteredEmail('');
-                enteredPassword('');
                 setSignUpSuccessful(true);
+                signUpSuccessHandler();
             })
-            .catch(error => console.error("Failed to register user:", error));
+            .catch(error => {
+                console.error("Failed to register user:", error);
+                Alert.alert(
+                    'Error',
+                    error,
+                    [
+                        {
+                            text: 'Retry',
+                        }
+                    ]
+                );
+            });
 
     };
 
 
-    useEffect(() => {
-        firebaseDB.auth()
-            .onAuthStateChanged(user => {
-                    navigation.navigate(user ? 'Sign In' : 'Sign Up');
+    const signUpSuccessHandler = () => {
+        Alert.alert(
+            'Success',
+            'Registered as: @' + firebaseDB.auth().currentUser.displayName,
+            [
+                {
+                    text: 'Okay',
+                    onPress: () => navigation.goBack()
                 }
-            );
-        // catch(error => console.log(error));
-    }, [firebaseDB]);
+            ]
+        );
+        enteredUsername('');
+        enteredNumber('');
+        enteredEmail('');
+        enteredPassword('');
+    }
+
 
 
     return (
@@ -129,12 +145,6 @@ function SignUpScreen({navigation}) {
                                 }
                             }}
                     />
-
-                    {
-                        isSignUpSuccessful
-                            ? <Text style={styles.text}>Sign Up Successful!</Text>
-                            : null
-                    }
                 </View>
 
                 <View style={styles.signInContainer}>

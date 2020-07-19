@@ -22,9 +22,9 @@ function Profile({navigation}) {
                 [
                     {
                         text: 'Ok',
-                        onPress: () => navigation.goBack()
                     }
                 ]))
+            .then(() => navigation.goBack())
             .catch(err => console.error("Error signing out:", err));
     };
 

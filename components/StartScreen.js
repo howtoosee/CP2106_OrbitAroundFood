@@ -1,31 +1,31 @@
-import React, {useState, useEffect} from 'react';
-import {StyleSheet, View, Image, TouchableOpacity, Text} from 'react-native';
+import React, {useEffect, useState} from 'react';
+import {Image, StyleSheet, Text, TouchableOpacity, View} from 'react-native';
 
 import requireSignInAlert from './ComponentRequiresSignInAlert';
 import StartScreenButton from "./StartScreenButton";
-import {Colors, Fonts, DefaultStyles, firebaseDB} from "../constants";
+import {Colors, DefaultStyles, firebaseDB, Fonts} from "../constants";
 
 
-function StartScreen({navigation}) {
+function StartScreen({navigation, route}) {
 
-    const [displayName, setDisplayName] = useState('');
-    const [isSignedIn, setSignedIn] = useState(false);
+
+    const [displayName, setDisplayName] = useState();
+    const [isSignedIn, setSignedIn] = useState(firebaseDB.auth().currentUser !== null);
 
 
     useEffect(() => {
-        firebaseDB.auth().onAuthStateChanged(function (user) {
-                if (user) {
-                    // User is signed in.
-                    setDisplayName(firebaseDB.auth().currentUser.displayName);
-                    setSignedIn(true);
+        firebaseDB.auth().onAuthStateChanged(() => {
+            if (firebaseDB.auth().currentUser) {
+                // User is signed in.
+                setDisplayName(firebaseDB.auth().currentUser.displayName);
+                setSignedIn(true);
 
-                } else {
-                    // No user is signed in.
-                    setDisplayName('');
-                    setSignedIn(false);
-                }
+            } else {
+                // No user is signed in.
+                setDisplayName('');
+                setSignedIn(false);
             }
-        );
+        });
     }, [firebaseDB]);
 
 
@@ -77,7 +77,7 @@ function StartScreen({navigation}) {
 
                         <Text style={{color: 'white', fontSize: Fonts.M}}>
                             {isSignedIn
-                                ? '@' + displayName
+                                ? '@ ' + displayName
                                 : 'Sign In'}
                         </Text>
 

@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useState, useEffect} from 'react';
 import {View, TextInput, Text, Button, StyleSheet, Image, Alert} from 'react-native';
 
 import Colors from '../constants/Colors';
@@ -16,19 +16,30 @@ function SignInScreen({navigation}) {
     const passwordHider = () => {
         return password.length === 0
             ? ''
-            : '*'.repeat(password.length - 1) +  password.slice(-1);
+            : '*'.repeat(password.length - 1) + password.slice(-1);
     }
 
     const signInErrorAlert = err => {
         Alert.alert(
-            'Sign in error',
-            'Signed in failed: ' + err,
+            'Error',
+            err.message,
             [
                 {
                     text: 'Dismiss'
                 }
             ]
         );
+    }
+
+    const signInHandler = () => {
+        firebaseDB.auth()
+            .signInWithEmailAndPassword(email, password)
+            .catch(error => {
+                    signInErrorAlert(error);
+                    console.log(error);
+                }
+            )
+            .then(() => signInSuccessHandler());
     }
 
     const signInSuccessHandler = () => {
@@ -50,19 +61,6 @@ function SignInScreen({navigation}) {
             ]);
     }
 
-    const signInHandler = () => {
-        firebaseDB.auth()
-            .signInWithEmailAndPassword(email, password)
-            .catch(error => {
-                    signInErrorAlert(error);
-                    console.log(error);
-
-                }
-            )
-            .then(() => signInSuccessHandler());
-
-        // navigation.goBack();
-    }
 
     return (
         <View style={DefaultStyles.screen}>

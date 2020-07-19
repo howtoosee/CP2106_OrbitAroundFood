@@ -19,6 +19,7 @@ function addFavourite(foodObj) {
 function removeFavourite(foodObj) {
     favsIDArr = favsIDArr.filter(item => item !== foodObj.id);
     favsObjArr = favsObjArr.filter(obj => obj.id !== foodObj.id);
+    console.log("Removed favourite:", foodObj.id);
 }
 
 

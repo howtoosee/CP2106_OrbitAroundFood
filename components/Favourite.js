@@ -2,23 +2,22 @@ import React, {useState} from 'react';
 import {StyleSheet, View, Button, Text, ScrollView} from 'react-native';
 
 
-import Colors from '../constants/Colors';
-import DefaultStyles from "../constants/DefaultStyles";
+import {Colors, Fonts, DefaultStyles} from '../constants';
 
 import {readFavourites} from "../api/FavouritesLogic";
 
 
 function Favourite({navigation}) {
 
-    const [favsArr, setFavsArr] = useState([]);
+    const [favsArr, setFavsArr] = useState(readFavourites());
 
     const refresh = () => setFavsArr(readFavourites());
 
     return (
         <View style={DefaultStyles.screen}>
             {(favsArr.length === 0)
-                ? <View>
-                    <Text>No favourites yet</Text>
+                ? <View style={styles.emptyFavContainer}>
+                    <Text style={styles.noFavText}>No favourites yet :(</Text>
                 </View>
 
 
@@ -82,9 +81,17 @@ function getFavsItemElement(item, navigation, refresh) {
 
 const styles = StyleSheet.create({
 
-    content: {
+    emptyFavContainer: {
         flex: 1,
-        flexDirection: 'column',
+        paddingTop: '10%',
+        paddingBottom: '80%',
+        justifyContent: 'center',
+        alignItems: 'center',
+    },
+
+    noFavText: {
+        fontSize: Fonts.S,
+        color: Colors.TEXT,
     },
 
     searchResultContainer: {

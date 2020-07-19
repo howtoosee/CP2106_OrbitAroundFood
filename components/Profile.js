@@ -6,26 +6,23 @@ import Fonts from '../constants/Fonts';
 import Colors from '../constants/Colors';
 import DefaultStyles from "../constants/DefaultStyles";
 
-import * as firebase from 'firebase';
+import firebaseDB from '../constants/firebaseDB';
 
 function Profile({navigation}) {
 
-    const {displayName, email} = firebase.auth().currentUser
+    const {displayName, email} = firebaseDB.auth().currentUser
 
     const signOutHandler = () => {
-        firebase.auth()
+        firebaseDB.auth()
             .signOut()
             .then(() => console.log("Successfully signed out:", displayName))
             .then(() => Alert.alert(
                 'Success',
                 'Signed out from @' + displayName,
-                [
-                    {
-                        text: 'Ok',
-                    }
-                ]))
-            .then(() => navigation.goBack())
-            .catch(err => console.error("Error signing out:", err));
+                [{text: 'Ok'}]
+            ))
+            .catch(err => console.error("Error signing out:", err))
+            .then(() => navigation.goBack());
     };
 
     return (

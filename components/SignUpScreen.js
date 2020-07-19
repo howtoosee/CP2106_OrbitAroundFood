@@ -7,6 +7,8 @@ import DefaultStyles from '../constants/DefaultStyles';
 
 import firebaseDB from '../constants/firebaseDB';
 
+const userCollection = firebaseDB.firestore().collection('USER');
+
 
 function SignUpScreen({navigation}) {
 
@@ -14,7 +16,7 @@ function SignUpScreen({navigation}) {
     const [number, enteredNumber] = useState('');
     const [email, enteredEmail] = useState('');
     const [password, enteredPassword] = useState('');
-    const [isSignUpSuccessful, setSignUpSuccessful] = useState(false);
+
 
     const passwordHider = () => {
         return password.length === 0
@@ -22,42 +24,53 @@ function SignUpScreen({navigation}) {
             : '*'.repeat(password.length - 1) + password.slice(-1);
     }
 
+    const signUpAlert = err => {
+        return Alert.alert(
+            'Error',
+            err.message,
+            [
+                {
+                    text: 'Dismiss'
+                }
+            ]
+        );
+    };
+
+    const storeUserInDB = (email, number, username) => {
+        userCollection.doc(username)
+            .set({
+                username: username,
+                contact: number,
+                email: email
+            })
+            .catch(err => console.log('Error creating user doc:', err));
+    }
+
+
     const signUpHandler = () => {
         firebaseDB.auth()
             .createUserWithEmailAndPassword(email, password)
-            .then(userCredentials => {
-                return userCredentials.user.updateProfile({
-                    displayName: username
-                });
+            .then(() => firebaseDB.auth()
+                .currentUser
+                .updateProfile({
+                    displayName: username,
+                })
+            )
+            .catch(err => {
+                console.log('Error logging in:', err.code, err.message);
+                signUpAlert(err);
             })
             .then(() => {
-                firebaseDB.firestore()
-                    .collection('users')
-                    .add({
-                        username: username,
-                        contact: number,
-                        email: email
-                    })
-                    .then(() => console.log("Successfully stored user data:", username))
+                if (firebaseDB.auth().currentUser) {
+                    storeUserInDB(email, number, username);
+                    signUpSuccessHandler();
+                    firebaseDB.auth()
+                        .signOut()
+                        .catch(err => console.log('Error signing out:', err));
+                }
             })
-            .then(() => {
-                setSignUpSuccessful(true);
-                signUpSuccessHandler();
-            })
-            .catch(error => {
-                console.error("Failed to register user:", error);
-                Alert.alert(
-                    'Error',
-                    error,
-                    [
-                        {
-                            text: 'Retry',
-                        }
-                    ]
-                );
-            });
-
-    };
+            .catch(err => console.log('Error:', err));
+    }
 
 
     const signUpSuccessHandler = () => {
@@ -66,7 +79,7 @@ function SignUpScreen({navigation}) {
             'Registered as: @' + firebaseDB.auth().currentUser.displayName,
             [
                 {
-                    text: 'Okay',
+                    text: 'Sign in',
                     onPress: () => navigation.goBack()
                 }
             ]
@@ -76,7 +89,6 @@ function SignUpScreen({navigation}) {
         enteredEmail('');
         enteredPassword('');
     }
-
 
 
     return (

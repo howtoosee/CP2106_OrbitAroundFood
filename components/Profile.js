@@ -84,11 +84,13 @@ const styles = StyleSheet.create({
 
     name: {
         fontSize: Fonts.L,
+        color: Colors.DARK_TEXT,
         fontWeight: '600',
     },
 
     email: {
         fontSize: Fonts.S,
+        color: Colors.TEXT,
         fontStyle: 'italic',
     },
 

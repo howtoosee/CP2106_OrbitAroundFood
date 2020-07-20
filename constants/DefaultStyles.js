@@ -6,10 +6,18 @@ const DefaultStyles = StyleSheet.create({
 
     screen: {
         flex: 1,
-        paddingTop: 5,
+        paddingVertical: 5,
         paddingHorizontal: 30,
-        flexDirection: 'column',
-        justifyContent: 'space-between',
+        justifyContent: 'center',
+        // alignItems: 'stretch',
+    },
+
+    keyboardAvoidScreen: {
+        flex: 1,
+        paddingVertical: 1,
+        paddingHorizontal: 30,
+        justifyContent: 'center',
+        alignItems: 'center',
     },
 
     headerContainer: {

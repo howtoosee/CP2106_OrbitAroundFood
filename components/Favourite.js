@@ -15,6 +15,12 @@ function Favourite({navigation}) {
 
     return (
         <View style={DefaultStyles.screen}>
+
+            <View style={styles.headerContainer}>
+                <Text style={styles.headerText}>Saved favourites:</Text>
+            </View>
+
+            <View style={styles.contentContainer}>
             {(favsArr.length === 0)
                 ? <View style={styles.emptyFavContainer}>
                     <Text style={styles.noFavText}>No favourites yet :(</Text>
@@ -27,6 +33,7 @@ function Favourite({navigation}) {
                     }
                 </ScrollView>
             }
+            </View>
 
 
         </View>
@@ -81,6 +88,21 @@ function getFavsItemElement(item, navigation, refresh) {
 
 const styles = StyleSheet.create({
 
+    headerContainer: {
+        flex: 1,
+        justifyContent: 'center',
+        alignItems: 'flex-start',
+    },
+
+    headerText: {
+        color: Colors.DARK_TEXT,
+        fontSize: Fonts.S,
+    },
+
+    contentContainer: {
+        flex: 29,
+    },
+
     emptyFavContainer: {
         flex: 1,
         paddingTop: '10%',
@@ -98,8 +120,7 @@ const styles = StyleSheet.create({
         marginTop: 10,
         padding: 10,
         borderWidth: 2,
-        // borderColor: Colors.CARD,
-        borderColor: Colors.TEXT,
+        borderColor: Colors.BORDER,
         borderRadius: 4,
         width: '97%',
         color: Colors.TEXT,
@@ -107,14 +128,16 @@ const styles = StyleSheet.create({
     },
 
     searchResultKey: {
-        color: Colors.TEXT,
-        fontSize: 16,
+        color: Colors.DARK_TEXT,
+        fontSize: Fonts.S,
         fontWeight: "bold",
+        paddingBottom: 6,
     },
 
     searchResultInfo: {
         color: Colors.TEXT,
-        fontSize: 14,
+        fontSize: Fonts.XS,
+        paddingBottom: 2,
     },
 
     loadingContainer: {

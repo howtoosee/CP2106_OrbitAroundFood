@@ -3,8 +3,7 @@ import {StyleSheet, Text, Button, View, SafeAreaView} from 'react-native';
 import Icon from 'react-native-vector-icons/FontAwesome';
 
 
-import Colors from '../constants/Colors';
-import DefaultStyles from "../constants/DefaultStyles";
+import {Colors, DefaultStyles, Fonts} from '../constants';
 import DefaultHeader from "./DefaultHeader"
 
 
@@ -60,6 +59,7 @@ function Filter(props) {
 
                     <View style={styles.confirmButtonContainer}>
                         <Button title={filters.length === 0 ? "Back" : "Apply filters"}
+                                color={Colors.BUTTON}
                                 onPress={applyFilters}
                         />
                     </View>
@@ -107,6 +107,7 @@ function FilterElement(props) {
 
             <View style={styles.filterElementAddButtonContainer}>
                 <Button title={isAdded ? "Remove" : "Add"}
+                        color={Colors.BUTTON}
                         onPress={isAdded ? removeFilterHandler : addFilterHandler}
                         icon={
                             <Icon
@@ -131,11 +132,12 @@ const styles = StyleSheet.create({
     },
 
     filterElement: {
-        marginTop: 8,
-        padding: 7,
-        borderWidth: 2,
-        borderColor: Colors.CARD,
-        borderRadius: 5,
+        marginTop: 12,
+        paddingVertical: 6,
+        paddingHorizontal: 8,
+        borderWidth: 1,
+        borderColor: Colors.BORDER,
+        borderRadius: 4,
         width: '97%',
         color: Colors.TEXT,
         flexDirection: "row",
@@ -149,7 +151,7 @@ const styles = StyleSheet.create({
     },
 
     filterElementText: {
-        fontSize: 20,
+        fontSize: Fonts.M,
         color: Colors.TEXT,
 
     },

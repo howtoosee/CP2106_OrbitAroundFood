@@ -1,7 +1,7 @@
 import React, {useState, useEffect} from 'react';
 import {StyleSheet, Text, View, ScrollView, ActivityIndicator, Button} from 'react-native';
 
-import {Colors, DefaultStyles} from "../constants";
+import {Colors, DefaultStyles, Fonts} from "../constants";
 import searchQueryFood from "../api/SearchApi";
 
 
@@ -30,8 +30,8 @@ function SearchResults({route, navigation}) {
             <View style={DefaultStyles.contentContainer}>
 
                 <View style={styles.resultStatInfo}>
-                    <Text>Searching for: "{searchKey}"</Text>
-                    <Text>Filters: {filterString}</Text>
+                    <Text style={styles.resultStatText}>Searching for: "{searchKey}"</Text>
+                    <Text style={styles.resultStatText}>Filters: {filterString}</Text>
                 </View>
 
                 {(isLoading)
@@ -43,14 +43,14 @@ function SearchResults({route, navigation}) {
                     : (results.length === 0)
 
                         ? <View style={styles.noResultsContainer}>
-                            <View style={styles.searchResultInfo}>
-                                <Text>No results found :(</Text>
+                            <View style={styles.resultStatInfo}>
+                                <Text style={styles.noResultText}>No results found :(</Text>
                             </View>
                         </View>
 
                         : <View>
                             <View style={styles.resultStatInfo}>
-                                <Text>Results found: {results.length}</Text>
+                                <Text style={styles.resultStatText}>Results found: {results.length}</Text>
                             </View>
 
 
@@ -124,25 +124,25 @@ const styles = StyleSheet.create({
 
     searchResultContainer: {
         marginTop: 10,
-        padding: 10,
+        padding: 8,
         borderWidth: 2,
-        // borderColor: Colors.CARD,
-        borderColor: Colors.TEXT,
+        borderColor: Colors.BORDER,
         borderRadius: 4,
         width: '97%',
-        color: Colors.TEXT,
         flexDirection: 'row',
     },
 
     searchResultKey: {
-        color: Colors.TEXT,
-        fontSize: 16,
+        color: Colors.DARK_TEXT,
+        fontSize: Fonts.S,
         fontWeight: "bold",
+        paddingBottom: 6,
     },
 
     searchResultInfo: {
         color: Colors.TEXT,
-        fontSize: 14,
+        fontSize: Fonts.XS,
+        paddingBottom: 2,
     },
 
     loadingContainer: {
@@ -177,9 +177,20 @@ const styles = StyleSheet.create({
     resultStatInfo: {
         marginTop: 4,
         marginBottom: 4,
-        fontSize: 14,
         color: Colors.TEXT,
         fontStyle: 'italic',
+    },
+
+    resultStatText: {
+        color: Colors.DARK_TEXT,
+        fontSize: Fonts.XS,
+    },
+
+    noResultText: {
+        color: Colors.DARK_TEXT,
+        fontSize: Fonts.M,
+        fontStyle: 'italic',
+        fontWeight: 'bold',
     },
 
     endOfResultsText: {

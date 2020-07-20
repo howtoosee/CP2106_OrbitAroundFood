@@ -18,7 +18,7 @@ function FoodDetails({route, navigation}) {
     const [reviews, setReviews] = useState(null);
     const [photoUri, setPhotoUri] = useState('');
 
-    const user = firebaseDB.auth().currentUser;
+    const [user, setUser] = useState(firebaseDB.auth().currentUser);
 
     const addReviewHandler = () => {
         if (user) {
@@ -87,6 +87,10 @@ function FoodDetails({route, navigation}) {
         if (isLoading) {
             loadReviews();
         }
+
+        return firebaseDB.auth().onAuthStateChanged(() => {
+            setUser(firebaseDB.auth().currentUser);
+        });
     }, [readReviews, foodObj, setReviews, getImage, setPhotoUri, setLoading]);
 
 
@@ -152,15 +156,15 @@ function FoodDetails({route, navigation}) {
 
                         : <View>
                             <View style={styles.reviewsHeader}>
-                                <Text>Reviews:</Text>
+                                <Text style={styles.reviewsHeaderText}>Reviews:</Text>
                             </View>
                             <ScrollView>
                                 {
                                     reviews.map(rev => reviewElement(rev))
                                 }
 
-                                <View style={styles.endOfResultsText}>
-                                    <Text>No more liao!</Text>
+                                <View style={styles.endOfResultsTextContainer}>
+                                    <Text style={styles.endOfResultsText}>No more liao!</Text>
                                 </View>
 
                             </ScrollView>
@@ -187,17 +191,13 @@ function reviewElement(rev) {
 
     return (
         <View style={styles.reviewResultIndivContainer} key={getKey(rev.id, 'scrollView')}>
-            <View style={styles.reviewResultKey}>
-                <Text>
-                    @{rev.userID} said on {formatDate(rev.time)}:
-                </Text>
-            </View>
+            <Text style={styles.reviewResultKey}>
+                @{rev.userID} on {formatDate(rev.time)}:
+            </Text>
 
-            <View style={styles.reviewResultInfo}>
-                <Text>
-                    {rev.comments}
-                </Text>
-            </View>
+            <Text style={styles.reviewResultInfo}>
+                {rev.comments}
+            </Text>
         </View>
     );
 }
@@ -222,7 +222,7 @@ const styles = StyleSheet.create({
 
     foodInfoContainer: {
         flex: 8,
-        // borderWidth: 2,
+        paddingVertical: 4,
     },
 
     favButtonContainer: {
@@ -233,14 +233,16 @@ const styles = StyleSheet.create({
     },
 
     searchResultKey: {
-        color: Colors.TEXT,
-        fontSize: 16,
+        color: Colors.DARK_TEXT,
+        fontSize: Fonts.S,
         fontWeight: "bold",
+        paddingBottom: 6,
     },
 
     searchResultInfo: {
         color: Colors.TEXT,
-        fontSize: 14,
+        fontSize: Fonts.XS,
+        paddingBottom: 2,
     },
 
     reviewResultContainer: {
@@ -254,32 +256,33 @@ const styles = StyleSheet.create({
 
     reviewResultIndivContainer: {
         marginTop: 10,
-        padding: 10,
-        borderWidth: 1,
-// borderColor: Colors.CARD,
-        borderColor: Colors.TEXT,
+        padding: 8,
+        borderWidth: 2,
+        borderColor: Colors.BORDER,
         borderRadius: 4,
         width: '98%',
     },
 
     reviewResultKey: {
         color: Colors.TEXT,
-        fontSize: 16,
+        fontSize: Fonts.XS,
         fontWeight: "bold",
-        paddingBottom: 2,
+        paddingBottom: 4,
     },
 
     reviewResultInfo: {
         color: Colors.TEXT,
-        fontSize: 18,
+        fontSize: Fonts.S,
     },
 
     reviewsHeader: {
         marginTop: 20,
         marginBottom: 5,
-// paddingTop: 10,
-        color: Colors.TEXT,
-        fontSize: 18,
+    },
+
+    reviewsHeaderText: {
+        color: Colors.DARK_TEXT,
+        fontSize: Fonts.S,
         fontWeight: "bold",
     },
 
@@ -297,7 +300,7 @@ const styles = StyleSheet.create({
         justifyContent: 'center'
     },
 
-    endOfResultsText: {
+    endOfResultsTextContainer: {
         height: 180,
         paddingVertical: 20,
         fontStyle: 'italic',
@@ -305,21 +308,11 @@ const styles = StyleSheet.create({
 // justifyContent: 'center'
     },
 
-    boxContainer: {
-        shadowColor: '#000',
-        shadowOffset: {width: 0, height: 2},
-        shadowOpacity: 0.8,
-        shadowRadius: 2,
-        height: 150,
-        width: 320,
-        margin: 20,
-        flexDirection: 'column',
-        alignItems: 'flex-start',
-        justifyContent: 'space-evenly',
-        paddingHorizontal: 15,
-        paddingBottom: 8,
-        backgroundColor: Colors.CARD
+    endOfResultsText: {
+        color: Colors.DARK_TEXT,
+        fontSize: Fonts.S,
     }
+
 });
 
 

@@ -3,23 +3,17 @@ import {StyleSheet, Text, TextInput, Button, View, Alert} from 'react-native';
 
 import {writeReviews} from "../api/ReviewsApi";
 
-import Colors from '../constants/Colors';
-import DefaultStyles from "../constants/DefaultStyles";
-
-import firebaseDB from '../constants/firebaseDB';
+import {Colors, DefaultStyles, Fonts, firebaseDB} from '../constants';
 
 
 function LeaveReview({route, navigation}) {
 
     const foodObj = route.params?.foodObj;
 
-    // const [userID, setUserID] = useState('');
     const user = firebaseDB.auth().currentUser;
-    console.log(user);
     const userID = user ? user.displayName : '';
     const [msgString, setMsgString] = useState('');
 
-    // const userIDInputHandler = userIDStr => setUserID(userIDStr);
     const msgInputHandler = msgStr => setMsgString(msgStr);
 
     const confirmHandler = () => {
@@ -30,7 +24,7 @@ function LeaveReview({route, navigation}) {
                 'Comment can not be empty!',
                 [
                     {
-                        text: 'Ok'
+                        text: 'Dismiss'
                     }
                 ]
             );
@@ -41,7 +35,7 @@ function LeaveReview({route, navigation}) {
                 "Something's wrong with the log in!",
                 [
                     {
-                        text: 'Ok'
+                        text: 'Dismiss'
                     }
                 ]
             );
@@ -55,9 +49,17 @@ function LeaveReview({route, navigation}) {
 
             writeReviews(foodObj.id, reviewObj)
                 .then(() => route.params.onGoBack())
-                .then(() => navigation.goBack())
+                .then(() => Alert.alert(
+                    'Success',
+                    "Successfully commented!",
+                    [
+                        {
+                            text: 'Ok',
+                            onPress: () => navigation.goBack()
+                        }
+                    ]
+                ))
                 .catch(err => console.error("Error writing review:", err));
-
         }
     }
 
@@ -88,25 +90,9 @@ function LeaveReview({route, navigation}) {
                 </View>
 
                 <View style={styles.reviewContainer}>
-                    <View style={styles.reviewHeader}>
-                        <Text style={styles.reviewHeaderText}>
-                            Leave a review:
-                        </Text>
-                    </View>
 
                     <View style={styles.usernameSectionContainer}>
-                        <Text style={styles.usernameText}>Reviewing as: {userID === '' ? 'None' : '@' + userID}</Text>
-
-                        {/*<View style={styles.usernameInputContainer}>*/}
-
-                        {/*    <TextInput style={styles.textInput}*/}
-                        {/*               placeholder="your username"*/}
-                        {/*               onChangeText={userIDInputHandler}*/}
-                        {/*               value={userID}*/}
-                        {/*    />*/}
-
-                        {/*</View>*/}
-
+                        <Text style={styles.usernameText}>Reviewing as: {'@' + userID}</Text>
                     </View>
 
                     <View style={styles.msgSectionContainer}>
@@ -139,17 +125,21 @@ function LeaveReview({route, navigation}) {
 const styles = StyleSheet.create({
     foodInfoContainer: {
         flex: 2,
+        paddingVertical: 4,
     },
 
     searchResultKey: {
-        color: Colors.TEXT,
-        fontSize: 16,
+        color: Colors.DARK_TEXT,
+        fontSize: Fonts.S,
         fontWeight: "bold",
+        paddingBottom: 6,
+
     },
 
     searchResultInfo: {
         color: Colors.TEXT,
-        fontSize: 14,
+        fontSize: Fonts.XS,
+        paddingBottom: 2,
     },
 
     reviewContainer: {
@@ -162,17 +152,18 @@ const styles = StyleSheet.create({
     },
 
     reviewHeaderText: {
-        fontSize: 16,
-
+        color: Colors.DARK_TEXT,
+        fontSize: Fonts.S,
     },
 
     usernameText: {
-        fontSize: 14,
+        color: Colors.DARK_TEXT,
+        fontSize: Fonts.S,
     },
 
     usernameSectionContainer: {
-        paddingTop: 10,
-        paddingBottom: 10,
+        paddingTop: 6,
+        paddingBottom: 8,
     },
 
     msgSectionContainer: {
@@ -184,7 +175,7 @@ const styles = StyleSheet.create({
         padding: 8,
         borderWidth: 2,
         borderRadius: 4,
-        borderColor: 'grey',
+        borderColor: Colors.BORDER,
         width: '95%',
     },
 
@@ -193,13 +184,14 @@ const styles = StyleSheet.create({
         padding: 8,
         borderWidth: 2,
         borderRadius: 4,
-        borderColor: 'grey',
+        borderColor: Colors.BORDER,
         width: '95%',
         height: 100,
     },
 
     inputText: {
-        fontSize: 16,
+        color: Colors.TEXT,
+        fontSize: Fonts.S,
     },
 
     sendButtonContainer: {

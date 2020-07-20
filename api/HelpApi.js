@@ -39,29 +39,29 @@ async function readHelps(setHelps) {
 
     let helps = [];
 
-    const today = date.getMonth() + '.' + date.getDate();
-    const snapshot = await helpCollection
-        .where('date', '==', today)
-        .where('status', '==', true)
+    // const today = date.getMonth() + '.' + date.getDate();
+    const querySnapshot = await helpCollection
+        // .where('date', '==', today)
+        .where('isOpen', '==', true)
         .orderBy('timestamp', 'desc')
         .get()
-        .catch(err => console.log("Error getting helps:", err));
 
 
-    await forEachDoc(snapshot.doc, async function (docSnapshot) {
-        const foodSnapshot = await foodCollection.doc(docSnapshot.foodId).get();
+    await forEachDoc(querySnapshot.docs, async function (docSnapshot) {
+        const docData = docSnapshot.data();
+        const foodSnapshot = await foodCollection.doc(docData.foodId).get();
         const foodObj = await foodSnapshot.data();
-        let combinedObj = await combineAllData(foodObj, docSnapshot.foodId);
+        let combinedObj = await combineAllData(foodObj, docData.foodId);
 
         combinedObj.helpid = docSnapshot.id;
-        combinedObj.isOpen = docSnapshot.isOpen
+        combinedObj.isOpen = docData.isOpen
 
-        combinedObj.foodId = docSnapshot.foodId;
+        combinedObj.foodId = docData.foodId;
 
         combinedObj.asker = {
-            name: docSnapshot.userid,
-            contact: docSnapshot.contact,
-            dropOff: docSnapshot.dropOff
+            name: docData.askerId,
+            contact: docData.askerContact,
+            dropOff: docData.dropOffLocation
         }
 
         helps.push(combinedObj);
@@ -128,10 +128,20 @@ async function writeHelp(foodId, userObj) {
 }
 
 
+async function getHelpUpdates(helpId, setHelpObj) {
+    const docRef = await helpCollection.doc(helpId);
+
+    await docRef.onSnapshot(() => {
+            setHelpObj(docRef.get().data());
+        },
+        err => console.log('Error getting help doc updates:', err));
+}
+
+
 async function forEachDoc(doc, callback) {
     for (let i = 0; i < doc.length; i++) {
         await callback(doc[i]);
     }
 }
 
-export {readHelps, setHelper, writeHelp};
+export {readHelps, setHelper, writeHelp, getHelpUpdates};

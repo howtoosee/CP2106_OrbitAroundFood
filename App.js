@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useState} from 'react';
 import {NavigationContainer} from '@react-navigation/native';
 import {createStackNavigator} from '@react-navigation/stack';
 import {SafeAreaProvider} from 'react-native-safe-area-context';
@@ -20,8 +20,20 @@ import {
 
 import {Platform} from "react-native";
 
+import {readHelps} from "./api/HelpApi";
+
 
 export default function App() {
+
+    const [help, setHelp] = useState([]);
+
+    // const test = () => {
+    //     readHelps(setHelp)
+    //         .then(() => console.log(help))
+    //         .catch(err => console.error(err));
+    // }
+
+    test();
 
 
     const forFade = ({current}) => ({

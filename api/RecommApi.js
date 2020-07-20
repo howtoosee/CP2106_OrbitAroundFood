@@ -1,5 +1,5 @@
 import firebaseDB from '../constants/firebaseDB';
-import combineAllData from "./combineAllData";
+import combineAllData from './combineAllData';
 
 const foodCollection = firebaseDB.firestore().collection("FOODS");
 const ratingsCollection = firebaseDB.firestore().collection("RATINGS");
@@ -8,7 +8,7 @@ const ratingsCollection = firebaseDB.firestore().collection("RATINGS");
 let localRatingsSnapshot = null;
 
 
-export default async function getRandomFood(setLoading, setFood) {
+export default async function getRandomFood(setFood) {
 
     // if localSnapshot is not initialised, initialise it
     if (localRatingsSnapshot === null) {
@@ -28,21 +28,13 @@ export default async function getRandomFood(setLoading, setFood) {
 
     // get food json object
     const foodDoc = await foodCollection.doc(foodId).get();
-    const foodObj = foodDoc.data()
+    const foodObj = foodDoc.data();
 
     // combine food object with store object
     await combineAllData(foodObj, foodId)
         .then(res => {
-            setLoading(false);
             setFood(res);
         })
-        .catch(err => console.log(err));
-
-    // console.log(combinedFoodObj);
-
-    // update states
-    // setLoading(false);
-    // setFood(combinedFoodObj);
-
+        .catch(err => console.log('Error setting recommendation:', err));
 }
 

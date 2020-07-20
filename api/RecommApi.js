@@ -2,32 +2,36 @@ import firebaseDB from '../constants/firebaseDB';
 import combineAllData from "./combineAllData";
 
 const foodCollection = firebaseDB.firestore().collection("FOODS");
+const ratingsCollection = firebaseDB.firestore().collection("RATINGS");
 
 // global variable local db snapshot
-let localSnapshot = null;
+let localRatingsSnapshot = null;
 
 
 export default async function getRandomFood(setLoading, setFood) {
 
     // if localSnapshot is not initialised, initialise it
-    if (localSnapshot === null) {
-        localSnapshot = await foodCollection.get()
-            .catch(err => console.log("Error getting food collection:", err));
+    if (localRatingsSnapshot === null) {
+        localRatingsSnapshot = await ratingsCollection
+            .where('avgRating', '>=', 3)
+            .get()
+            .catch(err => console.log("Error getting ratings collection:", err));
     }
 
-    const querySnapshot = localSnapshot;
+    const queryRatingSnapshot = localRatingsSnapshot;
 
     // generate random index
-    const index = Math.floor(Math.random() * querySnapshot.docs.length);
+    const index = Math.floor(Math.random() * queryRatingSnapshot.docs.length);
 
-    // get food snap shot
-    const foodSnapshot = querySnapshot.docs[index];
+    // get foodId (RatingDoc's ID = corresponding foodID)
+    const foodId = queryRatingSnapshot.docs[index].id;
 
     // get food json object
-    const foodObj = await foodSnapshot.data();
+    const foodDoc = await foodCollection.doc(foodId).get();
+    const foodObj = foodDoc.data()
 
     // combine food object with store object
-    await combineAllData(foodObj, foodSnapshot.id)
+    await combineAllData(foodObj, foodId)
         .then(res => {
             setLoading(false);
             setFood(res);

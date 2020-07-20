@@ -4,7 +4,7 @@ import {StyleSheet, Text, View, ScrollView, ActivityIndicator, Button, Image, Al
 import {readReviews} from "../api/ReviewsApi";
 import getImage from "../api/FoodImage";
 import {isFavourite, addFavourite, removeFavourite} from "../api/FavouritesLogic";
-
+import FoodInfoContainer from "./FoodInfoContainer";
 import requireSignInAlert from "./ComponentRequiresSignInAlert";
 
 import {Colors, DefaultStyles, Fonts, firebaseDB} from "../constants";
@@ -98,36 +98,13 @@ function FoodDetails({route, navigation}) {
     return (
 
         <View style={DefaultStyles.screen}>
-
-            <View style={styles.foodSectionContainer}>
-
-                <View style={styles.foodInfoContainer}>
-
-                    <Text style={styles.searchResultKey}>
-                        {foodObj.name}
-                    </Text>
-
-                    <Text style={styles.searchResultInfo}>
-                        {foodObj.price}
-                    </Text>
-
-                    <Text style={styles.searchResultInfo}>
-                        {foodObj.store.store_name} ({foodObj.store.location})
-                    </Text>
-
-                    <Text style={styles.searchResultInfo}>
-                        {foodObj.store.open_hours} - {foodObj.store.close_hours} hrs
-                    </Text>
-                </View>
-
-                <View style={styles.favButtonContainer}>
-                    <Button title={isSaved ? 'Del' : 'Fav'}
-                            color={Colors.BUTTON}
-                            onPress={isSaved ? removeFavHandler : addFavHandler}
-                    />
-                </View>
-
-            </View>
+            <FoodInfoContainer
+                item={foodObj}
+                useFavButton={true}
+                isSaved={isSaved}
+                addFavHandler={addFavHandler}
+                removeFavHandler={removeFavHandler}
+            />
 
             <View style={styles.imageContainer}>
                 {(isLoading || photoUri === '')
@@ -224,18 +201,6 @@ const styles = StyleSheet.create({
         height: 200,
     },
 
-    foodSectionContainer: {
-        flexDirection: 'row',
-        marginBottom: 10,
-        paddingVertical: 8,
-        paddingLeft: 8,
-        borderWidth: 2,
-        borderRadius: 2,
-        borderColor: Colors.LIGHT_BORDER,
-        justifyContent: 'center',
-        alignItems: 'center',
-    },
-
     foodInfoContainer: {
         flex: 10,
         marginVertical: 4,
@@ -252,13 +217,14 @@ const styles = StyleSheet.create({
         color: Colors.DARK_TEXT,
         fontSize: Fonts.S,
         fontWeight: "bold",
-        paddingBottom: 6,
+        paddingBottom: 4,
+        marginRight: 10,
     },
 
     searchResultInfo: {
         color: Colors.TEXT,
         fontSize: Fonts.XS,
-        paddingBottom: 2,
+        paddingBottom: 4,
     },
 
     reviewResultContainer: {

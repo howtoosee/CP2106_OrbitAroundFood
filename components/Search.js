@@ -183,9 +183,10 @@ const styles = StyleSheet.create({
 
     inputContainer: {
         flex: 9,
-        borderWidth: 2,
+        // borderWidth: 2,
+        borderBottomWidth: 2,
         borderColor: Colors.BORDER,
-        borderRadius: 4,
+        borderRadius: 0,
         paddingHorizontal: 8,
         paddingVertical: 8,
     },

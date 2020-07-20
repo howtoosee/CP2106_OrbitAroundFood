@@ -2,6 +2,7 @@ import DefaultHeader from "./DefaultHeader";
 import Favourite from './Favourite';
 import Filter from './Filter';
 import FoodDetails from './FoodDetails';
+import FoodInfoContainer from "./FoodInfoContainer";
 import HelpBuyPls from './HelpBuyPls';
 import LeaveReview from './LeaveReview';
 import NoSignInWarningDialogue from './NoSignInWarningDialogue';
@@ -21,6 +22,7 @@ export {
     Favourite,
     Filter,
     FoodDetails,
+    FoodInfoContainer,
     HelpBuyPls,
     LeaveReview,
     NoSignInWarningDialogue,

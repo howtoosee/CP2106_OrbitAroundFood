@@ -100,59 +100,74 @@ function SignUpScreen({navigation}) {
 
                     <View style={styles.inputSubContainer}>
                         <Text style={styles.accDetailsHeader}>Email</Text>
-                        <TextInput
-                            placeholder=" Email"
-                            style={styles.textInput}
-                            autoCapitalize="none"
-                            onChangeText={email => setEmail(email)}
-                            value={email}
-                        />
+
+                        <View style={styles.textInputContainer}>
+                            <TextInput
+                                placeholder=" Email"
+                                style={styles.textInput}
+                                autoCapitalize="none"
+                                onChangeText={email => setEmail(email)}
+                                value={email}
+                            />
+                        </View>
                     </View>
 
                     <View style={styles.inputSubContainer}>
                         <Text style={styles.accDetailsHeader}>Username</Text>
-                        <TextInput
-                            placeholder=" Username"
-                            style={styles.textInput}
-                            autoCapitalize="none"
-                            onChangeText={username => setUsername(username)}
-                            value={username}
-                        />
+
+                        <View style={styles.textInputContainer}>
+                            <TextInput
+                                placeholder=" Username"
+                                style={styles.textInput}
+                                autoCapitalize="none"
+                                onChangeText={username => setUsername(username)}
+                                value={username}
+                            />
+                        </View>
                     </View>
 
                     <View style={styles.inputSubContainer}>
                         <Text style={styles.accDetailsHeader}>Contact Number</Text>
-                        <TextInput
-                            placeholder=" Contact Number"
-                            style={styles.textInput}
-                            autoCapitalize="none"
-                            onChangeText={number => setNumber(number)}
-                            value={number}
-                        />
+
+                        <View style={styles.textInputContainer}>
+                            <TextInput
+                                placeholder=" Contact Number"
+                                style={styles.textInput}
+                                autoCapitalize="none"
+                                onChangeText={number => setNumber(number)}
+                                value={number}
+                            />
+                        </View>
                     </View>
 
                     <View style={styles.inputSubContainer}>
                         <Text style={styles.accDetailsHeader}>Password</Text>
-                        <TextInput
-                            placeholder=" Password (min. 6 chars)"
-                            style={styles.textInput}
-                            autoCapitalize="none"
-                            onChangeText={password => setPassword(password)}
-                            value={password}
-                            secureTextEntry={true}
-                        />
+
+                        <View style={styles.textInputContainer}>
+                            <TextInput
+                                placeholder=" Password (min. 6 chars)"
+                                style={styles.textInput}
+                                autoCapitalize="none"
+                                onChangeText={password => setPassword(password)}
+                                value={password}
+                                secureTextEntry={true}
+                            />
+                        </View>
                     </View>
 
                     <View style={styles.inputSubContainer}>
                         <Text style={styles.accDetailsHeader}>Confirm Password</Text>
-                        <TextInput
-                            placeholder=" Retype Password"
-                            style={styles.textInput}
-                            autoCapitalize="none"
-                            onChangeText={retypePassword => setRetypedPassword(retypePassword)}
-                            value={retypePassword}
-                            secureTextEntry={true}
-                        />
+
+                        <View style={styles.textInputContainer}>
+                            <TextInput
+                                placeholder=" Retype Password"
+                                style={styles.textInput}
+                                autoCapitalize="none"
+                                onChangeText={retypePassword => setRetypedPassword(retypePassword)}
+                                value={retypePassword}
+                                secureTextEntry={true}
+                            />
+                        </View>
                     </View>
                 </View>
 
@@ -234,12 +249,18 @@ const styles = StyleSheet.create({
         paddingVertical: 4
     },
 
+    textInputContainer: {
+        // borderWidth: 2,
+        marginTop: 4,
+        borderBottomWidth: 2,
+        borderRadius: 0,
+        borderColor: Colors.LIGHT_BORDER,
+    },
+
     textInput: {
         color: Colors.DARK_TEXT,
-        borderColor: Colors.LIGHT_BORDER,
-        borderWidth: 2,
-        borderRadius: 4,
-        padding: 8,
+        paddingVertical: 8,
+        paddingHorizontal: 0,
     },
 
     signInContainer: {

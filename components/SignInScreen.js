@@ -82,25 +82,30 @@ function SignInScreen({navigation}) {
                     <View style={styles.inputSubContainer}>
                         <Text style={styles.accDetailsHeader}>Email</Text>
 
-                        <TextInput
-                            placeholder="Email"
-                            style={styles.textInput}
-                            autoCapitalize="none"
-                            onChangeText={email => setEmailInput(email)}
-                            value={email}
-                        />
+                        <View style={styles.textInputContainer}>
+                            <TextInput
+                                placeholder="Email"
+                                style={styles.textInput}
+                                autoCapitalize="none"
+                                onChangeText={email => setEmailInput(email)}
+                                value={email}
+                            />
+                        </View>
                     </View>
 
                     <View style={styles.inputSubContainer}>
                         <Text style={styles.accDetailsHeader}>Password</Text>
-                        <TextInput
-                            placeholder="Password"
-                            style={styles.textInput}
-                            autoCapitalize="none"
-                            onChangeText={password => setPasswordInput(password)}
-                            value={password}
-                            secureTextEntry={true}
-                        />
+
+                        <View style={styles.textInputContainer}>
+                            <TextInput
+                                placeholder="Password"
+                                style={styles.textInput}
+                                autoCapitalize="none"
+                                onChangeText={password => setPasswordInput(password)}
+                                value={password}
+                                secureTextEntry={true}
+                            />
+                        </View>
                     </View>
 
                 </View>
@@ -192,12 +197,16 @@ const styles = StyleSheet.create({
         paddingBottom: 4,
     },
 
+    textInputContainer: {
+        borderBottomWidth: 2,
+        borderRadius: 0,
+        borderColor: Colors.LIGHT_BORDER,
+    },
+
     textInput: {
         color: Colors.DARK_TEXT,
-        borderColor: Colors.LIGHT_BORDER,
-        borderWidth: 2,
-        borderRadius: 4,
-        padding: 8,
+        paddingVertical: 8,
+        paddingHorizontal: 4,
     },
 
     signUpContainer: {

@@ -1,9 +1,8 @@
 import React, {useState} from 'react';
 import {StyleSheet, View, Button, Text, ScrollView} from 'react-native';
 
-
+import FoodInfoContainer from "./FoodInfoContainer";
 import {Colors, Fonts, DefaultStyles} from '../constants';
-
 import {readFavourites} from "../api/FavouritesLogic";
 
 
@@ -46,42 +45,56 @@ function getFavsItemElement(item, navigation, refresh) {
     const getKey = (name, objType) => name + '_' + objType + "_" + Math.floor(Math.random() * 10000);
 
     return (
-        <View style={styles.searchResultContainer} key={getKey(item.name, 'favsList')}>
-
-            <View style={styles.searchResultInfoContainer}>
-                <Text style={styles.searchResultKey}>
-                    {item.name}
-                </Text>
-
-                <Text style={styles.searchResultInfo}>
-                    {item.price}
-                </Text>
-
-                <Text style={styles.searchResultInfo}>
-                    {item.store.store_name} ({item.store.location})
-                </Text>
-
-                <Text style={styles.searchResultInfo}>
-                    {item.store.open_hours} - {item.store.close_hours}
-                </Text>
-            </View>
-
-            <View style={styles.detailsButtonContainer}>
-                <Button title={'More'}
-                        titleStyle={styles.detailsButton}
-                        color={Colors.BUTTON}
-                        onPress={() => {
-                            navigation.navigate('Food Details',
-                                {
-                                    foodObj: item,
-                                    onGoBack: () => refresh()
-                                });
-                        }
-                        }
-                />
-            </View>
-
-        </View>
+        <FoodInfoContainer
+            key={getKey(item.name, 'favsList')}
+            item={item}
+            navigation={navigation}
+            onGoBack={refresh}
+        />
+        // <View style={styles.searchResultContainer} key={getKey(item.name, 'favsList')}>
+        //
+        //     <View style={styles.searchResultInfoContainer}>
+        //         <View style={{
+        //             flexDirection: 'row',
+        //             justifyContent: 'flex-start',
+        //             alignItems: 'center',
+        //             marginBottom: 4
+        //         }}>
+        //
+        //             <Text style={styles.searchResultKey}>
+        //                 {item.name}
+        //             </Text>
+        //
+        //             <Text style={styles.searchResultInfo}>
+        //                 ({item.price})
+        //             </Text>
+        //         </View>
+        //
+        //         <Text style={styles.searchResultInfo}>
+        //             {item.store.store_name} ({item.store.location})
+        //         </Text>
+        //
+        //         <Text style={styles.searchResultInfo}>
+        //             {item.store.open_hours} - {item.store.close_hours}
+        //         </Text>
+        //     </View>
+        //
+        //     <View style={styles.detailsButtonContainer}>
+        //         <Button title={'More'}
+        //                 titleStyle={styles.detailsButton}
+        //                 color={Colors.BUTTON}
+        //                 onPress={() => {
+        //                     navigation.navigate('Food Details',
+        //                         {
+        //                             foodObj: item,
+        //                             onGoBack: () => refresh()
+        //                         });
+        //                 }
+        //                 }
+        //         />
+        //     </View>
+        //
+        // </View>
     );
 }
 
@@ -123,7 +136,7 @@ const styles = StyleSheet.create({
     searchResultContainer: {
         marginTop: 10,
         padding: 10,
-        borderWidth: 2,
+        borderWidth: 1,
         borderColor: Colors.BORDER,
         borderRadius: 4,
         width: '97%',
@@ -135,13 +148,14 @@ const styles = StyleSheet.create({
         color: Colors.DARK_TEXT,
         fontSize: Fonts.S,
         fontWeight: "bold",
-        paddingBottom: 6,
+        paddingBottom: 4,
+        marginRight: 10,
     },
 
     searchResultInfo: {
         color: Colors.TEXT,
         fontSize: Fonts.XS,
-        paddingBottom: 2,
+        paddingBottom: 4,
     },
 
     loadingContainer: {

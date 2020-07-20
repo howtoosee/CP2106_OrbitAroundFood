@@ -1,5 +1,5 @@
 import React, {useState, useEffect} from 'react';
-import {StyleSheet, View, Text, ActivityIndicator, Button} from 'react-native';
+import {StyleSheet, View, Text, ActivityIndicator, Button, Image} from 'react-native';
 
 import getImage from "../api/FoodImage";
 import {Colors, DefaultStyles, Fonts} from "../constants";
@@ -9,79 +9,104 @@ import getRandomFood from "../api/RecommApi";
 
 function Recommendation({navigation}) {
 
-    const [foodObj, setFoodObj] = useState(null);
     const [isLoading, setLoading] = useState(true);
+    const [foodObj, setFoodObj] = useState(null);
     const [photoUri, setPhotoUri] = useState('');
 
     const refresh = () => {
         setLoading(true);
         setFoodObj(null);
+        setPhotoUri('');
     }
 
 
     useEffect(() => {
         if (isLoading) {
-            getRandomFood(setLoading, setFoodObj)
-                .then(() => getImage(foodObj.imageURL, setPhotoUri))
-                .then(() => setLoading(false))
-                .catch(err => console.log("Error getting recommendation:", err));
+            getRandomFood(setFoodObj)
+                .catch(err => console.log('Error getting recommendation:', err))
+                .then(() => setLoading(false));
         }
-    }, [foodObj, isLoading, getRandomFood, setLoading, setFoodObj]);
+
+        if (foodObj) {
+            getImage(foodObj.imageURL, setPhotoUri)
+                .catch(err => console.log('Error getting image:', err))
+        } // else: wait
+    }, [isLoading, getRandomFood, setLoading, setFoodObj, getImage, setPhotoUri]);
 
 
     return (
 
         <View style={DefaultStyles.screen}>
 
-            <View style={styles.contentContainer}>
+            <View style={styles.headerInfoContainer}>
+                <Text style={styles.headerInfoText}>Recommends a dish that's at least 3-star rated!</Text>
+            </View>
 
-                <View style={styles.headerInfoContainer}>
-                    <Text style={styles.headerInfoText}>Recommends a dish that's at least 3-star rated!</Text>
-                </View>
+            <View style={styles.mainContentContainer}>
+                {(isLoading || foodObj === null)
+                    ? <View style={styles.loadingContainer}>
+                        <ActivityIndicator size='large' color='black'/>
+                    </View>
 
-                <View style={styles.mainRecommendationContainer}>
-                    {(isLoading || foodObj === null)
-                        ?
-                        <View style={styles.loadingContainer}>
-                            <ActivityIndicator size='large' color='black'/>
+                    : <View style={{flex: 1, height: '100%', justifyContent: 'flex-start'}}>
+                        <View style={styles.recommendationContainer}>
+                            <View style={styles.headerLineContainer}>
+
+                                <Text style={styles.searchResultKey}>
+                                    {foodObj.name}
+                                </Text>
+
+                                <Text style={styles.searchResultInfo}>
+                                    ({foodObj.price})
+                                </Text>
+                            </View>
+
+                            <Text style={styles.searchResultInfo}>
+                                {foodObj.store.store_name} ({foodObj.store.location})
+                            </Text>
+
+                            <Text style={styles.searchResultInfo}>
+                                {foodObj.store.open_hours} - {foodObj.store.close_hours}
+                            </Text>
+                        </View>
+                        {/*<View style={styles.recommendationContainer}>*/}
+
+                        {/*    <View style={styles.resultsKeyContainer}>*/}
+                        {/*        <Text style={styles.resultKey}>*/}
+                        {/*            {foodObj.name}*/}
+                        {/*        </Text>*/}
+                        {/*    </View>*/}
+
+                        {/*    <View style={styles.resultsInfoContainer}>*/}
+                        {/*        <Text style={styles.resultInfo}>*/}
+                        {/*            {foodObj.price}*/}
+                        {/*        </Text>*/}
+
+                        {/*        <Text style={styles.resultInfo}>*/}
+                        {/*            {foodObj.store.store_name}{'\n'}{foodObj.store.location}*/}
+                        {/*        </Text>*/}
+
+                        {/*        <Text style={styles.resultInfo}>*/}
+                        {/*            {foodObj.store.open_hours} - {foodObj.store.close_hours} hrs*/}
+                        {/*        </Text>*/}
+                        {/*    </View>*/}
+
+                        {/*</View>*/}
+
+                        <View style={styles.imageContainer}>
+                            {(isLoading || photoUri === '')
+                                ? <View style={styles.loadingContainer}>
+                                    <ActivityIndicator size='small' color='black'/>
+                                </View>
+
+                                : <Image
+                                    style={styles.image}
+                                    source={{uri: photoUri}}
+                                />
+                            }
                         </View>
 
-                        : <View style={{flex: 1}}>
-                            <View style={styles.recommendationContainer}>
-
-                                <View style={styles.resultsKeyContainer}>
-                                    <Text style={styles.resultKey}>
-                                        {foodObj.name}
-                                    </Text>
-                                </View>
-
-                                <View style={styles.resultsInfoContainer}>
-                                    <Text style={styles.resultInfo}>
-                                        {foodObj.price}
-                                    </Text>
-
-                                    <Text style={styles.resultInfo}>
-                                        {foodObj.store.store_name}{'\n'}{foodObj.store.location}
-                                    </Text>
-
-                                    <Text style={styles.resultInfo}>
-                                        {foodObj.store.open_hours} - {foodObj.store.close_hours} hrs
-                                    </Text>
-                                </View>
-
-                            </View>
-
-                            <View style={styles.imageContainer}>
-                                {(isLoading || photoUri === '')
-                                    ? <View style={styles.loadingContainer}>
-                                        <ActivityIndicator size='small' color='black'/>
-                                    </View>
-                                    : <Image
-                                        style={styles.image}
-                                        source={{uri: photoUri}}
-                                    />
-                                }
-                            </View>
+                        <View style={styles.buttonContainer}>
 
                             <View style={styles.detailsButtonContainer}>
                                 <Button title={'Details'}
@@ -102,9 +127,9 @@ function Recommendation({navigation}) {
                             </View>
 
                         </View>
-                    }
-                </View>
 
+                    </View>
+                }
             </View>
 
         </View>
@@ -115,8 +140,8 @@ function Recommendation({navigation}) {
 const styles = StyleSheet.create({
 
     headerInfoContainer: {
-        // flex: 1,
-        marginVertical: 10,
+        marginTop: 10,
+        marginBottom: 20,
     },
 
     headerInfoText: {
@@ -124,11 +149,32 @@ const styles = StyleSheet.create({
         fontStyle: 'italic'
     },
 
-    contentContainer: {
-        flex: 19,
-        justifyContent: 'center',
-        alignItems: 'stretch',
+    mainContentContainer: {
+        height: '95%',
+        paddingBottom: 20,
     },
+
+    headerLineContainer: {
+        flexDirection: 'row',
+        justifyContent: 'flex-start',
+        alignItems: 'center',
+        marginBottom: 4
+    },
+
+    searchResultKey: {
+        color: Colors.DARK_TEXT,
+        fontSize: Fonts.S,
+        fontWeight: "bold",
+        paddingBottom: 4,
+        marginRight: 10,
+    },
+
+    searchResultInfo: {
+        color: Colors.TEXT,
+        fontSize: Fonts.XS,
+        paddingBottom: 4,
+    },
+
 
     loadingContainer: {
         flex: 1,
@@ -136,63 +182,47 @@ const styles = StyleSheet.create({
         justifyContent: 'center',
     },
 
-    image: {
-        width: '90%',
-        height: 200,
+    imageContainer: {
+        flex: 4,
+        marginVertical: 10,
+        marginHorizontal: 20,
+        alignItems: 'center',
+        justifyContent: 'center',
     },
 
-    mainRecommendationContainer: {
-        flex: 1,
-        marginBottom: '15%',
+    image: {
+        width: 300,
+        height: 300,
+        marginVertical: 80,
+        alignItems: 'center',
         justifyContent: 'center',
+        // overflow: 'visible',
     },
 
     recommendationContainer: {
-        flex: 18,
-        paddingHorizontal: 30,
-        width: '100%',
-        alignItems: 'flex-start',
+        flex: 2,
+        paddingHorizontal: 0,
         justifyContent: 'center',
+        alignItems: 'stretch',
     },
 
-    resultsKeyContainer: {
+    buttonContainer: {
         flex: 4,
-        paddingTop: 50,
-        paddingBottom: 40,
-        flexWrap: 'wrap',
-        alignItems: 'flex-start', // keep left
-        justifyContent: 'flex-end', // keep bottom
-    },
-
-    resultsInfoContainer: {
-        flex: 6,
-        paddingBottom: 100,
-        flexWrap: 'wrap',
-        alignItems: 'flex-start', // keep left
-        justifyContent: 'space-around', // keep bottom
-    },
-
-    resultKey: {
-        color: Colors.DARK_TEXT,
-        fontSize: Fonts.M,
-        fontWeight: 'bold',
-    },
-
-    resultInfo: {
-        color: Colors.TEXT,
-        fontSize: Fonts.S,
+        paddingBottom: 20,
     },
 
     detailsButtonContainer: {
-        flex: 4,
+        flex: 6,
+        marginVertical: 20,
         alignItems: 'center',
-        justifyContent: 'flex-start',
+        justifyContent: 'center',
     },
 
     refreshButtonContainer: {
-        flex: 2,
+        flex: 4,
+        marginVertical: 10,
         alignItems: 'center',
-        justifyContent: 'center',
+        justifyContent: 'flex-start',
     }
 
 

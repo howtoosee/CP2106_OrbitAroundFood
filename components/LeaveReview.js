@@ -1,5 +1,6 @@
 import React, {useState} from 'react';
 import {StyleSheet, Text, TextInput, Button, View, Alert} from 'react-native';
+import {Rating, AirbnbRating} from 'react-native-ratings';
 
 import {writeReviews} from "../api/ReviewsApi";
 
@@ -12,6 +13,7 @@ function LeaveReview({route, navigation}) {
 
     const user = firebaseDB.auth().currentUser;
     const userID = user ? user.displayName : '';
+    const [rating, setRating] = useState(3);
     const [msgString, setMsgString] = useState('');
 
     const msgInputHandler = msgStr => setMsgString(msgStr);
@@ -44,6 +46,7 @@ function LeaveReview({route, navigation}) {
             // proper username and msg
             const reviewObj = {
                 userID: userID,
+                rating: rating,
                 comments: msgString
             }
 
@@ -67,54 +70,66 @@ function LeaveReview({route, navigation}) {
     return (
         <View style={DefaultStyles.screen}>
 
-            <View style={DefaultStyles.contentContainer}>
+            <View style={styles.foodInfoContainer}>
 
-                <View style={styles.foodInfoContainer}>
+                <Text style={styles.searchResultKey}>
+                    {foodObj.name}
+                </Text>
 
-                    <Text style={styles.searchResultKey}>
-                        {foodObj.name}
-                    </Text>
+                <Text style={styles.searchResultInfo}>
+                    {foodObj.price}
+                </Text>
 
-                    <Text style={styles.searchResultInfo}>
-                        {foodObj.price}
-                    </Text>
+                <Text style={styles.searchResultInfo}>
+                    {foodObj.store.store_name} ({foodObj.store.location})
+                </Text>
 
-                    <Text style={styles.searchResultInfo}>
-                        {foodObj.store.store_name} ({foodObj.store.location})
-                    </Text>
+                <Text style={styles.searchResultInfo}>
+                    {foodObj.store.open_hours} - {foodObj.store.close_hours} hrs
+                </Text>
 
-                    <Text style={styles.searchResultInfo}>
-                        {foodObj.store.open_hours} - {foodObj.store.close_hours} hrs
-                    </Text>
+            </View>
 
+            <View style={styles.reviewContainer}>
+
+                <View style={styles.reviewTitleContainer}>
+                    <Text style={styles.reviewTitleText}>LemmeReview:</Text>
                 </View>
 
-                <View style={styles.reviewContainer}>
-
-                    <View style={styles.usernameSectionContainer}>
-                        <Text style={styles.usernameText}>Reviewing as: {'@' + userID}</Text>
-                    </View>
-
-                    <View style={styles.msgSectionContainer}>
-                        <Text style={styles.reviewHeaderText}>My comments:</Text>
-                        <View style={styles.msgInputContainer}>
-                            <TextInput style={styles.textInput}
-                                       numberOfLines={8}
-                                       placeholder="nice dish!"
-                                       onChangeText={msgInputHandler}
-                                       value={msgString}
-                            />
-                        </View>
-                    </View>
-                </View>
-
-                <View style={styles.sendButtonContainer}>
-                    <Button title={"Send"}
-                            color={Colors.BUTTON}
-                            onPress={() => confirmHandler()}
+                <View style={styles.ratingSectionContainer}>
+                    <Text style={styles.reviewHeaderText}>{'@' + userID}'s rating:</Text>
+                    <View style={styles.ratingContainer}>
+                    <AirbnbRating
+                        selectedColor={Colors.DARKER_BUTTON}
+                        reviewColor={Colors.DARKER_BUTTON}
+                        size={30}
+                        count={5}
+                        defaultRating={rating}
+                        showRating={false}
+                        onFinishRating={setRating}
                     />
+                    </View>
+
                 </View>
 
+                <View style={styles.msgSectionContainer}>
+                    <Text style={styles.reviewHeaderText}>{'@' + userID}'s comments:</Text>
+                    <View style={styles.msgInputContainer}>
+                        <TextInput style={styles.inputText}
+                                   numberOfLines={10}
+                                   placeholder="nice dish!"
+                                   onChangeText={msgInputHandler}
+                                   value={msgString}
+                        />
+                    </View>
+                </View>
+            </View>
+
+            <View style={styles.sendButtonContainer}>
+                <Button title={"Send"}
+                        color={Colors.BUTTON}
+                        onPress={() => confirmHandler()}
+                />
             </View>
 
         </View>
@@ -124,8 +139,13 @@ function LeaveReview({route, navigation}) {
 
 const styles = StyleSheet.create({
     foodInfoContainer: {
-        flex: 2,
-        paddingVertical: 4,
+        marginBottom: 10,
+        paddingVertical: 8,
+        paddingLeft: 8,
+        borderWidth: 2,
+        borderRadius: 2,
+        borderColor: Colors.LIGHT_BORDER,
+        justifyContent: 'center',
     },
 
     searchResultKey: {
@@ -133,7 +153,6 @@ const styles = StyleSheet.create({
         fontSize: Fonts.S,
         fontWeight: "bold",
         paddingBottom: 6,
-
     },
 
     searchResultInfo: {
@@ -143,17 +162,34 @@ const styles = StyleSheet.create({
     },
 
     reviewContainer: {
-        flex: 14,
+        marginTop: 20,
+        marginBottom: 30,
     },
 
-    reviewHeader: {
-        paddingTop: 10,
-        paddingBottom: 5,
+    reviewTitleContainer: {
+        marginTop: 4,
+        marginBottom: 10,
+    },
+
+    reviewTitleText: {
+        color: Colors.DARK_TEXT,
+        fontSize: Fonts.M,
+    },
+
+    ratingSectionContainer: {
+        marginTop: 8,
     },
 
     reviewHeaderText: {
         color: Colors.DARK_TEXT,
         fontSize: Fonts.S,
+    },
+
+    ratingContainer: {
+        marginVertical: 10,
+        paddingLeft: 4,
+        justifyContent: 'center',
+        alignItems: 'flex-start',
     },
 
     usernameText: {
@@ -167,26 +203,16 @@ const styles = StyleSheet.create({
     },
 
     msgSectionContainer: {
-        paddingTop: 10,
-    },
-
-    usernameInputContainer: {
         marginTop: 8,
-        padding: 8,
-        borderWidth: 2,
-        borderRadius: 4,
-        borderColor: Colors.BORDER,
-        width: '95%',
     },
 
     msgInputContainer: {
         marginTop: 8,
         padding: 8,
-        borderWidth: 2,
+        borderWidth: 1,
         borderRadius: 4,
         borderColor: Colors.BORDER,
-        width: '95%',
-        height: 100,
+        height: 150,
     },
 
     inputText: {
@@ -195,7 +221,7 @@ const styles = StyleSheet.create({
     },
 
     sendButtonContainer: {
-        flex: 2,
+        marginVertical: 20,
     }
 })
 

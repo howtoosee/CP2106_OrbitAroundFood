@@ -15,6 +15,7 @@ function FoodDetails({route, navigation}) {
 
     const foodObj = route.params?.foodObj;
     const [isSaved, setSaved] = useState(isFavourite(foodObj));
+    const [rating, setRating] = useState(null);
     const [reviews, setReviews] = useState(null);
     const [photoUri, setPhotoUri] = useState('');
 
@@ -67,7 +68,7 @@ function FoodDetails({route, navigation}) {
     }
 
     const loadReviews = () => {
-        readReviews(foodObj.id, setReviews)
+        readReviews(foodObj.id, setRating, setReviews)
             .catch(err => console.log("Error getting reviews:", err))
 
             // set image uri
@@ -98,7 +99,7 @@ function FoodDetails({route, navigation}) {
 
         <View style={DefaultStyles.screen}>
 
-            <View style={{flexDirection: 'row', paddingBottom: 10}}>
+            <View style={styles.foodSectionContainer}>
 
                 <View style={styles.foodInfoContainer}>
 
@@ -155,10 +156,12 @@ function FoodDetails({route, navigation}) {
                         </View>
 
                         : <View>
+
                             <View style={styles.reviewsHeader}>
+                                <Text>Rating: {rating}</Text>
                                 <Text style={styles.reviewsHeaderText}>Reviews:</Text>
                             </View>
-                            <ScrollView>
+                            <ScrollView style={{overflow: 'hidden'}}>
                                 {
                                     reviews.map(rev => reviewElement(rev))
                                 }
@@ -211,7 +214,7 @@ const styles = StyleSheet.create({
         paddingBottom: 10,
         paddingRight: 20,
         alignItems: 'center',
-        justifyContent: 'center',
+        justifyContent: 'flex-start',
         overflow: 'visible',
     },
 
@@ -220,16 +223,28 @@ const styles = StyleSheet.create({
         height: 200,
     },
 
+    foodSectionContainer: {
+        flexDirection: 'row',
+        marginBottom: 10,
+        paddingVertical: 8,
+        paddingLeft: 8,
+        borderWidth: 2,
+        borderRadius: 2,
+        borderColor: Colors.LIGHT_BORDER,
+        justifyContent: 'center',
+        alignItems: 'center',
+    },
+
     foodInfoContainer: {
-        flex: 8,
-        paddingVertical: 4,
+        flex: 10,
+        marginVertical: 4,
     },
 
     favButtonContainer: {
         flex: 2,
-        paddingRight: 10,
-        justifyContent: 'space-around',
-        alignItems: 'center',
+        justifyContent: 'center',
+        alignItems: 'flex-start',
+        // borderWidth: 1,
     },
 
     searchResultKey: {
@@ -257,10 +272,9 @@ const styles = StyleSheet.create({
     reviewResultIndivContainer: {
         marginTop: 10,
         padding: 8,
-        borderWidth: 2,
+        borderWidth: 1,
         borderColor: Colors.BORDER,
         borderRadius: 4,
-        width: '98%',
     },
 
     reviewResultKey: {
@@ -311,6 +325,7 @@ const styles = StyleSheet.create({
     endOfResultsText: {
         color: Colors.DARK_TEXT,
         fontSize: Fonts.S,
+        fontStyle: 'italic'
     }
 
 });

@@ -1,23 +1,13 @@
 import React, {useState, useEffect} from 'react';
-import {View, TextInput, Text, Button, StyleSheet, Image, Alert} from 'react-native';
+import {View, KeyboardAvoidingView, TextInput, Text, Button, StyleSheet, Image, Alert} from 'react-native';
 
-import Colors from '../constants/Colors';
-import Fonts from '../constants/Fonts';
-import DefaultStyles from "../constants/DefaultStyles";
-
-import firebaseDB from "../constants/firebaseDB";
+import {Colors, Fonts, DefaultStyles, firebaseDB} from '../constants';
 
 
 function SignInScreen({navigation}) {
 
     const [email, setEmailInput] = useState('');
     const [password, setPasswordInput] = useState('');
-
-    const passwordHider = () => {
-        return password.length === 0
-            ? ''
-            : '*'.repeat(password.length - 1) + password.slice(-1);
-    }
 
     const signInErrorAlert = err => {
         Alert.alert(
@@ -34,36 +24,44 @@ function SignInScreen({navigation}) {
     const signInHandler = () => {
         firebaseDB.auth()
             .signInWithEmailAndPassword(email, password)
-            .catch(error => {
-                    signInErrorAlert(error);
-                    console.log(error);
+            .catch(err => {
+                    signInErrorAlert(err);
+                    console.log('Error signing in:', err.code, err.message);
                 }
             )
             .then(() => signInSuccessHandler());
     }
 
     const signInSuccessHandler = () => {
-        const displayName = firebaseDB.auth().currentUser.displayName;
-        console.log("Successfully signed in:", email, displayName);
+        const user = firebaseDB.auth().currentUser;
 
-        Alert.alert(
-            'Success',
-            'Signed in as @' + displayName,
-            [
-                {
-                    text: 'Ok',
-                    onPress: () => {
-                        setEmailInput('');
-                        setPasswordInput('');
-                        navigation.goBack();
+        if (user) {
+            const displayName = user.displayName;
+            console.log("Successfully signed in:", email, displayName);
+
+            Alert.alert(
+                'Success',
+                'Signed in as @' + displayName,
+                [
+                    {
+                        text: 'Ok',
+                        onPress: () => {
+                            setEmailInput('');
+                            setPasswordInput('');
+                            navigation.goBack();
+                        }
                     }
-                }
-            ]);
+                ]
+            );
+        }
     }
 
 
     return (
-        <View style={DefaultStyles.screen}>
+
+        <KeyboardAvoidingView style={DefaultStyles.keyboardAvoidScreen}
+                              behavior='position'
+        >
 
             <View style={styles.imageContainer}>
                 <Image
@@ -75,9 +73,8 @@ function SignInScreen({navigation}) {
             <View style={styles.contentContainer}>
 
                 <View style={styles.titleTextContainer}>
-                    <Text style={styles.signIn}>Sign In</Text>
-
-                    <Text>Sign in to OrbitAroundFood</Text>
+                    <Text style={styles.signInText}>Sign In</Text>
+                    <Text style={styles.signInSubtext}>Sign in to OrbitAroundFood</Text>
                 </View>
 
                 <View style={styles.inputContainer}>
@@ -101,43 +98,42 @@ function SignInScreen({navigation}) {
                             style={styles.textInput}
                             autoCapitalize="none"
                             onChangeText={password => setPasswordInput(password)}
-                            value={passwordHider()}
+                            value={password}
+                            secureTextEntry={true}
                         />
                     </View>
 
                 </View>
 
                 <View style={styles.buttonContainer}>
-
-                    <Button color={Colors.BUTTON}
-                            title="Confirm"
-                            onPress={signInHandler}
-                    />
+                    <View style={styles.confirmButtonContainer}>
+                        <Button color={Colors.BUTTON}
+                                title="Confirm"
+                                onPress={signInHandler}
+                        />
+                    </View>
 
                     <View style={styles.signUpContainer}>
-                        <Text style={{fontSize: Fonts.S, paddingTop: 6}}>Haven't created an account? </Text>
+                        <Text style={styles.noAccountText}>No account yet? </Text>
                         <Button title="Sign Up"
-                                color={Colors.ALT_BUTTON}
+                                color={Colors.DARKER_BUTTON}
                                 onPress={() => navigation.navigate('Sign Up')}/>
                     </View>
 
                 </View>
             </View>
-        </View>
+
+        </KeyboardAvoidingView>
     );
 }
 
 
 const styles = StyleSheet.create({
-    screen: {
-        flex: 1,
-        flexDirection: 'column'
-    },
 
     imageContainer: {
         flex: 4,
-        paddingTop: 0,
-        paddingBottom: 20,
+        marginTop: 0,
+        marginBottom: 20,
         alignItems: 'center',
         justifyContent: 'flex-start',
     },
@@ -149,34 +145,21 @@ const styles = StyleSheet.create({
 
     contentContainer: {
         flex: 6,
-        paddingHorizontal: 20,
-        paddingBottom: 100,
-        justifyContent: 'center'
-    },
-
-    content: {
-        paddingBottom: 10
+        marginHorizontal: 20,
+        marginBottom: 100,
+        justifyContent: 'flex-start',
     },
 
     inputContainer: {
         flex: 4,
-        paddingVertical: 20,
-        justifyContent: 'center',
+        marginVertical: 20,
+        justifyContent: 'flex-start',
     },
 
     buttonContainer: {
-        flex: 4,
-        width: '100%',
+        flex: 3,
         justifyContent: 'flex-start',
         alignItems: 'center'
-    },
-
-    signUpContainer: {
-        width: '100%',
-        paddingVertical: 10,
-        flexDirection: 'row',
-        alignItems: 'center',
-        justifyContent: 'center'
     },
 
     titleTextContainer: {
@@ -185,14 +168,22 @@ const styles = StyleSheet.create({
         justifyContent: 'flex-end',
     },
 
-    signIn: {
+    signInText: {
         fontSize: Fonts.XL,
         fontWeight: 'bold',
-        paddingBottom: 4,
+        paddingVertical: 8,
+    },
+
+    signInSubtext: {
+        fontSize: Fonts.XS,
     },
 
     inputSubContainer: {
         paddingBottom: 20,
+    },
+
+    confirmButtonContainer: {
+        paddingTop: 10,
     },
 
     accDetailsHeader: {
@@ -202,18 +193,26 @@ const styles = StyleSheet.create({
     },
 
     textInput: {
-        height: 35,
-        width: '100%',
-        borderColor: 'grey',
+        color: Colors.DARK_TEXT,
+        borderColor: Colors.LIGHT_BORDER,
         borderWidth: 2,
         borderRadius: 4,
-        paddingHorizontal: 8,
+        padding: 8,
     },
 
-    back: {
-        width: '30%'
-    }
+    signUpContainer: {
+        marginTop: 20,
+        marginVertical: 10,
+        flexDirection: 'row',
+        justifyContent: 'flex-start',
+        alignItems: 'center',
+    },
 
+    noAccountText: {
+        padding: 6,
+        color: Colors.DARK_TEXT,
+        fontSize: Fonts.M,
+    }
 
 });
 

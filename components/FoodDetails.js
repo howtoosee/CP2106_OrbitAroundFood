@@ -131,9 +131,10 @@ function FoodDetails({route, navigation}) {
 
             <View style={styles.imageContainer}>
                 {(isLoading || photoUri === '')
-                    ? <ActivityIndicator size='small' color='black'/>
-                    :
-                    <Image
+                    ? <View style={styles.loadingContainer}>
+                        <ActivityIndicator size='small' color='black'/>
+                    </View>
+                    : <Image
                         style={styles.image}
                         source={{uri: photoUri}}
                     />
@@ -302,8 +303,6 @@ const styles = StyleSheet.create({
 
     loadingContainer: {
         flex: 1,
-        paddingBottom: 100,
-        flexDirection: 'row',
         alignItems: 'center',
         justifyContent: 'center',
     },

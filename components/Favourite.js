@@ -92,11 +92,13 @@ const styles = StyleSheet.create({
         flex: 1,
         justifyContent: 'center',
         alignItems: 'flex-start',
+        marginTop: 10,
     },
 
     headerText: {
         color: Colors.DARK_TEXT,
         fontSize: Fonts.S,
+        fontWeight: 'bold',
     },
 
     contentContainer: {
@@ -105,8 +107,8 @@ const styles = StyleSheet.create({
 
     emptyFavContainer: {
         flex: 1,
-        paddingTop: '10%',
-        paddingBottom: '80%',
+        // marginTop: '20%',
+        marginBottom: '30%',
         justifyContent: 'center',
         alignItems: 'center',
     },
@@ -114,6 +116,8 @@ const styles = StyleSheet.create({
     noFavText: {
         fontSize: Fonts.S,
         color: Colors.TEXT,
+        fontStyle: 'italic',
+        fontWeight: 'bold',
     },
 
     searchResultContainer: {

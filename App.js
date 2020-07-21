@@ -8,15 +8,20 @@ import {
     Favourite,
     FoodDetails,
     HelpBuyPls,
-    StartScreenLoggedIn,
+    RequestDirectory,
+    RequestResult,
+    MyRequestInput,
     LeaveReview,
+    SignInScreen,
     Profile,
     Recommendation,
     Search,
     SearchResults,
-    SignInScreen,
     SignUpScreen,
-    StartScreen
+    StartScreen,
+    DateAndTimePicker,
+    AcceptRequestInput,
+    MyConfirmedRequestList
 } from './components';
 
 
@@ -37,7 +42,6 @@ export default function App() {
                     <stack.Screen name="Welcome"
                                   component={StartScreen}
                     />
-
 
                     <stack.Screen name="Sign In"
                                   component={SignInScreen}
@@ -71,15 +75,36 @@ export default function App() {
                                   component={Favourite}
                     />
 
-
                     <stack.Screen name="Lemme Help"
                                   component={HelpBuyPls}
-                                  // options={{cardStyleInterpolator: forFade}}
+                    />
+
+                    <stack.Screen name="My Request"
+                                  component={MyRequestInput}
+                    />
+
+                    <stack.Screen name="Request Help"
+                                  component={RequestDirectory}
+                    />
+
+                    <stack.Screen name="DateTimePicker"
+                                  component={DateAndTimePicker}
+                    />
+
+                    <stack.Screen name="Accept Request"
+                                  component={AcceptRequestInput}
+                    />
+
+                    <stack.Screen name="Confirmed Request List"
+                                  component={MyConfirmedRequestList}
+                    />
+
+                    <stack.Screen name="Food Choices"
+                                  component={RequestResult}
                     />
 
                     <stack.Screen name="Profile"
                                   component={Profile}
-                                  // options={{cardStyleInterpolator: forFade}}
                     />
 
                 </stack.Navigator>

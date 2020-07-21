@@ -5,8 +5,7 @@ import {Colors, Fonts, DefaultStyles, firebaseDB} from '../constants';
 
 const userCollection = firebaseDB.firestore().collection('USER');
 
-
-function SignUpScreen({navigation}) {
+function SignUpScreen({ navigation }) {
 
     const [username, setUsername] = useState('');
     const [number, setNumber] = useState('');
@@ -39,6 +38,7 @@ function SignUpScreen({navigation}) {
 
 
     const signUpHandler = () => {
+
         firebaseDB.auth()
             .createUserWithEmailAndPassword(email, password)
             .then(() => firebaseDB.auth()
@@ -192,13 +192,11 @@ function SignUpScreen({navigation}) {
                         />
                     </View>
                 </View>
-
             </View>
 
         </KeyboardAvoidingView>
     );
 }
-
 
 const styles = StyleSheet.create({
 

@@ -1,47 +1,38 @@
-import DefaultHeader from "./DefaultHeader";
 import Favourite from './Favourite';
-import Filter from './Filter';
-import FoodDetails from './FoodDetails';
 import HelpBuyPls from './HelpBuyPls';
+import Home from './Home';
+import LeaveReview from './LeaveReview';
+import SignInScreen from './SignInScreen';
+import Profile from './Profile';
+import Recommendation from './Recommendation';
+import FoodDetails from './FoodDetails';
+import Search from './Search';
+import SearchResults from './SearchResults';
+import SignUpScreen from './SignUpScreen';
+import StartScreen from './StartScreen';
 import RequestDirectory from './RequestDirectory';
 import RequestResult from './RequestResult';
 import MyRequestInput from './MyRequestInput';
 import DateAndTimePicker from './DateAndTimePicker';
 import AcceptRequestInput from './AcceptRequestInput';
 import MyConfirmedRequestList from './MyConfirmedRequestList';
-import LeaveReview from './LeaveReview';
-import NoSignInWarningDialogue from './NoSignInWarningDialogue';
-import Profile from './Profile';
-import Recommendation from './Recommendation';
-import Search from './Search';
-import SearchResults from './SearchResults';
-import SignInScreen from './SignInScreen';
-import SignUpScreen from './SignUpScreen';
-import StartScreen from './StartScreen';
-import StartScreenButton from './StartScreenButton';
-import StartScreenLoggedIn from './StartScreenLoggedIn';
-
 
 export {
-    DefaultHeader,
     Favourite,
-    Filter,
     FoodDetails,
     HelpBuyPls,
     RequestDirectory,
     RequestResult,
     MyRequestInput,
+    Home,
     LeaveReview,
-    NoSignInWarningDialogue,
+    SignInScreen,
     Profile,
     Recommendation,
     Search,
     SearchResults,
-    SignInScreen,
     SignUpScreen,
     StartScreen,
-    StartScreenButton,
-    StartScreenLoggedIn,
     DateAndTimePicker,
     AcceptRequestInput,
     MyConfirmedRequestList

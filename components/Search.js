@@ -1,5 +1,6 @@
 import React, {useState} from 'react';
-import {StyleSheet, Text, TextInput, Button, View, ScrollView, TouchableOpacity, Modal} from 'react-native';
+import {StyleSheet, Button, Text, TextInput, View, ScrollView, TouchableOpacity, Modal} from 'react-native';
+import {Button as ButtonRNE} from 'react-native-elements';
 import Icon from 'react-native-vector-icons/FontAwesome';
 
 import Filter from './Filter';
@@ -64,102 +65,106 @@ function Search({navigation}) {
 
         <View style={DefaultStyles.screen}>
 
-            <View style={DefaultStyles.contentContainer}>
+            <Modal animationType="slide"
+                   transparent={false}
+                   visible={isFilterVisible}>
+                <Filter filters={filters}
+                        filterNames={filterNames}
+                        setFilters={setFilters}
+                        setFilterNames={setFilterNames}
+                        setVisible={setFilterVisible}
+                />
+            </Modal>
 
-                <Modal animationType="slide"
-                       transparent={false}
-                       visible={isFilterVisible}>
-                    <Filter filters={filters}
-                            filterNames={filterNames}
-                            setFilters={setFilters}
-                            setFilterNames={setFilterNames}
-                            setVisible={setFilterVisible}
+            <View style={styles.searchBar}>
+
+                <View style={styles.inputContainer}>
+
+                    <TextInput style={styles.inputText}
+                               placeholder="What do you wanna eat?"
+                               onChangeText={searchInputHandler}
+                               value={searchString}
                     />
-                </Modal>
 
-                <View style={styles.searchBar}>
+                </View>
 
-                    <View style={styles.inputContainer}>
-
-                        <TextInput style={styles.inputText}
-                                   placeholder="What do you wanna eat?"
-                                   onChangeText={searchInputHandler}
-                                   value={searchString}
-                        />
-
-                    </View>
-
-                    <View style={styles.searchButton}>
-                        <Button
+                <View style={styles.searchButton}>
+                    <ButtonRNE type='clear'
                             icon={
                                 <Icon
                                     name="search"
-                                    size={15}
+                                    size={25}
                                     color={Colors.BUTTON}
                                 />
                             }
-                            title='Find'
                             color={Colors.BUTTON}
                             onPress={searchHandler}
-                        />
-                    </View>
+                    />
+                </View>
 
-                    <View style={styles.filterButton}>
-                        <Button
+                <View style={styles.filterButton}>
+                    <ButtonRNE type='clear'
                             icon={
                                 <Icon
                                     name="filter"
-                                    size={15}
+                                    size={25}
                                     color={Colors.BUTTON}
                                 />
                             }
-                            title="Filters"
                             color={Colors.BUTTON}
                             onPress={filterHandler}
-                        />
-                    </View>
-
-
-                </View>
-
-
-                <View style={styles.searchHistoryOverallContainer}>
-
-                    <View style={styles.searchHistoryTitle}>
-                        <Text style={styles.searchHistoryTitleText}>
-                            Search History
-                        </Text>
-                    </View>
-
-                    <View style={styles.searchHistoryContainer}>
-                        <ScrollView>
-                            {searchHist.map(item => (
-
-                                <TouchableOpacity
-                                    key={getKey("touchable_opacity")}
-                                    onPress={() => searchInputHandler(item)}>
-
-                                    <View style={styles.searchHistoryTextContainer}>
-                                        <Text style={styles.searchHistoryText}
-                                              key={getKey("search_hist")}>
-                                            {item}
-                                        </Text>
-                                    </View>
-
-                                </TouchableOpacity>
-                            ))}
-                        </ScrollView>
-                    </View>
-
-
-                </View>
-
-                <View style={styles.searchHistoryClearButton}>
-                    <Button title="Clear search history"
-                            color={Colors.BUTTON}
-                            onPress={clearSearchHistHandler}
                     />
                 </View>
+
+
+            </View>
+
+
+            <View style={styles.searchHistoryOverallContainer}>
+
+                <View style={styles.searchHistoryTitle}>
+                    <Text style={styles.searchHistoryTitleText}>
+                        Search History
+                    </Text>
+                </View>
+
+                <View style={styles.searchHistoryContainer}>
+                    <ScrollView>
+                        {searchHist.map(item => (
+
+                            <TouchableOpacity
+                                key={getKey("touchable_opacity")}
+                                onPress={() => searchInputHandler(item)}>
+
+                                <View style={styles.searchHistoryTextContainer}>
+                                    <Text style={styles.searchHistoryText}
+                                          key={getKey("search_hist")}>
+                                        {item}
+                                    </Text>
+                                </View>
+
+                            </TouchableOpacity>
+
+                                // <Button key={getKey("button")}
+                                //         title={item}
+                                //         type="outline"
+                                //         color
+                                //         titleStyle={styles.searchHistoryText}
+                                //         containerStyle={{color: Colors.TEXT}}
+                                //         onPress={() => searchInputHandler(item)}
+                                // />
+                        ))}
+                    </ScrollView>
+                </View>
+
+
+            </View>
+
+            <View style={styles.searchHistoryClearButton}>
+                <Button title="Clear search history"
+                        color={Colors.BUTTON}
+                        onPress={clearSearchHistHandler}
+                />
             </View>
 
         </View>
@@ -178,26 +183,26 @@ const styles = StyleSheet.create({
     },
 
     filterButton: {
-        flex: 3,
+        flex: 2,
         width: '90%',
         justifyContent: 'center',
         alignItems: 'flex-end',
     },
 
     searchButton: {
-        flex: 3,
+        flex: 2,
         width: '90%',
         justifyContent: 'space-around',
         alignItems: 'flex-end',
     },
 
     inputContainer: {
-        flex: 9,
+        flex: 10,
         // borderWidth: 2,
         borderBottomWidth: 2,
         borderColor: Colors.BORDER,
         borderRadius: 0,
-        paddingHorizontal: 8,
+        paddingHorizontal: 4,
         paddingVertical: 8,
     },
 
@@ -230,6 +235,8 @@ const styles = StyleSheet.create({
 
 
     searchHistoryText: {
+        alignItems: 'flex-start',
+        justifyContent: 'flex-start',
         fontSize: Fonts.XS,
         color: Colors.TEXT,
     },
@@ -245,7 +252,7 @@ const styles = StyleSheet.create({
     },
 
     searchHistoryClearButton: {
-        flex: 4,
+        flex: 5,
         paddingTop: 25,
         justifyContent: 'center',
     }

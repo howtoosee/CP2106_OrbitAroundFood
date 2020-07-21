@@ -10,7 +10,7 @@ function SearchResults({route, navigation}) {
     const {searchKey} = route.params;
     const {filters} = route.params;
     const {filterNames} = route.params;
-    const filterString = filterNames.length === 0 ? "none" : filterNames.join(", ");
+    const filterString = filterNames.length === 0 ? "None" : filterNames.join(", ");
 
     const [isLoading, setLoading] = useState(true);
     const [results, setResList] = useState([]);
@@ -119,6 +119,7 @@ const styles = StyleSheet.create({
     resultStatText: {
         color: Colors.DARK_TEXT,
         fontSize: Fonts.XS,
+        fontWeight: 'bold',
     },
 
     noResultText: {

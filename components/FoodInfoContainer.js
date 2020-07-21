@@ -12,16 +12,14 @@ function FoodInfoContainer(props) {
         <View style={styles.searchResultContainer}>
 
             <View style={styles.searchResultInfoContainer}>
-                <View style={styles.headerLineContainer}>
 
-                    <Text style={styles.searchResultKey}>
-                        {item.name}
-                    </Text>
+                <Text style={styles.searchResultKey}>
+                    {item.name}
+                </Text>
 
-                    <Text style={styles.searchResultInfo}>
-                        ({item.price})
-                    </Text>
-                </View>
+                <Text style={styles.searchResultPrice}>
+                    ({item.price})
+                </Text>
 
                 <Text style={styles.searchResultInfo}>
                     {item.store.store_name} ({item.store.location})
@@ -84,7 +82,15 @@ const styles = StyleSheet.create({
         fontSize: Fonts.S,
         fontWeight: "bold",
         paddingBottom: 4,
+        marginBottom: 2,
         marginRight: 10,
+    },
+
+    searchResultPrice: {
+        color: Colors.TEXT,
+        fontSize: Fonts.XS,
+        fontWeight: "bold",
+        paddingBottom: 4,
     },
 
     searchResultInfo: {

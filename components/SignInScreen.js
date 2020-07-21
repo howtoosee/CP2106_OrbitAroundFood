@@ -60,7 +60,7 @@ function SignInScreen({navigation}) {
     return (
 
         <KeyboardAvoidingView style={DefaultStyles.keyboardAvoidScreen}
-                              behavior='position'
+                         s     behavior='position'
         >
 
             <View style={styles.imageContainer}>

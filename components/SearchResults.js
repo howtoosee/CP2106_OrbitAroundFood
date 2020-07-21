@@ -61,7 +61,7 @@ function SearchResults({route, navigation}) {
                                 }
 
                                 <View style={styles.endOfResultsText}>
-                                    <Text>No more liao!</Text>
+                                    <Text style={styles.endOfResultsText}>No more liao!</Text>
                                 </View>
 
                             </ScrollView>
@@ -122,8 +122,8 @@ const styles = StyleSheet.create({
     },
 
     noResultText: {
-        color: Colors.DARK_TEXT,
         fontSize: Fonts.M,
+        color: Colors.TEXT,
         fontStyle: 'italic',
         fontWeight: 'bold',
     },
@@ -131,6 +131,8 @@ const styles = StyleSheet.create({
     endOfResultsText: {
         height: 180,
         paddingVertical: 20,
+        fontSize: Fonts.XS,
+        color: Colors.TEXT,
         fontStyle: 'italic',
         alignItems: 'center',
         // justifyContent: 'center'

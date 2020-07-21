@@ -13,6 +13,7 @@ import {Colors, DefaultStyles, Fonts, firebaseDB} from "../constants";
 function FoodDetails({route, navigation}) {
     const [isLoading, setLoading] = useState(true);
 
+    const onGoBack = route.params?.onGoBack ? route.params.onGoBack : () => null;
     const foodObj = route.params?.foodObj;
     const [isSaved, setSaved] = useState(isFavourite(foodObj));
     const [rating, setRating] = useState(null);
@@ -52,19 +53,15 @@ function FoodDetails({route, navigation}) {
     const addFavHandler = () => {
         addFavourite(foodObj);
         setSaved(true);
-        if (route.params?.onGoBack) {
-            route.params?.onGoBack();
-        }
-        favAlert('added');
+        onGoBack();
+        // favAlert('added');
     }
 
     const removeFavHandler = () => {
         removeFavourite(foodObj);
         setSaved(false);
-        if (route.params?.onGoBack) {
-            route.params?.onGoBack();
-        }
-        favAlert('removed');
+        onGoBack();
+        // favAlert('removed');
     }
 
     const loadReviews = () => {
@@ -104,6 +101,7 @@ function FoodDetails({route, navigation}) {
                 isSaved={isSaved}
                 addFavHandler={addFavHandler}
                 removeFavHandler={removeFavHandler}
+                onGoBack={() => onGoBack()}
             />
 
             <View style={styles.imageContainer}>

@@ -1,5 +1,5 @@
 import React, {useState} from 'react';
-import {StyleSheet, View, Button, Text, ScrollView} from 'react-native';
+import {StyleSheet, View, Text, ScrollView} from 'react-native';
 
 import FoodInfoContainer from "./FoodInfoContainer";
 import {Colors, Fonts, DefaultStyles} from '../constants';
@@ -10,7 +10,10 @@ function Favourite({navigation}) {
 
     const [favsArr, setFavsArr] = useState(readFavourites());
 
-    const refresh = () => setFavsArr(readFavourites());
+    const refresh = () => {
+        setFavsArr(readFavourites())
+        // console.log('refreshed favourites:', favsArr);
+    }
 
     return (
         <View style={DefaultStyles.screen}>
@@ -20,18 +23,18 @@ function Favourite({navigation}) {
             </View>
 
             <View style={styles.contentContainer}>
-            {(favsArr.length === 0)
-                ? <View style={styles.emptyFavContainer}>
-                    <Text style={styles.noFavText}>No favourites yet :(</Text>
-                </View>
+                {(favsArr.length === 0)
+                    ? <View style={styles.emptyFavContainer}>
+                        <Text style={styles.noFavText}>No favourites yet :(</Text>
+                    </View>
 
 
-                : <ScrollView>
-                    {
-                        favsArr.map(item => getFavsItemElement(item, navigation, refresh))
-                    }
-                </ScrollView>
-            }
+                    : <ScrollView>
+                        {
+                            favsArr.map(item => getFavsItemElement(item, navigation, refresh))
+                        }
+                    </ScrollView>
+                }
             </View>
 
 
@@ -51,50 +54,6 @@ function getFavsItemElement(item, navigation, refresh) {
             navigation={navigation}
             onGoBack={refresh}
         />
-        // <View style={styles.searchResultContainer} key={getKey(item.name, 'favsList')}>
-        //
-        //     <View style={styles.searchResultInfoContainer}>
-        //         <View style={{
-        //             flexDirection: 'row',
-        //             justifyContent: 'flex-start',
-        //             alignItems: 'center',
-        //             marginBottom: 4
-        //         }}>
-        //
-        //             <Text style={styles.searchResultKey}>
-        //                 {item.name}
-        //             </Text>
-        //
-        //             <Text style={styles.searchResultInfo}>
-        //                 ({item.price})
-        //             </Text>
-        //         </View>
-        //
-        //         <Text style={styles.searchResultInfo}>
-        //             {item.store.store_name} ({item.store.location})
-        //         </Text>
-        //
-        //         <Text style={styles.searchResultInfo}>
-        //             {item.store.open_hours} - {item.store.close_hours}
-        //         </Text>
-        //     </View>
-        //
-        //     <View style={styles.detailsButtonContainer}>
-        //         <Button title={'More'}
-        //                 titleStyle={styles.detailsButton}
-        //                 color={Colors.BUTTON}
-        //                 onPress={() => {
-        //                     navigation.navigate('Food Details',
-        //                         {
-        //                             foodObj: item,
-        //                             onGoBack: () => refresh()
-        //                         });
-        //                 }
-        //                 }
-        //         />
-        //     </View>
-        //
-        // </View>
     );
 }
 

@@ -1,5 +1,8 @@
 import React from "react";
-import {Button, Text, View, StyleSheet} from "react-native";
+import {Text, View, StyleSheet} from "react-native";
+import {Button} from 'react-native-elements';
+import Icon from 'react-native-vector-icons/FontAwesome';
+import Icon5 from 'react-native-vector-icons/FontAwesome5';
 import {Colors, Fonts} from "../constants";
 
 
@@ -18,7 +21,7 @@ function FoodInfoContainer(props) {
                 </Text>
 
                 <Text style={styles.searchResultPrice}>
-                    ({item.price})
+                    {item.price}
                 </Text>
 
                 <Text style={styles.searchResultInfo}>
@@ -32,21 +35,40 @@ function FoodInfoContainer(props) {
 
             {(!useFavButton)
                 ? <View style={styles.detailsButtonContainer}>
-                    <Button title={'More'}
-                            color={Colors.BUTTON}
+                    <Button type='clear'
+                            icon={
+                                <Icon5
+                                    name='chevron-right'
+                                    size={30}
+                                    color={Colors.BUTTON}
+                                />
+                            }
                             onPress={() => navigation.navigate('Food Details',
                                 {
                                     foodObj: item,
                                     onGoBack: () => onGoBack()
-                                }
-                            )
+                                })
                             }
                     />
                 </View>
                 : <View style={styles.favButtonContainer}>
-                    <Button title={isSaved ? 'Del' : 'Fav'}
-                            color={Colors.BUTTON}
-                            onPress={isSaved ? removeFavHandler : addFavHandler}
+                    <Button type='clear'
+                            // title={isSaved ? 'Del' : 'Fav'}
+                            icon={
+                                <Icon
+                                    name={isSaved ? 'heart' : 'heart-o'}
+                                    size={30}
+                                    color={Colors.BUTTON}
+                                />
+                            }
+                            onPress={() => {
+                                if (isSaved) {
+                                    removeFavHandler();
+                                } else {
+                                    addFavHandler();
+                                }
+                                onGoBack();
+                            }}
                     />
                 </View>
             }

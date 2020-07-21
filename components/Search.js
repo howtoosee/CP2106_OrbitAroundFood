@@ -23,7 +23,7 @@ function Search({navigation}) {
     const searchHandler = () => {
         if (isValidString(searchString)) {
             console.log("Searching for: " + searchString);
-            addSearchHist();
+            addSearchHistHandler();
             setSearchString('');
 
             console.log("Active filters:", filters);
@@ -45,10 +45,15 @@ function Search({navigation}) {
     const isValidString = str => str.length > 0 && str.trim().length > 0;
     // checks if string is valid
 
-    const addSearchHist = () => {
+    const addSearchHistHandler = () => {
         addHistory(searchString);
         setSearchHist(getHistory());
     };
+
+    const clearSearchHistHandler = () => {
+        clearHistory();
+        setSearchHist(getHistory());
+    }
 
 
     const getKey = objType => objType + "_" + Math.floor(Math.random() * 10000);
@@ -121,34 +126,39 @@ function Search({navigation}) {
                 <View style={styles.searchHistoryOverallContainer}>
 
                     <View style={styles.searchHistoryTitle}>
-                        <Text style={styles.searchHistoryTitleText}>Search History</Text>
+                        <Text style={styles.searchHistoryTitleText}>
+                            Search History
+                        </Text>
                     </View>
 
-                    <View  style={styles.searchHistoryContainer}>
-                    <ScrollView>
-                        {searchHist.map(item => (
+                    <View style={styles.searchHistoryContainer}>
+                        <ScrollView>
+                            {searchHist.map(item => (
 
-                            <TouchableOpacity
-                                key={getKey("touchable_opacity")}
-                                onPress={() => searchInputHandler(item)}>
+                                <TouchableOpacity
+                                    key={getKey("touchable_opacity")}
+                                    onPress={() => searchInputHandler(item)}>
 
-                                <View style={styles.searchHistoryTextContainer}>
-                                    <Text style={styles.searchHistoryText}
-                                          key={getKey("search_hist")}>
-                                        {item}
-                                    </Text>
-                                </View>
+                                    <View style={styles.searchHistoryTextContainer}>
+                                        <Text style={styles.searchHistoryText}
+                                              key={getKey("search_hist")}>
+                                            {item}
+                                        </Text>
+                                    </View>
 
-                            </TouchableOpacity>
-                        ))}
-                    </ScrollView>
+                                </TouchableOpacity>
+                            ))}
+                        </ScrollView>
                     </View>
 
 
                 </View>
 
                 <View style={styles.searchHistoryClearButton}>
-                    <Button title="Clear search history" color={Colors.BUTTON} onPress={clearHistory}/>
+                    <Button title="Clear search history"
+                            color={Colors.BUTTON}
+                            onPress={clearSearchHistHandler}
+                    />
                 </View>
             </View>
 

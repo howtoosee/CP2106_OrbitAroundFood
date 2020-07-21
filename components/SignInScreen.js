@@ -1,43 +1,68 @@
-import React, { useState } from 'react';
-import { View, TextInput, Text, Button, StyleSheet, Image, Alert, ScrollView } from 'react-native';
 
-import Colors from '../constants/Colors';
-import Fonts from '../constants/Fonts';
+import React, {useState, useEffect} from 'react';
+import {View, KeyboardAvoidingView, TextInput, Text, Button, StyleSheet, Image, Alert} from 'react-native';
 
-import * as firebase from 'firebase';
+import {Colors, Fonts, DefaultStyles, firebaseDB} from '../constants';
 
 function SignInScreen({ navigation }) {
 
-    const [email, enteredEmail] = useState('');
-    const [password, enteredPassword] = useState('');
-    const [signInSuccessful, setIsSignInSuccessful] = useState(false);
-    const [errorMessage, setErrorMessage] = useState(null);
+    const [email, setEmailInput] = useState('');
+    const [password, setPasswordInput] = useState('');
 
-    const handleLogIn = () => {
-
-        firebase.
-            auth().
-            signInWithEmailAndPassword(email, password).
-            then(() => {
-                enteredEmail('');
-                enteredPassword('');
-                navigation.navigate('Orbit Around Food');
-            }).
-            then(() => {
-                setIsSignInSuccessful(true);
-            }).
-            catch(error => {
-                setErrorMessage(error);
-                if (!errorMessage) {
-                    Alert.alert('Sign In Error', 'Invalid Account');
-                } else if (errorMessage) {
-                    Alert.alert('Sign In Error', errorMessage.toString());
+    const signInErrorAlert = err => {
+        Alert.alert(
+            'Error',
+            err.message,
+            [
+                {
+                    text: 'Dismiss'
                 }
-            });
+            ]
+        );
     }
 
+    const signInHandler = () => {
+        firebaseDB.auth()
+            .signInWithEmailAndPassword(email, password)
+            .catch(err => {
+                    signInErrorAlert(err);
+                    console.log('Error signing in:', err.code, err.message);
+                }
+            )
+            .then(() => signInSuccessHandler());
+    }
+
+    const signInSuccessHandler = () => {
+        const user = firebaseDB.auth().currentUser;
+
+        if (user) {
+            const displayName = user.displayName;
+            console.log("Successfully signed in:", email, displayName);
+
+            Alert.alert(
+                'Success',
+                'Signed in as @' + displayName,
+                [
+                    {
+                        text: 'Ok',
+                        onPress: () => {
+                            setEmailInput('');
+                            setPasswordInput('');
+                            navigation.goBack();
+                        }
+                    }
+                ]
+            );
+        }
+    }
+
+
     return (
-        <ScrollView style={styles.screen}>
+
+        <KeyboardAvoidingView style={DefaultStyles.keyboardAvoidScreen}
+                              behavior='position'
+        >
+
             <View style={styles.imageContainer}>
                 <Image
                     style={styles.image}
@@ -45,56 +70,75 @@ function SignInScreen({ navigation }) {
                 />
             </View>
             <View style={styles.contentContainer}>
-                <View style={styles.content}>
-                    <View>
-                        <Text style={styles.signIn}>Sign In</Text>
-                        <Text>Sign into OrbitAroundFood</Text>
-                    </View>
-                    <View style={styles.inputContainer}>
-                        <Text style={styles.accDetails}>Email</Text>
-                        <TextInput
-                            placeholder=" Email"
-                            style={styles.textInput}
-                            autoCapitalize="none"
-                            onChangeText={email => enteredEmail(email)}
-                            value={email}
-                        />
-                        <View style={styles.inputContainer}>
-                            <Text style={styles.accDetails}>Password</Text>
+
+                <View style={styles.titleTextContainer}>
+                    <Text style={styles.signInText}>Sign In</Text>
+                    <Text style={styles.signInSubtext}>Sign in to OrbitAroundFood</Text>
+                </View>
+
+                <View style={styles.inputContainer}>
+
+                    <View style={styles.inputSubContainer}>
+                        <Text style={styles.accDetailsHeader}>Email</Text>
+
+                        <View style={styles.textInputContainer}>
                             <TextInput
-                                placeholder=" Password"
+                                placeholder="Email"
                                 style={styles.textInput}
                                 autoCapitalize="none"
-                                onChangeText={password => enteredPassword(password)}
+                                onChangeText={email => setEmailInput(email)}
+                                value={email}
+                            />
+                        </View>
+                    </View>
+
+                    <View style={styles.inputSubContainer}>
+                        <Text style={styles.accDetailsHeader}>Password</Text>
+
+                        <View style={styles.textInputContainer}>
+                            <TextInput
+                                placeholder="Password"
+                                style={styles.textInput}
+                                autoCapitalize="none"
+                                onChangeText={password => setPasswordInput(password)}
                                 value={password}
                                 secureTextEntry={true}
                             />
                         </View>
                     </View>
+
                 </View>
                 <View style={styles.buttonContainer}>
-                    <Button color={Colors.BUTTON} title="Confirm" onPress={() => {
-                        if (email.length && password.length) { handleLogIn() }
-                    }} />
-                    <View style={styles.helpContainer}>
-                        <Text style={{ fontSize: Fonts.S, paddingTop: 6 }}>Have not created an account?  </Text>
-                        <Button title="Sign Up" color={Colors.ALT_BUTTON} onPress={() => navigation.navigate('Sign Up')} />
+
+                    <View style={styles.confirmButtonContainer}>
+                        <Button color={Colors.BUTTON}
+                                title="Confirm"
+                                onPress={signInHandler}
+                        />
+                    </View>
+
+                    <View style={styles.signUpContainer}>
+                        <Text style={styles.noAccountText}>No account yet? </Text>
+                        <Button title="Sign Up"
+                                color={Colors.DARKER_BUTTON}
+                                onPress={() => navigation.navigate('Sign Up')}/>
                     </View>
                 </View>
             </View>
-        </ScrollView>
+
+
+        </KeyboardAvoidingView>
     );
 }
 
 const styles = StyleSheet.create({
-    screen: {
-        flex: 1,
-        flexDirection: 'column'
-    },
 
     imageContainer: {
         // flex: 4,
         paddingTop: 10,
+        flex: 4,
+        marginTop: 0,
+        marginBottom: 20,
         alignItems: 'center',
     },
 
@@ -104,57 +148,75 @@ const styles = StyleSheet.create({
     },
 
     contentContainer: {
-        // flex: 3,
-        paddingHorizontal: 45,
-        justifyContent: 'center'
-    },
-
-    content: {
-        paddingBottom: 10
+        flex: 6,
+        marginHorizontal: 20,
+        marginBottom: 100,
+        justifyContent: 'flex-start',
     },
 
     inputContainer: {
-        paddingTop: 10
+        flex: 4,
+        marginVertical: 20,
+        justifyContent: 'flex-start',
     },
 
     buttonContainer: {
-        // flex: 4,
-        width: '100%',
-        justifyContent: 'center',
+        flex: 3,
+        justifyContent: 'flex-start',
         alignItems: 'center'
     },
 
-    helpContainer: {
-        width: '100%',
-        paddingVertical: 5,
-        flexDirection: 'row',
-        justifyContent: 'center'
+    titleTextContainer: {
+        flex: 2,
+        paddingBottom: 10,
+        justifyContent: 'flex-end',
     },
 
-    signIn: {
+    signInText: {
         fontSize: Fonts.XL,
-        fontWeight: 'bold'
-
+        fontWeight: 'bold',
+        paddingVertical: 8,
     },
 
-    accDetails: {
+    signInSubtext: {
+        fontSize: Fonts.XS,
+    },
+
+    confirmButtonContainer: {
+        paddingTop: 10,
+    },
+
+    accDetailsHeader: {
         fontWeight: 'bold',
         fontSize: Fonts.M,
         paddingBottom: 3,
     },
 
-    textInput: {
-        height: 35,
-        width: '100%',
-        borderColor: 'grey',
-        borderWidth: 3,
-        padding: 5
+    textInputContainer: {
+        borderBottomWidth: 2,
+        borderRadius: 0,
+        borderColor: Colors.LIGHT_BORDER,
     },
 
-    back: {
-        width: '30%'
-    }
+    textInput: {
+        color: Colors.DARK_TEXT,
+        paddingVertical: 8,
+        paddingHorizontal: 4,
+    },
 
+    signUpContainer: {
+        marginTop: 20,
+        marginVertical: 10,
+        flexDirection: 'row',
+        justifyContent: 'flex-start',
+        alignItems: 'center',
+    },
+
+    noAccountText: {
+        padding: 6,
+        color: Colors.DARK_TEXT,
+        fontSize: Fonts.M,
+    }
 
 });
 

@@ -6,10 +6,16 @@ const DefaultStyles = StyleSheet.create({
 
     screen: {
         flex: 1,
-        paddingTop: 5,
-        paddingHorizontal: 30,
-        flexDirection: 'column',
-        justifyContent: 'space-between',
+        marginVertical: 5,
+        marginHorizontal: 30,
+    },
+
+    keyboardAvoidScreen: {
+        flex: 1,
+        marginVertical: 1,
+        marginHorizontal: 30,
+        justifyContent: 'center',
+        alignItems: 'center',
     },
 
     headerContainer: {

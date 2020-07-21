@@ -1,44 +1,38 @@
-import React, {useState, useEffect} from 'react';
-import {StyleSheet, View, Button, Text, ScrollView, ActivityIndicator} from 'react-native';
+import React, {useState} from 'react';
+import {StyleSheet, View, Button, Text, ScrollView} from 'react-native';
 
-import Colors from '../constants/Colors';
-import DefaultStyles from "../constants/DefaultStyles";
-
-import {readFavourites} from "../api/FavouritesApi";
+import FoodInfoContainer from "./FoodInfoContainer";
+import {Colors, Fonts, DefaultStyles} from '../constants';
+import {readFavourites} from "../api/FavouritesLogic";
 
 
 function Favourite({navigation}) {
 
-    const [favsArr, setFavsArr] = useState([]);
-    const [isLoading, setLoading] = useState(true);
+    const [favsArr, setFavsArr] = useState(readFavourites());
 
-    useEffect(() => {
-        readFavourites(setFavsArr)
-            .then(() => setLoading(false))
-            // .then(() => console.log("FavsArr:", favsArr))
-            .catch(err => console.error("Error reading favourites:", err));
-    }, [setFavsArr, setLoading]);
+    const refresh = () => setFavsArr(readFavourites());
 
     return (
         <View style={DefaultStyles.screen}>
-            {isLoading
-                ? <View style={styles.loadingContainer}>
-                    <ActivityIndicator size='large' color='black'/>
-                    {/*<ActivityIndicator size='large' color={Colors.BUTTON}/>*/}
+
+            <View style={styles.headerContainer}>
+                <Text style={styles.headerText}>Saved favourites:</Text>
+            </View>
+
+            <View style={styles.contentContainer}>
+            {(favsArr.length === 0)
+                ? <View style={styles.emptyFavContainer}>
+                    <Text style={styles.noFavText}>No favourites yet :(</Text>
                 </View>
 
-                : (favsArr.length === 0)
-                    ? <View>
-                        <Text>No favourites yet</Text>
-                    </View>
 
-
-                    : <ScrollView>
-                        {
-                            favsArr.map(item => getFavsItemElement(item, navigation))
-                        }
-                    </ScrollView>
+                : <ScrollView>
+                    {
+                        favsArr.map(item => getFavsItemElement(item, navigation, refresh))
+                    }
+                </ScrollView>
             }
+            </View>
 
 
         </View>
@@ -47,60 +41,103 @@ function Favourite({navigation}) {
 }
 
 
-function getFavsItemElement(item, navigation) {
+function getFavsItemElement(item, navigation, refresh) {
     const getKey = (name, objType) => name + '_' + objType + "_" + Math.floor(Math.random() * 10000);
 
     return (
-        <View style={styles.searchResultContainer} key={getKey(item.name, 'favsList')}>
-
-            <View style={styles.searchResultInfoContainer}>
-                <Text style={styles.searchResultKey}>
-                    {item.name}
-                </Text>
-
-                <Text style={styles.searchResultInfo}>
-                    {item.price}
-                </Text>
-
-                <Text style={styles.searchResultInfo}>
-                    {item.store.store_name} ({item.store.location})
-                </Text>
-
-                <Text style={styles.searchResultInfo}>
-                    {item.store.open_hours} - {item.store.close_hours}
-                </Text>
-            </View>
-
-            <View style={styles.detailsButtonContainer}>
-                <Button title={'More'}
-                        titleStyle={styles.detailsButton}
-                        color={Colors.BUTTON}
-                        onPress={() => navigation.navigate('Food Details',
-                            {
-                                foodObj: item
-                            })
-                        }
-                />
-            </View>
-
-        </View>
+        <FoodInfoContainer
+            key={getKey(item.name, 'favsList')}
+            item={item}
+            navigation={navigation}
+            onGoBack={refresh}
+        />
+        // <View style={styles.searchResultContainer} key={getKey(item.name, 'favsList')}>
+        //
+        //     <View style={styles.searchResultInfoContainer}>
+        //         <View style={{
+        //             flexDirection: 'row',
+        //             justifyContent: 'flex-start',
+        //             alignItems: 'center',
+        //             marginBottom: 4
+        //         }}>
+        //
+        //             <Text style={styles.searchResultKey}>
+        //                 {item.name}
+        //             </Text>
+        //
+        //             <Text style={styles.searchResultInfo}>
+        //                 ({item.price})
+        //             </Text>
+        //         </View>
+        //
+        //         <Text style={styles.searchResultInfo}>
+        //             {item.store.store_name} ({item.store.location})
+        //         </Text>
+        //
+        //         <Text style={styles.searchResultInfo}>
+        //             {item.store.open_hours} - {item.store.close_hours}
+        //         </Text>
+        //     </View>
+        //
+        //     <View style={styles.detailsButtonContainer}>
+        //         <Button title={'More'}
+        //                 titleStyle={styles.detailsButton}
+        //                 color={Colors.BUTTON}
+        //                 onPress={() => {
+        //                     navigation.navigate('Food Details',
+        //                         {
+        //                             foodObj: item,
+        //                             onGoBack: () => refresh()
+        //                         });
+        //                 }
+        //                 }
+        //         />
+        //     </View>
+        //
+        // </View>
     );
 }
 
 
 const styles = StyleSheet.create({
 
-    content: {
+    headerContainer: {
         flex: 1,
-        flexDirection: 'column',
+        justifyContent: 'center',
+        alignItems: 'flex-start',
+        marginTop: 10,
+    },
+
+    headerText: {
+        color: Colors.DARK_TEXT,
+        fontSize: Fonts.S,
+        fontWeight: 'bold',
+    },
+
+    contentContainer: {
+        flex: 29,
+    },
+
+    emptyFavContainer: {
+        flex: 1,
+        // marginTop: '20%',
+        marginBottom: '30%',
+        justifyContent: 'center',
+        alignItems: 'center',
+    },
+
+    noFavText: {
+        fontSize: Fonts.S,
+        color: Colors.TEXT,
+        fontStyle: 'italic',
+        fontWeight: 'bold',
     },
 
     searchResultContainer: {
         marginTop: 10,
         padding: 10,
-        borderWidth: 2,
-        // borderColor: Colors.CARD,
-        borderColor: Colors.TEXT,
+        borderWidth: 1,
+        borderColor: Colors.BORDER,
         borderRadius: 4,
         width: '97%',
         color: Colors.TEXT,
@@ -108,14 +145,17 @@ const styles = StyleSheet.create({
     },
 
     searchResultKey: {
-        color: Colors.TEXT,
-        fontSize: 16,
+        color: Colors.DARK_TEXT,
+        fontSize: Fonts.S,
         fontWeight: "bold",
+        paddingBottom: 4,
+        marginRight: 10,
     },
 
     searchResultInfo: {
         color: Colors.TEXT,
-        fontSize: 14,
+        fontSize: Fonts.XS,
+        paddingBottom: 4,
     },
 
     loadingContainer: {

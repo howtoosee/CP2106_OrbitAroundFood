@@ -1,47 +1,68 @@
 import React, {useState} from 'react';
-import {StyleSheet, Text, TextInput, Button, View} from 'react-native';
+import {StyleSheet, Text, TextInput, Button, View, Alert} from 'react-native';
+import {Rating, AirbnbRating} from 'react-native-ratings';
 
 import {writeReviews} from "../api/ReviewsApi";
 
-import Colors from '../constants/Colors';
-import DefaultStyles from "../constants/DefaultStyles";
-
-import firebaseDB from '../constants/firebaseDB';
+import {Colors, DefaultStyles, Fonts, firebaseDB} from '../constants';
 
 
 function LeaveReview({route, navigation}) {
 
     const foodObj = route.params?.foodObj;
 
-    // const [userID, setUserID] = useState('');
     const user = firebaseDB.auth().currentUser;
-    console.log(user);
     const userID = user ? user.displayName : '';
+    const [rating, setRating] = useState(3);
     const [msgString, setMsgString] = useState('');
 
-    // const userIDInputHandler = userIDStr => setUserID(userIDStr);
     const msgInputHandler = msgStr => setMsgString(msgStr);
 
     const confirmHandler = () => {
-        if (userID.trim().length === 0) {
+        if (msgString.trim().length === 0) {
             // error msg
-            console.error("Error, userID can not be empty!");
-        } else if (msgString.trim().length === 0) {
-            // error msg
-            console.error("Error, comment string can not be empty!");
-        } else if (userID === '') {
-            console.error("Not signed in!");
+            Alert.alert(
+                'Error',
+                'Comment can not be empty!',
+                [
+                    {
+                        text: 'Dismiss'
+                    }
+                ]
+            );
+            console.log("Error, comment string can not be empty!");
+        } else if (!user) {
+            Alert.alert(
+                'Error',
+                "Something's wrong with the log in!",
+                [
+                    {
+                        text: 'Dismiss'
+                    }
+                ]
+            );
+            console.log("Error, something's wrong with the log in!");
         } else {
             // proper username and msg
             const reviewObj = {
                 userID: userID,
+                rating: rating,
                 comments: msgString
             }
 
             writeReviews(foodObj.id, reviewObj)
-                .then(() => navigation.goBack())
+                .then(() => route.params.onGoBack())
+                .then(() => Alert.alert(
+                    'Success',
+                    "Successfully commented!",
+                    [
+                        {
+                            text: 'Ok',
+                            onPress: () => navigation.goBack()
+                        }
+                    ]
+                ))
                 .catch(err => console.error("Error writing review:", err));
-
         }
     }
 
@@ -49,70 +70,66 @@ function LeaveReview({route, navigation}) {
     return (
         <View style={DefaultStyles.screen}>
 
-            <View style={DefaultStyles.contentContainer}>
+            <View style={styles.foodInfoContainer}>
 
-                <View style={styles.foodInfoContainer}>
+                <Text style={styles.searchResultKey}>
+                    {foodObj.name}
+                </Text>
 
-                    <Text style={styles.searchResultKey}>
-                        {foodObj.name}
-                    </Text>
+                <Text style={styles.searchResultInfo}>
+                    {foodObj.price}
+                </Text>
 
-                    <Text style={styles.searchResultInfo}>
-                        {foodObj.price}
-                    </Text>
+                <Text style={styles.searchResultInfo}>
+                    {foodObj.store.store_name} ({foodObj.store.location})
+                </Text>
 
-                    <Text style={styles.searchResultInfo}>
-                        {foodObj.store.store_name} ({foodObj.store.location})
-                    </Text>
+                <Text style={styles.searchResultInfo}>
+                    {foodObj.store.open_hours} - {foodObj.store.close_hours} hrs
+                </Text>
 
-                    <Text style={styles.searchResultInfo}>
-                        {foodObj.store.open_hours} - {foodObj.store.close_hours} hrs
-                    </Text>
+            </View>
 
+            <View style={styles.reviewContainer}>
+
+                <View style={styles.reviewTitleContainer}>
+                    <Text style={styles.reviewTitleText}>LemmeReview:</Text>
                 </View>
 
-                <View style={styles.reviewContainer}>
-                    <View style={styles.reviewHeader}>
-                        <Text style={styles.reviewHeaderText}>
-                            Leave a review:
-                        </Text>
-                    </View>
-
-                    <View style={styles.usernameSectionContainer}>
-                        <Text style={styles.usernameText}>Reviewing as: {userID === '' ? 'None' : '@'+userID}</Text>
-
-                        {/*<View style={styles.usernameInputContainer}>*/}
-
-                        {/*    <TextInput style={styles.textInput}*/}
-                        {/*               placeholder="your username"*/}
-                        {/*               onChangeText={userIDInputHandler}*/}
-                        {/*               value={userID}*/}
-                        {/*    />*/}
-
-                        {/*</View>*/}
-
-                    </View>
-
-                    <View style={styles.msgSectionContainer}>
-                        <Text style={styles.usernameText}>my comments</Text>
-                        <View style={styles.msgInputContainer}>
-                            <TextInput style={styles.textInput}
-                                       // multiline
-                                       numberOfLines={8}
-                                       placeholder="nice dish!"
-                                       onChangeText={msgInputHandler}
-                                       value={msgString}
-                            />
-                        </View>
-                    </View>
-                </View>
-
-                <View style={styles.sendButtonContainer}>
-                    <Button title={"Send"}
-                            onPress={() => confirmHandler()}
+                <View style={styles.ratingSectionContainer}>
+                    <Text style={styles.reviewHeaderText}>{'@' + userID}'s rating:</Text>
+                    <View style={styles.ratingContainer}>
+                    <AirbnbRating
+                        selectedColor={Colors.DARKER_BUTTON}
+                        reviewColor={Colors.DARKER_BUTTON}
+                        size={30}
+                        count={5}
+                        defaultRating={rating}
+                        showRating={false}
+                        onFinishRating={setRating}
                     />
+                    </View>
+
                 </View>
 
+                <View style={styles.msgSectionContainer}>
+                    <Text style={styles.reviewHeaderText}>{'@' + userID}'s comments:</Text>
+                    <View style={styles.msgInputContainer}>
+                        <TextInput style={styles.inputText}
+                                   numberOfLines={10}
+                                   placeholder="nice dish!"
+                                   onChangeText={msgInputHandler}
+                                   value={msgString}
+                        />
+                    </View>
+                </View>
+            </View>
+
+            <View style={styles.sendButtonContainer}>
+                <Button title={"Send"}
+                        color={Colors.BUTTON}
+                        onPress={() => confirmHandler()}
+                />
             </View>
 
         </View>
@@ -122,72 +139,89 @@ function LeaveReview({route, navigation}) {
 
 const styles = StyleSheet.create({
     foodInfoContainer: {
-        flex: 2,
+        marginBottom: 10,
+        paddingVertical: 8,
+        paddingLeft: 8,
+        borderWidth: 2,
+        borderRadius: 2,
+        borderColor: Colors.LIGHT_BORDER,
+        justifyContent: 'center',
     },
 
     searchResultKey: {
-        color: Colors.TEXT,
-        fontSize: 16,
+        color: Colors.DARK_TEXT,
+        fontSize: Fonts.S,
         fontWeight: "bold",
+        paddingBottom: 6,
     },
 
     searchResultInfo: {
         color: Colors.TEXT,
-        fontSize: 14,
+        fontSize: Fonts.XS,
+        paddingBottom: 2,
     },
 
     reviewContainer: {
-        flex: 14,
+        marginTop: 20,
+        marginBottom: 30,
     },
 
-    reviewHeader: {
-        paddingTop: 10,
-        paddingBottom: 5,
+    reviewTitleContainer: {
+        marginTop: 4,
+        marginBottom: 10,
+    },
+
+    reviewTitleText: {
+        color: Colors.DARK_TEXT,
+        fontSize: Fonts.M,
+    },
+
+    ratingSectionContainer: {
+        marginTop: 8,
     },
 
     reviewHeaderText: {
-        fontSize: 16,
+        color: Colors.DARK_TEXT,
+        fontSize: Fonts.S,
+    },
 
+    ratingContainer: {
+        marginVertical: 10,
+        paddingLeft: 4,
+        justifyContent: 'center',
+        alignItems: 'flex-start',
     },
 
     usernameText: {
-        fontSize: 14,
+        color: Colors.DARK_TEXT,
+        fontSize: Fonts.S,
     },
 
     usernameSectionContainer: {
-        paddingTop: 10,
-        paddingBottom: 10,
+        paddingTop: 6,
+        paddingBottom: 8,
     },
 
     msgSectionContainer: {
-        paddingTop: 10,
-    },
-
-    usernameInputContainer: {
         marginTop: 8,
-        padding: 8,
-        borderWidth: 2,
-        borderRadius: 4,
-        borderColor: 'grey',
-        width: '95%',
     },
 
     msgInputContainer: {
         marginTop: 8,
         padding: 8,
-        borderWidth: 2,
+        borderWidth: 1,
         borderRadius: 4,
-        borderColor: 'grey',
-        width: '95%',
-        height: 100,
+        borderColor: Colors.BORDER,
+        height: 150,
     },
 
     inputText: {
-        fontSize: 16,
+        color: Colors.TEXT,
+        fontSize: Fonts.S,
     },
 
     sendButtonContainer: {
-        flex: 2,
+        marginVertical: 20,
     }
 })
 

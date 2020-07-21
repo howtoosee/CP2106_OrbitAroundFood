@@ -1,13 +1,16 @@
 import React from 'react';
 import {StyleSheet, View, Button} from 'react-native';
 
-import Colors from '../constants/Colors';
+import {Colors} from '../constants';
 
 
 function StartScreenButton(props) {
     return (
         <View style={styles.buttons}>
-            <Button title={props.title} color={Colors.BUTTON} onPress={props.onPress}/>
+            <Button title={props.title}
+                    color={props.color ? props.color : Colors.BUTTON}
+                    onPress={props.onPress}
+            />
         </View>
     );
 }

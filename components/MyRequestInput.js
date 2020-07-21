@@ -51,21 +51,25 @@ function MyRequestInput({ navigation, route }) {
     const { displayName } = firebase.auth().currentUser;
     const foodObj = route.params?.foodObj;
     const [userContact, setUserContact] = useState('');
+
     async function getUserContact() {
         const usersRef = firebase.firestore().collection('USERS').doc(displayName);
         const snapshot = await usersRef.get();
         if (!snapshot.exists) {
             console.log('No matching documents.');
         } else {
-            const getUserContact = await snapshot.data().contact;
-            await setUserContact(getUserContact);
+            const contact = await snapshot.data().contact;
+            setUserContact(contact);
         }
     }
-    getUserContact();
+
+
 
     useEffect(() => {
         if (route.params) {
             // Post updated, do something with `route.params`
+            getUserContact()
+                .catch(err => console.log('Error getting user contact:', err));
         }
     }, [route.params]);
 

@@ -1,23 +1,28 @@
 import React from 'react';
-import {StyleSheet, Text, View, Image, Button} from 'react-native';
+import {StyleSheet, Text, View, Image, Button, Alert} from 'react-native';
 
 
 import Fonts from '../constants/Fonts';
 import Colors from '../constants/Colors';
 import DefaultStyles from "../constants/DefaultStyles";
 
-import * as firebase from 'firebase';
+import firebaseDB from '../constants/firebaseDB';
 
 function Profile({navigation}) {
 
-    const {displayName, email} = firebase.auth().currentUser
+    const {displayName, email} = firebaseDB.auth().currentUser
 
-    const signOutUser = () => {
-        firebase.auth()
+    const signOutHandler = () => {
+        firebaseDB.auth()
             .signOut()
-            .then(() => navigation.navigate('Welcome'))
             .then(() => console.log("Successfully signed out:", displayName))
-            .catch(err => console.error("Error signing out:", err));
+            .then(() => Alert.alert(
+                'Success',
+                'Signed out from @' + displayName,
+                [{text: 'Ok'}]
+            ))
+            .catch(err => console.error("Error signing out:", err))
+            .then(() => navigation.goBack());
     };
 
     return (
@@ -45,7 +50,7 @@ function Profile({navigation}) {
             <View style={styles.buttonContainer}>
                 <Button title="Log Out"
                         color={Colors.BUTTON}
-                        onPress={signOutUser}/>
+                        onPress={signOutHandler}/>
             </View>
 
         </View>
@@ -79,11 +84,13 @@ const styles = StyleSheet.create({
 
     name: {
         fontSize: Fonts.L,
+        color: Colors.DARK_TEXT,
         fontWeight: '600',
     },
 
     email: {
         fontSize: Fonts.S,
+        color: Colors.TEXT,
         fontStyle: 'italic',
     },
 

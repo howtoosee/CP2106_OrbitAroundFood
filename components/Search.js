@@ -5,8 +5,7 @@ import Icon from 'react-native-vector-icons/FontAwesome';
 import Filter from './Filter';
 import {addHistory, clearHistory, getHistory} from '../api/SearchHistoryLogic';
 
-import Colors from '../constants/Colors';
-import DefaultStyles from "../constants/DefaultStyles";
+import {Colors, DefaultStyles, Fonts} from '../constants';
 
 
 function Search({navigation}) {
@@ -184,53 +183,53 @@ const styles = StyleSheet.create({
 
     inputContainer: {
         flex: 9,
-        borderWidth: 2,
-        borderColor: 'grey',
-        borderRadius: 5,
-        padding: 8,
+        // borderWidth: 2,
+        borderBottomWidth: 2,
+        borderColor: Colors.BORDER,
+        borderRadius: 0,
+        paddingHorizontal: 8,
+        paddingVertical: 8,
     },
 
     inputText: {
-        fontSize: 16,
+        fontSize: Fonts.XS,
     },
 
     searchHistoryOverallContainer: {
         flex: 18,
-        marginLeft: 0,
         // paddingTop: 10,
     },
 
     searchHistoryContainer: {
         flex: 18,
-        marginLeft: 0,
         paddingTop: 10,
         justifyContent: 'space-around'
     },
 
     searchHistoryTitle: {
         flex: 1,
-        paddingLeft: 3,
         marginTop: 25,
     },
 
     searchHistoryTitleText: {
         flex: 8,
-        color: Colors.TEXT,
-        fontSize: 15,
+        color: Colors.DARK_TEXT,
+        fontSize: Fonts.S,
         fontWeight: 'bold',
     },
 
 
     searchHistoryText: {
+        fontSize: Fonts.XS,
         color: Colors.TEXT,
     },
 
     searchHistoryTextContainer: {
-        marginTop: 8,
-        padding: 7,
-        borderWidth: 2,
-        borderColor: Colors.CARD,
-        borderRadius: 5,
+        marginVertical: 8,
+        padding: 8,
+        borderWidth: 1,
+        borderColor: Colors.LIGHT_BORDER,
+        borderRadius: 4,
         width: '97%',
         color: Colors.TEXT,
     },

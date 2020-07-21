@@ -1,20 +1,22 @@
 import firebaseDB from '../constants/firebaseDB';
 
 const reviewsCollection = firebaseDB.firestore().collection("REVIEWS");
+const ratingsCollection = firebaseDB.firestore().collection('RATINGS');
 
 const date = new Date();
 
 
-export async function readReviews(foodObjID, setReviews) {
+export async function readReviews(foodObjID, setRating, setReviews) {
 
     let reviewsArr = [];
+    let rating = null;
 
-    const snapshot = await reviewsCollection
+    const reviewSnapshot = await reviewsCollection
         .where('foodID', '==', foodObjID)
         .orderBy('timestamp', 'desc')
         .get();
 
-    await forEachField(snapshot.docs, async function (docSnapshot) {
+    await forEachField(reviewSnapshot.docs, async function (docSnapshot) {
 
         const snapshotData = await docSnapshot.data()
         // console.log("snapshotData:", snapshotData);
@@ -32,24 +34,55 @@ export async function readReviews(foodObjID, setReviews) {
 
     });
 
-    setReviews(reviewsArr);
+    const ratingSnapshot = ratingsCollection.doc(foodObjID);
+    const ratingDoc = await ratingSnapshot.get();
 
+    if (ratingDoc.exists) {
+        const docData = await ratingDoc.data();
+        rating = (docData.avgRating).toFixed(2);
+    } else {
+        rating = 'no ratings yet';
+    }
+
+    setRating(rating);
+    setReviews(reviewsArr);
 }
 
 
 export async function writeReviews(foodObjID, reviewObj) {
 
-    const genReviewID = (timestamp, userID) => timestamp + '_@' + userID;
-
-    const time = date.getTime();
-
-    const id = genReviewID(time, reviewObj.userID);
-    reviewObj.timestamp = time;
+    reviewObj.timestamp = date.getTime();
     reviewObj.foodID = foodObjID;
 
-    // console.log("Writing new review obj:", id, reviewObj);
+    await reviewsCollection.add(reviewObj)
+        .catch(err => console.log('Error adding review:', err));
 
-    await reviewsCollection.doc(id).set(reviewObj);
+
+    const ratingSnapshot = ratingsCollection.doc(foodObjID);
+    const ratingDoc = await ratingSnapshot.get();
+
+    if (ratingDoc.exists) {
+        const docData = await ratingDoc.data();
+        const newSumRating = docData.sumRating + reviewObj.rating;
+        const newNumRating = docData.numRating + 1;
+        const newAvgRating = newSumRating / newNumRating;
+
+        await ratingSnapshot
+            .set({
+                sumRating: newSumRating,
+                numRating: newNumRating,
+                avgRating: newAvgRating,
+            })
+            .catch(err => console.log('Error updating rating:', err));
+    } else {
+        await ratingSnapshot
+            .set({
+                sumRating: reviewObj.rating,
+                numRating: 1,
+                avgRating: reviewObj.rating,
+            })
+            .catch(err => console.log('Error updating rating:', err));
+    }
 
 }
 

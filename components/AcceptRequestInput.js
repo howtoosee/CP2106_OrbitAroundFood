@@ -2,19 +2,36 @@ import React, { useState, useEffect } from 'react';
 import { View, TextInput, Button, StyleSheet } from 'react-native';
 
 import { Fonts, Colors } from '../constants';
+import { setHelper } from '../api/HelpApi';
+import * as firebase from 'firebase';
 
 function AcceptRequestInput({ navigation, route }) {
 
-    const [enteredContact, setEnteredContact] = useState('');
     const [enteredRemarks, setEnteredRemarks] = useState('');
-
-    const contactInputHandler = (enteredText) => {
-        setEnteredContact(enteredText);
-    };
 
     const remarksInputHandler = (enteredText) => {
         setEnteredRemarks(enteredText);
     };
+
+    // Link to database
+    const { displayName } = firebase.auth().currentUser;
+    const requestObj = route.params?.requestObj;
+    const [userContact, setUserContact] = useState('');
+
+    async function getUserContact() {
+
+        const usersRef = firebase.firestore().collection('USERS').doc(displayName);
+        const snapshot = await usersRef.get();
+
+        if (!snapshot.exists) {
+            console.log('No matching documents.');
+        } else {
+            const getUserContact = await snapshot.data().contact;
+            await setUserContact(getUserContact);
+        }
+        
+    }
+    getUserContact();
 
     useEffect(() => {
         if (route.params) {
@@ -24,26 +41,16 @@ function AcceptRequestInput({ navigation, route }) {
 
     const confirmRequestHandler = () => {
 
-        if (enteredContact.length == 0) {
+        if (enteredRemarks.length == 0) {
             return;
         }
 
-        navigation.navigate(
-            'Confirmed Request List', {
-            store: route.param?.store,
-            open: route.param?.open,
-            close: route.param?.close,
-            loc: route.params?.loc,
-            dest: route.params?.dest,
-            date: route.params?.date,
-            time: route.params?.time,
-            food: route.params?.food,
-            price: route.params?.price,
-            customerRemarks: route.params?.customerRemarks,
-            buyerContact: enteredContact,
-            buyerRemarks: enteredRemarks
-        });
-        setEnteredContact('');
+        const helperObj = {
+            Id: displayName,
+            contact: userContact,
+            remark: enteredRemarks
+        }
+        setHelper(requestObj.helpId, helperObj);
         setEnteredRemarks('');
     };
 
@@ -51,12 +58,6 @@ function AcceptRequestInput({ navigation, route }) {
         <View style={styles.screen}>
             <View style={styles.container}>
                 <View style={styles.textInputContainer}>
-                    <TextInput
-                        placeholder="Your Contact Number"
-                        placeholderTextColor={'grey'}
-                        style={styles.textInput}
-                        onChangeText={contactInputHandler}
-                        value={enteredContact} />
                     <TextInput
                         placeholder="Remarks"
                         placeholderTextColor={'grey'}
@@ -69,7 +70,7 @@ function AcceptRequestInput({ navigation, route }) {
                         <Button title="CONFIRM" color={Colors.ALT_BUTTON} onPress={confirmRequestHandler} />
                     </View>
                     <View style={styles.cancelButton}>
-                        <Button title="CANCEL" color={Colors.DARKER_BUTTON} onPress={() => navigation.navigate('Lemme Help')} />
+                        <Button title="CANCEL" color={Colors.DARKER_BUTTON} onPress={() => navigation.goBack()} />
                     </View>
                 </View>
             </View>
@@ -82,18 +83,21 @@ const styles = StyleSheet.create({
     screen: {
         flex: 1
     },
+
     container: {
         flex: 1,
         flexDirection: 'column',
         justifyContent: 'center',
         alignItems: 'center'
     },
+
     textInputContainer: {
         width: '90%',
         flexDirection: 'column',
         justifyContent: 'center',
         alignItems: 'center'
     },
+
     textInput: {
         width: '100%',
         height: 50,
@@ -105,15 +109,18 @@ const styles = StyleSheet.create({
         borderRadius: 5,
         backgroundColor: Colors.CARD
     },
+
     buttonContainer: {
         flexDirection: "row",
         justifyContent: 'center',
         paddingTop: 20
     },
+
     confirmButton: {
         width: '35%',
         paddingRight: 15
     },
+    
     cancelButton: {
         width: '35%',
         paddingRight: 15

@@ -4,8 +4,8 @@ import { StyleSheet, Text, TextInput, Button, View, ScrollView, TouchableOpacity
 import Colors from '../constants/Colors';
 import DefaultStyles from "../constants/DefaultStyles";
 
-function RequestDirectory({ navigation }) {
-
+function RequestDirectory({ navigation, route }) {
+    const onGoBack = route.params?.onGoBack;
     const [searchString, setSearchString] = useState('');
 
     const searchInputHandler = (inputStr) => {
@@ -15,7 +15,10 @@ function RequestDirectory({ navigation }) {
     const searchHandler = () => {
         if (isValidString(searchString)) {
             console.log("Searching for: " + searchString);
-            navigation.navigate('Food Choices', {searchKey: searchString});
+            navigation.navigate('Food Choices', {
+                searchKey: searchString,
+                onGoBack: () => onGoBack()
+            });
         }
         // else ignore the search string
     }

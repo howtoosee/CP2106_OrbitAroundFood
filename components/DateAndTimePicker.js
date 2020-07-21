@@ -66,10 +66,12 @@ const styles = StyleSheet.create({
         justifyContent: "center",
         paddingHorizontal: 10
     },
+
     dateTimeContainer: {
         paddingVertical:5,
         alignItems: 'center',
     },
+
     dateTimeButton: {
         alignItems: "center",
         backgroundColor: Colors.BUTTON,
@@ -80,6 +82,7 @@ const styles = StyleSheet.create({
         color: Colors.TEXT,
         padding: 8
     },
+    
     dateTimeText: {
         color: 'black',
         fontSize: Fonts.S

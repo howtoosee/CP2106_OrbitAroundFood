@@ -128,7 +128,7 @@ function FoodDetails({route, navigation}) {
 
                     : reviews.length === 0
                         ? <View style={styles.noResultsContainer}>
-                            <Text>
+                            <Text style={styles.noResultText}>
                                 No reviews yet.
                             </Text>
                         </View>
@@ -279,6 +279,13 @@ const styles = StyleSheet.create({
         justifyContent: 'center'
     },
 
+    noResultText: {
+        fontSize: Fonts.M,
+        color: Colors.TEXT,
+        fontWeight: 'bold',
+        fontStyle: 'italic'
+    },
+
     endOfResultsTextContainer: {
         height: 180,
         paddingVertical: 20,
@@ -289,7 +296,7 @@ const styles = StyleSheet.create({
 
     endOfResultsText: {
         color: Colors.DARK_TEXT,
-        fontSize: Fonts.S,
+        fontSize: Fonts.XS,
         fontStyle: 'italic'
     }
 

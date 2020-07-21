@@ -85,7 +85,7 @@ function SignUpScreen({navigation}) {
 
     return (
         <KeyboardAvoidingView style={DefaultStyles.keyboardAvoidScreen}
-                              behavior='position'
+                              behavior='padding'
         >
 
             <View styles={styles.contentContainer}>

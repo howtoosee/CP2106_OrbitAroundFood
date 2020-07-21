@@ -1,10 +1,10 @@
+
 import React, {useState, useEffect} from 'react';
 import {View, KeyboardAvoidingView, TextInput, Text, Button, StyleSheet, Image, Alert} from 'react-native';
 
 import {Colors, Fonts, DefaultStyles, firebaseDB} from '../constants';
 
-
-function SignInScreen({navigation}) {
+function SignInScreen({ navigation }) {
 
     const [email, setEmailInput] = useState('');
     const [password, setPasswordInput] = useState('');
@@ -69,7 +69,6 @@ function SignInScreen({navigation}) {
                     source={require('../assets/icon.png')}
                 />
             </View>
-
             <View style={styles.contentContainer}>
 
                 <View style={styles.titleTextContainer}>
@@ -109,8 +108,8 @@ function SignInScreen({navigation}) {
                     </View>
 
                 </View>
-
                 <View style={styles.buttonContainer}>
+
                     <View style={styles.confirmButtonContainer}>
                         <Button color={Colors.BUTTON}
                                 title="Confirm"
@@ -124,28 +123,28 @@ function SignInScreen({navigation}) {
                                 color={Colors.DARKER_BUTTON}
                                 onPress={() => navigation.navigate('Sign Up')}/>
                     </View>
-
                 </View>
             </View>
+
 
         </KeyboardAvoidingView>
     );
 }
 
-
 const styles = StyleSheet.create({
 
     imageContainer: {
+        // flex: 4,
+        paddingTop: 10,
         flex: 4,
         marginTop: 0,
         marginBottom: 20,
         alignItems: 'center',
-        justifyContent: 'flex-start',
     },
 
     image: {
         width: 320,
-        height: 320,
+        height: 280,
     },
 
     contentContainer: {
@@ -183,10 +182,6 @@ const styles = StyleSheet.create({
         fontSize: Fonts.XS,
     },
 
-    inputSubContainer: {
-        paddingBottom: 20,
-    },
-
     confirmButtonContainer: {
         paddingTop: 10,
     },
@@ -194,7 +189,7 @@ const styles = StyleSheet.create({
     accDetailsHeader: {
         fontWeight: 'bold',
         fontSize: Fonts.M,
-        paddingBottom: 4,
+        paddingBottom: 3,
     },
 
     textInputContainer: {

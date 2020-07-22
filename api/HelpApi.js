@@ -62,7 +62,7 @@ async function setHelper(helpId, helperObj) {
 
 async function writeHelp(foodId, userObj, timeObj) {
 
-    const genHelpID = (userID) => firebase.database.ServerValue.TIMESTAMP + '_by_' + userID;
+    const genHelpID = (userID) => userID + '-' + timeObj.timestamp;
 
     const todayDate = (dateObj.getMonth() + 1) + '.' + dateObj.getDate();
     const date = months[dateObj.getMonth()] + ' ' + dateObj.getDate();
@@ -94,16 +94,6 @@ async function writeHelp(foodId, userObj, timeObj) {
         .set(helpObj)
         .catch(err => console.log("Error writing help:", err));
 
-}
-
-
-async function getHelpUpdates(helpId, setHelpObj) {
-    const docRef = await helpCollection.doc(helpId);
-
-    return await docRef.onSnapshot(() => {
-            setHelpObj(docRef.get().data());
-        },
-        err => console.log('Error getting help doc updates:', err));
 }
 
 
@@ -173,4 +163,4 @@ async function forEachDoc(doc, callback) {
 }
 
 
-export {readHelps, setHelper, writeHelp, getHelpUpdates, readAllUserRelatedRequests};
+export {readHelps, setHelper, writeHelp, readAllUserRelatedRequests};

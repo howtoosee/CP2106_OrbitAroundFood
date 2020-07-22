@@ -1,10 +1,10 @@
 import React, {useState} from 'react';
-import {StyleSheet, Text, TextInput, Button, View, Alert} from 'react-native';
+import {Alert, Button, StyleSheet, Text, TextInput, View} from 'react-native';
 import {AirbnbRating} from 'react-native-ratings';
 
 import {writeReviews} from "../../api/ReviewsApi";
 import FoodInfoContainer from "../support-components/FoodInfoContainer";
-import {Colors, DefaultStyles, Fonts, firebaseDB} from '../../constants';
+import {Colors, DefaultStyles, firebaseDB, Fonts} from '../../constants';
 
 
 function LeaveReview({route, navigation}) {

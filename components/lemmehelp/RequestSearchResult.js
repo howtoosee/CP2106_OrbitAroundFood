@@ -1,7 +1,7 @@
-import React, {useState, useEffect} from "react";
-import {StyleSheet, Text, View, ScrollView, ActivityIndicator, Button} from "react-native";
+import React, {useEffect, useState} from "react";
+import {ActivityIndicator, ScrollView, StyleSheet, Text, View} from "react-native";
 
-import {DefaultStyles, Colors, Fonts} from "../../constants";
+import {Colors, DefaultStyles, Fonts} from "../../constants";
 import searchQueryFood from "../../api/SearchApi";
 import {SafeAreaView} from "react-native-safe-area-context";
 import FoodInfoContainer from "../support-components/FoodInfoContainer";
@@ -59,7 +59,7 @@ function RequestSearchResult({route, navigation}) {
                             </View>
 
                             <ScrollView style={styles.searchResults}
-                                showsVerticalScrollIndicator={false}
+                                        showsVerticalScrollIndicator={false}
                             >
                                 {results.map((item) =>
                                     getResultItemElement(item, navigation, onGoBack)

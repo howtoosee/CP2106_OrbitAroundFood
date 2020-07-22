@@ -1,14 +1,14 @@
 import React, {useState} from 'react';
 import {
-    StyleSheet,
     Button,
-    Text,
-    TextInput,
-    View,
+    Modal,
     SafeAreaView,
     ScrollView,
+    StyleSheet,
+    Text,
+    TextInput,
     TouchableOpacity,
-    Modal
+    View
 } from 'react-native';
 import {Button as ButtonRNE} from 'react-native-elements';
 import Icon from 'react-native-vector-icons/FontAwesome';

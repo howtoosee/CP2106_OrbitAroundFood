@@ -1,7 +1,7 @@
-import React, {useState, useEffect} from "react";
-import {View, Text, SafeAreaView, StyleSheet, ScrollView, Button, ActivityIndicator} from "react-native";
+import React, {useEffect, useState} from "react";
+import {ActivityIndicator, Button, SafeAreaView, ScrollView, StyleSheet, Text, View} from "react-native";
 
-import {Fonts, Colors, DefaultStyles} from "../../constants";
+import {Colors, DefaultStyles, Fonts} from "../../constants";
 import {readHelps} from "../../api/HelpApi";
 import ActiveRequestContainer from "./ActiveRequestContainer";
 
@@ -60,7 +60,7 @@ function LemmeHelpScreen({navigation}) {
                             </View>
 
                             <ScrollView style={styles.requestResultsContainer}
-                                showsVerticalScrollIndicator={false}
+                                        showsVerticalScrollIndicator={false}
                             >
                                 {
                                     requests.map((item) =>

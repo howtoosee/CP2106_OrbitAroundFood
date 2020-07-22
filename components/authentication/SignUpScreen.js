@@ -1,18 +1,18 @@
-import React, {useEffect, useState} from 'react';
+import React, {useState} from 'react';
 import {
-    View,
-    KeyboardAvoidingView,
-    SafeAreaView,
-    TextInput,
-    Text,
-    Button,
-    StyleSheet,
     Alert,
-    Platform
+    Button,
+    KeyboardAvoidingView,
+    Platform,
+    SafeAreaView,
+    StyleSheet,
+    Text,
+    TextInput,
+    View
 } from 'react-native';
 
-import {Colors, Fonts, DefaultStyles} from '../../constants';
-import {userNameExists, createUser, signOut} from '../../api/AuthenticationApi';
+import {Colors, DefaultStyles, Fonts} from '../../constants';
+import {createUser, signOut, userNameExists} from '../../api/AuthenticationApi';
 
 
 function SignUpScreen({navigation}) {
@@ -46,7 +46,7 @@ function SignUpScreen({navigation}) {
             signUpAlert('Incorrect email format!');
         } else if (username.length === 0) {
             signUpAlert('Username cannot be empty!');
-        } else if (username.length < 4){
+        } else if (username.length < 4) {
             signUpAlert('Username must be of at least 4 characters!');
         } else if (illegalUsernameChars.test(username)) {
             signUpAlert('Username must of letters, numbers and underscores only!');

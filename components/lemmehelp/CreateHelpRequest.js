@@ -1,5 +1,5 @@
-import React, {useState, useEffect} from 'react';
-import {View, TextInput, Button, StyleSheet, SafeAreaView, Text, Alert, Platform} from 'react-native';
+import React, {useEffect, useState} from 'react';
+import {Alert, Button, SafeAreaView, StyleSheet, Text, TextInput, View} from 'react-native';
 import {Button as ButtonRNE} from 'react-native-elements';
 import DateTimePickerModal from 'react-native-modal-datetime-picker';
 
@@ -7,7 +7,7 @@ import * as firebase from 'firebase';
 import {getUserContact} from '../../api/AuthenticationApi';
 
 
-import {Fonts, Colors, DefaultStyles} from '../../constants';
+import {Colors, DefaultStyles, Fonts} from '../../constants';
 import {writeHelp} from '../../api/HelpApi';
 import FoodInfoContainer from '../support-components/FoodInfoContainer';
 

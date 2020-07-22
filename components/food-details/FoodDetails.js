@@ -1,15 +1,13 @@
 import React, {useEffect, useState} from 'react';
-import {StyleSheet, Text, View, ScrollView, ActivityIndicator, Button, Image, Alert, SafeAreaView} from 'react-native';
-import {Rating} from 'react-native-ratings';
-import StarRatingBar from 'react-native-star-rating-view/StarRatingBar'
+import {ActivityIndicator, Alert, Button, Image, SafeAreaView, ScrollView, StyleSheet, Text, View} from 'react-native';
 
 import {readReviews} from "../../api/ReviewsApi";
 import getImage from "../../api/FoodImage";
-import {isFavourite, addFavourite, removeFavourite} from "../../api/FavouritesLogic";
+import {addFavourite, isFavourite, removeFavourite} from "../../api/FavouritesLogic";
 import FoodInfoContainer from "../support-components/FoodInfoContainer";
 import requireSignInAlert from "../support-components/ComponentRequiresSignInAlert";
 
-import {Colors, DefaultStyles, Fonts, firebaseDB} from "../../constants";
+import {Colors, DefaultStyles, firebaseDB, Fonts} from "../../constants";
 
 
 function FoodDetails({route, navigation}) {

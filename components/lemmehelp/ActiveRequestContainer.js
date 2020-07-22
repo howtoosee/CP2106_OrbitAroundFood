@@ -1,6 +1,6 @@
 import React from 'react';
-import {StyleSheet, View, Text, Alert} from 'react-native';
-import {Fonts, Colors} from '../../constants';
+import {Alert, StyleSheet, Text, View} from 'react-native';
+import {Colors, Fonts} from '../../constants';
 import {Button} from 'react-native-elements';
 import Icon from 'react-native-vector-icons/FontAwesome5';
 import * as firebase from 'firebase';

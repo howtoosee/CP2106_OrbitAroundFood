@@ -1,9 +1,9 @@
 import React, {useState} from 'react';
-import {StyleSheet, SafeAreaView, TextInput, View, Text, Button, ScrollView, TouchableOpacity} from 'react-native';
+import {Button, SafeAreaView, ScrollView, StyleSheet, Text, TextInput, TouchableOpacity, View} from 'react-native';
 import {Button as ButtonRNE,} from 'react-native-elements';
 import Icon from "react-native-vector-icons/FontAwesome";
 
-import {Colors, Fonts, DefaultStyles} from '../../constants';
+import {Colors, DefaultStyles, Fonts} from '../../constants';
 import {addHistory, clearHistory, getHistory} from "../../api/SearchHistoryLogic";
 
 function RequestSearch({navigation, route}) {

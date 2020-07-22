@@ -1,6 +1,6 @@
 import React, {useState} from 'react';
-import {StyleSheet, View, Text} from 'react-native';
-import {Fonts, Colors} from '../../constants';
+import {StyleSheet, Text, View} from 'react-native';
+import {Colors, Fonts} from '../../constants';
 import {Button} from 'react-native-elements';
 import Icon from 'react-native-vector-icons/FontAwesome5';
 
@@ -39,7 +39,7 @@ function RequestInfoContainer(props) {
     const getStatusHeaderString = (statusString) => {
         if (statusString === 'req') {
             return 'I requested ( ' + (item.isOpen ? 'OPEN' : 'CLOSED') + ' ) :';
-        } else if (statusString === 'help' ) {
+        } else if (statusString === 'help') {
             return 'I helped:'
         } else if (statusString === 'helping') {
             return 'Accepting request:';

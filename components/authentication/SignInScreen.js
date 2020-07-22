@@ -1,7 +1,18 @@
-import React, {useState, useEffect} from 'react';
-import {View, KeyboardAvoidingView, SafeAreaView, TextInput, Text, Button, StyleSheet, Image, Alert, Platform} from 'react-native';
+import React, {useState} from 'react';
+import {
+    Alert,
+    Button,
+    Image,
+    KeyboardAvoidingView,
+    Platform,
+    SafeAreaView,
+    StyleSheet,
+    Text,
+    TextInput,
+    View
+} from 'react-native';
 
-import {Colors, Fonts, DefaultStyles, firebaseDB} from '../../constants';
+import {Colors, DefaultStyles, firebaseDB, Fonts} from '../../constants';
 
 
 function SignInScreen({navigation}) {

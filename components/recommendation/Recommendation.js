@@ -1,11 +1,10 @@
-import React, {useState, useEffect} from 'react';
-import {StyleSheet, View, Text, ActivityIndicator, Button, Image, SafeAreaView} from 'react-native';
+import React, {useEffect, useState} from 'react';
+import {ActivityIndicator, Button, Image, SafeAreaView, StyleSheet, Text, View} from 'react-native';
 
 import getImage from "../../api/FoodImage";
 import getRandomFood from "../../api/RecommApi";
-import {Colors, DefaultStyles, Fonts} from "../../constants";
+import {Colors, DefaultStyles} from "../../constants";
 import FoodInfoContainer from "../support-components/FoodInfoContainer";
-
 
 
 function Recommendation({navigation}) {

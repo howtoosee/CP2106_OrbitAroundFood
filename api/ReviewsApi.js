@@ -1,24 +1,21 @@
-import firebaseDB from '../constants/firebaseDB';
+import firebase from "firebase";
 
-const reviewsCollection = firebaseDB.firestore().collection("REVIEWS");
-const ratingsCollection = firebaseDB.firestore().collection('RATINGS');
+const reviewsCollection = firebase.firestore().collection("REVIEWS");
+const ratingsCollection = firebase.firestore().collection("RATINGS");
 
 const date = new Date();
 
-
 export async function readReviews(foodObjID, setRating, setReviews) {
-
     let reviewsArr = [];
     let rating = null;
 
     const reviewSnapshot = await reviewsCollection
-        .where('foodID', '==', foodObjID)
-        .orderBy('timestamp', 'desc')
+        .where("foodID", "==", foodObjID)
+        .orderBy("timestamp", "desc")
         .get();
 
     await forEachField(reviewSnapshot.docs, async function (docSnapshot) {
-
-        const snapshotData = await docSnapshot.data()
+        const snapshotData = await docSnapshot.data();
         // console.log("snapshotData:", snapshotData);
 
         const newDoc = {
@@ -26,12 +23,11 @@ export async function readReviews(foodObjID, setRating, setReviews) {
             userID: snapshotData.userID,
             comments: snapshotData.comments,
             time: new Date(snapshotData.timestamp)
-        }
+        };
 
         // console.log(newDoc);
 
         reviewsArr.push(newDoc);
-
     });
 
     const ratingSnapshot = ratingsCollection.doc(foodObjID);
@@ -39,24 +35,22 @@ export async function readReviews(foodObjID, setRating, setReviews) {
 
     if (ratingDoc.exists) {
         const docData = await ratingDoc.data();
-        rating = (docData.avgRating).toFixed(2);
+        rating = docData.avgRating.toFixed(2);
     } else {
-        rating = 'no ratings yet';
+        rating = "no ratings yet";
     }
 
     setRating(rating);
     setReviews(reviewsArr);
 }
 
-
 export async function writeReviews(foodObjID, reviewObj) {
-
     reviewObj.timestamp = date.getTime();
     reviewObj.foodID = foodObjID;
 
-    await reviewsCollection.add(reviewObj)
-        .catch(err => console.log('Error adding review:', err));
-
+    await reviewsCollection
+        .add(reviewObj)
+        .catch((err) => console.log("Error adding review:", err));
 
     const ratingSnapshot = ratingsCollection.doc(foodObjID);
     const ratingDoc = await ratingSnapshot.get();
@@ -71,21 +65,19 @@ export async function writeReviews(foodObjID, reviewObj) {
             .set({
                 sumRating: newSumRating,
                 numRating: newNumRating,
-                avgRating: newAvgRating,
+                avgRating: newAvgRating
             })
-            .catch(err => console.log('Error updating rating:', err));
+            .catch((err) => console.log("Error updating rating:", err));
     } else {
         await ratingSnapshot
             .set({
                 sumRating: reviewObj.rating,
                 numRating: 1,
-                avgRating: reviewObj.rating,
+                avgRating: reviewObj.rating
             })
-            .catch(err => console.log('Error updating rating:', err));
+            .catch((err) => console.log("Error updating rating:", err));
     }
-
 }
-
 
 async function forEachField(doc, callback) {
     for (let i = 0; i < doc.length; i++) {

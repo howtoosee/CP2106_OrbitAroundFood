@@ -1,13 +1,10 @@
-import firebaseDB from '../constants/firebaseDB';
+import firebase from "firebase";
 
-const storage = firebaseDB.storage();
-
+const storage = firebase.storage();
 
 async function getImage(url, setPhotoUri) {
     const pathRef = storage.refFromURL(url);
-    await pathRef.getDownloadURL()
-        .then(uri => setPhotoUri(uri));
+    await pathRef.getDownloadURL().then((uri) => setPhotoUri(uri));
 }
-
 
 export default getImage;

@@ -7,7 +7,8 @@ import {addFavourite, isFavourite, removeFavourite} from "../../api/FavouritesLo
 import FoodInfoContainer from "../support-components/FoodInfoContainer";
 import requireSignInAlert from "../support-components/ComponentRequiresSignInAlert";
 
-import {Colors, DefaultStyles, firebaseDB, Fonts} from "../../constants";
+import {Colors, DefaultStyles, Fonts} from "../../constants";
+import firebase from 'firebase';
 
 
 function FoodDetails({route, navigation}) {
@@ -20,7 +21,7 @@ function FoodDetails({route, navigation}) {
     const [reviews, setReviews] = useState(null);
     const [photoUri, setPhotoUri] = useState('');
 
-    const [user, setUser] = useState(firebaseDB.auth().currentUser);
+    const [user, setUser] = useState(firebase.auth().currentUser);
 
     const addReviewHandler = () => {
         if (user) {
@@ -86,8 +87,8 @@ function FoodDetails({route, navigation}) {
             loadReviews();
         }
 
-        return firebaseDB.auth().onAuthStateChanged(() => {
-            setUser(firebaseDB.auth().currentUser);
+        return firebase.auth().onAuthStateChanged(() => {
+            setUser(firebase.auth().currentUser);
         });
     }, [readReviews, foodObj, setReviews, getImage, setPhotoUri, setLoading]);
 

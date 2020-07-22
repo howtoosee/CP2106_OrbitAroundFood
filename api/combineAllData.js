@@ -1,7 +1,6 @@
-import firebaseDB from "../constants/firebaseDB";
+import firebase from "firebase";
 
-const storeCollection = firebaseDB.firestore().collection("STORES");
-
+const storeCollection = firebase.firestore().collection("STORES");
 
 export default async function combineAllData(foodData, id) {
     // template for newData
@@ -9,12 +8,11 @@ export default async function combineAllData(foodData, id) {
         id: id,
         name: foodData.name,
         price: isNaN(foodData.price)
-            ? 'not available'
-            : '$' + foodData.price.toFixed(2),
+            ? "not available"
+            : "$" + foodData.price.toFixed(2),
         storeID: foodData.storeID,
         imageURL: foodData.imageURL
     };
-
 
     await storeCollection
         .doc(foodData.storeID) // access doc (docID of store = foodData.store)

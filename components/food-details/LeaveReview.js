@@ -4,15 +4,17 @@ import {AirbnbRating} from 'react-native-ratings';
 
 import {writeReviews} from "../../api/ReviewsApi";
 import FoodInfoContainer from "../support-components/FoodInfoContainer";
-import {Colors, DefaultStyles, firebaseDB, Fonts} from '../../constants';
+import {Colors, DefaultStyles, Fonts} from '../../constants';
 
+import firebase from 'firebase';
 
 function LeaveReview({route, navigation}) {
 
     const foodObj = route.params?.foodObj;
 
-    const user = firebaseDB.auth().currentUser;
+    const user = firebase.auth().currentUser;
     const userID = user ? user.displayName : '';
+
     const [rating, setRating] = useState(3);
     const [msgString, setMsgString] = useState('');
 

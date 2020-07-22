@@ -1,21 +1,21 @@
-import firebaseDB from '../constants/firebaseDB';
-import combineAllData from './combineAllData';
+import firebase from "firebase";
+import combineAllData from "./combineAllData";
 
-const foodCollection = firebaseDB.firestore().collection("FOODS");
-const ratingsCollection = firebaseDB.firestore().collection("RATINGS");
+const foodCollection = firebase.firestore().collection("FOODS");
+const ratingsCollection = firebase.firestore().collection("RATINGS");
 
 // global variable local db snapshot
 let localRatingsSnapshot = null;
 
-
 export default async function getRandomFood(setFood) {
-
     // if localSnapshot is not initialised, initialise it
     if (localRatingsSnapshot === null) {
         localRatingsSnapshot = await ratingsCollection
-            .where('avgRating', '>=', 3)
+            .where("avgRating", ">=", 3)
             .get()
-            .catch(err => console.log("Error getting ratings collection:", err));
+            .catch((err) =>
+                console.log("Error getting ratings collection:", err)
+            );
     }
 
     const queryRatingSnapshot = localRatingsSnapshot;
@@ -32,9 +32,8 @@ export default async function getRandomFood(setFood) {
 
     // combine food object with store object
     await combineAllData(foodObj, foodId)
-        .then(res => {
+        .then((res) => {
             setFood(res);
         })
-        .catch(err => console.log('Error setting recommendation:', err));
+        .catch((err) => console.log("Error setting recommendation:", err));
 }
-

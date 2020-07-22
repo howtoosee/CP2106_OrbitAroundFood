@@ -1,10 +1,11 @@
 import React, {useState, useEffect} from 'react';
-import {StyleSheet, View, Text, ActivityIndicator, Button, Image} from 'react-native';
+import {StyleSheet, View, Text, ActivityIndicator, Button, Image, SafeAreaView} from 'react-native';
 
-import getImage from "../api/FoodImage";
-import {Colors, DefaultStyles, Fonts} from "../constants";
+import getImage from "../../api/FoodImage";
+import getRandomFood from "../../api/RecommApi";
+import {Colors, DefaultStyles, Fonts} from "../../constants";
+import FoodInfoContainer from "../support-components/FoodInfoContainer";
 
-import getRandomFood from "../api/RecommApi";
 
 
 function Recommendation({navigation}) {
@@ -36,7 +37,7 @@ function Recommendation({navigation}) {
 
     return (
 
-        <View style={DefaultStyles.screen}>
+        <SafeAreaView style={DefaultStyles.screen}>
 
             <View style={styles.headerInfoContainer}>
                 <Text style={styles.headerInfoText}>Recommends a dish that's at least 3-star rated!</Text>
@@ -50,48 +51,10 @@ function Recommendation({navigation}) {
 
                     : <View style={{flex: 1, height: '100%', justifyContent: 'flex-start'}}>
                         <View style={styles.recommendationContainer}>
-                            <View style={styles.headerLineContainer}>
-
-                                <Text style={styles.searchResultKey}>
-                                    {foodObj.name}
-                                </Text>
-
-                                <Text style={styles.searchResultInfo}>
-                                    ({foodObj.price})
-                                </Text>
-                            </View>
-
-                            <Text style={styles.searchResultInfo}>
-                                {foodObj.store.store_name} ({foodObj.store.location})
-                            </Text>
-
-                            <Text style={styles.searchResultInfo}>
-                                {foodObj.store.open_hours} - {foodObj.store.close_hours}
-                            </Text>
+                            <FoodInfoContainer item={foodObj}
+                                               hideButton={true}
+                            />
                         </View>
-                        {/*<View style={styles.recommendationContainer}>*/}
-
-                        {/*    <View style={styles.resultsKeyContainer}>*/}
-                        {/*        <Text style={styles.resultKey}>*/}
-                        {/*            {foodObj.name}*/}
-                        {/*        </Text>*/}
-                        {/*    </View>*/}
-
-                        {/*    <View style={styles.resultsInfoContainer}>*/}
-                        {/*        <Text style={styles.resultInfo}>*/}
-                        {/*            {foodObj.price}*/}
-                        {/*        </Text>*/}
-
-                        {/*        <Text style={styles.resultInfo}>*/}
-                        {/*            {foodObj.store.store_name}{'\n'}{foodObj.store.location}*/}
-                        {/*        </Text>*/}
-
-                        {/*        <Text style={styles.resultInfo}>*/}
-                        {/*            {foodObj.store.open_hours} - {foodObj.store.close_hours} hrs*/}
-                        {/*        </Text>*/}
-                        {/*    </View>*/}
-
-                        {/*</View>*/}
 
                         <View style={styles.imageContainer}>
                             {(isLoading || photoUri === '')
@@ -132,7 +95,7 @@ function Recommendation({navigation}) {
                 }
             </View>
 
-        </View>
+        </SafeAreaView>
     );
 }
 
@@ -150,8 +113,8 @@ const styles = StyleSheet.create({
     },
 
     mainContentContainer: {
-        height: '95%',
-        paddingBottom: 20,
+        height: '100%',
+        paddingBottom: 10,
     },
 
     headerLineContainer: {
@@ -160,21 +123,6 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         marginBottom: 4
     },
-
-    searchResultKey: {
-        color: Colors.DARK_TEXT,
-        fontSize: Fonts.S,
-        fontWeight: "bold",
-        paddingBottom: 4,
-        marginRight: 10,
-    },
-
-    searchResultInfo: {
-        color: Colors.TEXT,
-        fontSize: Fonts.XS,
-        paddingBottom: 4,
-    },
-
 
     loadingContainer: {
         flex: 1,
@@ -185,25 +133,26 @@ const styles = StyleSheet.create({
     imageContainer: {
         flex: 4,
         marginVertical: 10,
-        marginHorizontal: 20,
-        alignItems: 'center',
+        // marginHorizontal: 20,
+        alignItems: 'flex-start',
         justifyContent: 'center',
     },
 
     image: {
-        width: 300,
-        height: 300,
+        height: '100%',
+        width: '100%',
         marginVertical: 80,
+        alignSelf: 'center',
         alignItems: 'center',
         justifyContent: 'center',
-        // overflow: 'visible',
+        overflow: 'hidden',
     },
 
     recommendationContainer: {
         flex: 2,
-        paddingHorizontal: 0,
         justifyContent: 'center',
         alignItems: 'stretch',
+        marginBottom: 8,
     },
 
     buttonContainer: {

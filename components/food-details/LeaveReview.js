@@ -1,10 +1,10 @@
 import React, {useState} from 'react';
 import {StyleSheet, Text, TextInput, Button, View, Alert} from 'react-native';
-import {Rating, AirbnbRating} from 'react-native-ratings';
+import {AirbnbRating} from 'react-native-ratings';
 
-import {writeReviews} from "../api/ReviewsApi";
-
-import {Colors, DefaultStyles, Fonts, firebaseDB} from '../constants';
+import {writeReviews} from "../../api/ReviewsApi";
+import FoodInfoContainer from "../support-components/FoodInfoContainer";
+import {Colors, DefaultStyles, Fonts, firebaseDB} from '../../constants';
 
 
 function LeaveReview({route, navigation}) {
@@ -72,21 +72,10 @@ function LeaveReview({route, navigation}) {
 
             <View style={styles.foodInfoContainer}>
 
-                <Text style={styles.searchResultKey}>
-                    {foodObj.name}
-                </Text>
-
-                <Text style={styles.searchResultInfo}>
-                    {foodObj.price}
-                </Text>
-
-                <Text style={styles.searchResultInfo}>
-                    {foodObj.store.store_name} ({foodObj.store.location})
-                </Text>
-
-                <Text style={styles.searchResultInfo}>
-                    {foodObj.store.open_hours} - {foodObj.store.close_hours} hrs
-                </Text>
+                <FoodInfoContainer
+                    item={foodObj}
+                    hideButton={true}
+                />
 
             </View>
 
@@ -99,15 +88,15 @@ function LeaveReview({route, navigation}) {
                 <View style={styles.ratingSectionContainer}>
                     <Text style={styles.reviewHeaderText}>{'@' + userID}'s rating:</Text>
                     <View style={styles.ratingContainer}>
-                    <AirbnbRating
-                        selectedColor={Colors.DARKER_BUTTON}
-                        reviewColor={Colors.DARKER_BUTTON}
-                        size={30}
-                        count={5}
-                        defaultRating={rating}
-                        showRating={false}
-                        onFinishRating={setRating}
-                    />
+                        <AirbnbRating
+                            selectedColor={Colors.DARKER_BUTTON}
+                            reviewColor={Colors.DARKER_BUTTON}
+                            size={30}
+                            count={5}
+                            defaultRating={rating}
+                            showRating={false}
+                            onFinishRating={setRating}
+                        />
                     </View>
 
                 </View>
@@ -209,8 +198,9 @@ const styles = StyleSheet.create({
     msgInputContainer: {
         marginTop: 8,
         padding: 8,
-        borderWidth: 1,
-        borderRadius: 4,
+        // borderWidth: 1,
+        borderBottomWidth: 1,
+        borderRadius: 0,
         borderColor: Colors.BORDER,
         height: 150,
     },

@@ -7,10 +7,10 @@ import getSlideFromRightTransition from 'react-navigation-slide-from-right-trans
 import {
     Favourite,
     FoodDetails,
-    HelpBuyPls,
-    RequestDirectory,
-    RequestResult,
-    MyRequestInput,
+    LemmeHelpScreen,
+    RequestSearch,
+    RequestSearchResult,
+    CreateHelpRequest,
     LeaveReview,
     SignInScreen,
     Profile,
@@ -19,9 +19,9 @@ import {
     SearchResults,
     SignUpScreen,
     StartScreen,
-    DateAndTimePicker,
-    AcceptRequestInput,
-    MyConfirmedRequestList
+    AcceptHelpRequest,
+    RequestHistory,
+    RequestDetails
 } from './components';
 
 
@@ -76,31 +76,31 @@ export default function App() {
                     />
 
                     <stack.Screen name="Lemme Help"
-                                  component={HelpBuyPls}
+                                  component={LemmeHelpScreen}
                     />
 
-                    <stack.Screen name="My Request"
-                                  component={MyRequestInput}
+                    <stack.Screen name="New Request"
+                                  component={CreateHelpRequest}
                     />
 
-                    <stack.Screen name="Request Help"
-                                  component={RequestDirectory}
-                    />
-
-                    <stack.Screen name="DateTimePicker"
-                                  component={DateAndTimePicker}
+                    <stack.Screen name="Request Search"
+                                  component={RequestSearch}
                     />
 
                     <stack.Screen name="Accept Request"
-                                  component={AcceptRequestInput}
+                                  component={AcceptHelpRequest}
                     />
 
-                    <stack.Screen name="Confirmed Request List"
-                                  component={MyConfirmedRequestList}
+                    <stack.Screen name="Request History"
+                                  component={RequestHistory}
                     />
 
-                    <stack.Screen name="Food Choices"
-                                  component={RequestResult}
+                    <stack.Screen name='Request Details'
+                                  component={RequestDetails}
+                    />
+
+                    <stack.Screen name="Request Search Results"
+                                  component={RequestSearchResult}
                     />
 
                     <stack.Screen name="Profile"

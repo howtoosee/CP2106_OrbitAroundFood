@@ -1,13 +1,15 @@
 import React, {useEffect, useState} from 'react';
-import {StyleSheet, Text, View, ScrollView, ActivityIndicator, Button, Image, Alert} from 'react-native';
+import {StyleSheet, Text, View, ScrollView, ActivityIndicator, Button, Image, Alert, SafeAreaView} from 'react-native';
+import {Rating} from 'react-native-ratings';
+import StarRatingBar from 'react-native-star-rating-view/StarRatingBar'
 
-import {readReviews} from "../api/ReviewsApi";
-import getImage from "../api/FoodImage";
-import {isFavourite, addFavourite, removeFavourite} from "../api/FavouritesLogic";
-import FoodInfoContainer from "./FoodInfoContainer";
-import requireSignInAlert from "./ComponentRequiresSignInAlert";
+import {readReviews} from "../../api/ReviewsApi";
+import getImage from "../../api/FoodImage";
+import {isFavourite, addFavourite, removeFavourite} from "../../api/FavouritesLogic";
+import FoodInfoContainer from "../support-components/FoodInfoContainer";
+import requireSignInAlert from "../support-components/ComponentRequiresSignInAlert";
 
-import {Colors, DefaultStyles, Fonts, firebaseDB} from "../constants";
+import {Colors, DefaultStyles, Fonts, firebaseDB} from "../../constants";
 
 
 function FoodDetails({route, navigation}) {
@@ -94,13 +96,14 @@ function FoodDetails({route, navigation}) {
 
     return (
 
-        <View style={DefaultStyles.screen}>
+        <SafeAreaView style={DefaultStyles.screen}>
             <FoodInfoContainer
                 item={foodObj}
                 useFavButton={true}
                 isSaved={isSaved}
                 addFavHandler={addFavHandler}
                 removeFavHandler={removeFavHandler}
+                buttonType={'favs'}
                 onGoBack={() => onGoBack()}
             />
 
@@ -134,10 +137,14 @@ function FoodDetails({route, navigation}) {
                         : <View>
 
                             <View style={styles.reviewsHeader}>
-                                <Text>Rating: {rating}</Text>
+                                <Text style={styles.ratingText}>Rating: {rating}</Text>
+
                                 <Text style={styles.reviewsHeaderText}>Reviews:</Text>
                             </View>
-                            <ScrollView style={{overflow: 'hidden'}}>
+
+                            <ScrollView style={{overflow: 'hidden'}}
+                                        showsVerticalScrollIndicator={false}
+                            >
                                 {
                                     reviews.map(rev => reviewElement(rev))
                                 }
@@ -157,7 +164,7 @@ function FoodDetails({route, navigation}) {
                         onPress={addReviewHandler}
                 />
             </View>
-        </View>
+        </SafeAreaView>
     );
 }
 
@@ -185,18 +192,19 @@ function reviewElement(rev) {
 const styles = StyleSheet.create({
 
     imageContainer: {
-        flex: 8,
+        flex: 10,
         paddingTop: 10,
-        paddingBottom: 10,
-        paddingRight: 20,
+        // paddingBottom: 20,
         alignItems: 'center',
-        justifyContent: 'flex-start',
-        overflow: 'visible',
+        justifyContent: 'center',
     },
 
     image: {
-        width: '90%',
-        height: 200,
+        width: '100%',
+        height: '100%',
+        alignItems: 'flex-start',
+        justifyContent: 'center',
+        overflow: 'hidden',
     },
 
     foodInfoContainer: {
@@ -231,7 +239,7 @@ const styles = StyleSheet.create({
     },
 
     addReviewContainer: {
-        flex: 3,
+        flex: 2,
     },
 
     reviewResultIndivContainer: {
@@ -254,6 +262,13 @@ const styles = StyleSheet.create({
         fontSize: Fonts.S,
     },
 
+    ratingText: {
+        color: Colors.DARK_TEXT,
+        fontSize: Fonts.S,
+        fontWeight: "bold",
+        marginBottom: 6,
+    },
+
     reviewsHeader: {
         marginTop: 20,
         marginBottom: 5,
@@ -263,6 +278,7 @@ const styles = StyleSheet.create({
         color: Colors.DARK_TEXT,
         fontSize: Fonts.S,
         fontWeight: "bold",
+        marginTop: 4,
     },
 
     loadingContainer: {

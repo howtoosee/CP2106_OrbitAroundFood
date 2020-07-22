@@ -3,8 +3,7 @@ import {StyleSheet, Text, Button, View, SafeAreaView} from 'react-native';
 import Icon from 'react-native-vector-icons/FontAwesome';
 
 
-import {Colors, DefaultStyles, Fonts} from '../constants';
-import DefaultHeader from "./DefaultHeader"
+import {Colors, DefaultStyles, Fonts} from '../../constants';
 
 
 function Filter(props) {
@@ -21,53 +20,50 @@ function Filter(props) {
 
 
     return (
-        <View style={DefaultStyles.screen}>
+        < SafeAreaView style={DefaultStyles.screen}>
 
-            <View style={DefaultStyles.contentContainer}>
-                <SafeAreaView>
-
-                    <DefaultHeader headerText="Filters"/>
-
-                    <View style={styles.filterContainer}>
-                        <FilterElement title="Halal"
-                                       keyword="halal"
-                                       filters={filters}
-                                       setFilters={setFilters}
-                                       filterNames={filterNames}
-                                       setFilterNames={setFilterNames}
-                        />
-
-                        <FilterElement title="Vegetarian"
-                                       keyword="vegetarian"
-                                       filters={filters}
-                                       setFilters={setFilters}
-                                       filterNames={filterNames}
-                                       setFilterNames={setFilterNames}
-                        />
-
-                        <FilterElement title="Healthier Choice"
-                                       keyword="healthy"
-                                       filters={filters}
-                                       setFilters={setFilters}
-                                       filterNames={filterNames}
-                                       setFilterNames={setFilterNames}
-                        />
-
-
-                    </View>
-
-
-                    <View style={styles.confirmButtonContainer}>
-                        <Button title={filters.length === 0 ? "Back" : "Apply filters"}
-                                color={Colors.BUTTON}
-                                onPress={applyFilters}
-                        />
-                    </View>
-
-                </SafeAreaView>
+            <View style={styles.headerTextContainer}>
+                <Text style={styles.headerText}>Filters</Text>
             </View>
 
-        </View>
+            <View style={styles.filterContainer}>
+                <FilterElement title="Halal"
+                               keyword="halal"
+                               filters={filters}
+                               setFilters={setFilters}
+                               filterNames={filterNames}
+                               setFilterNames={setFilterNames}
+                />
+
+                <FilterElement title="Vegetarian"
+                               keyword="vegetarian"
+                               filters={filters}
+                               setFilters={setFilters}
+                               filterNames={filterNames}
+                               setFilterNames={setFilterNames}
+                />
+
+                <FilterElement title="Healthier Choice"
+                               keyword="healthy"
+                               filters={filters}
+                               setFilters={setFilters}
+                               filterNames={filterNames}
+                               setFilterNames={setFilterNames}
+                />
+
+
+            </View>
+
+
+            <View style={styles.confirmButtonContainer}>
+                <Button title={filters.length === 0 ? "Back" : "Apply filters"}
+                        color={Colors.BUTTON}
+                        onPress={applyFilters}
+                />
+            </View>
+
+        </SafeAreaView>
+
     );
 
 }
@@ -87,7 +83,6 @@ function FilterElement(props) {
             : [...(filterNames.filter(item => item !== title)), title]);
 
         setAdded(true);
-        // console.log("Filters:", filters);
     }
 
     const removeFilterHandler = () => {
@@ -95,7 +90,6 @@ function FilterElement(props) {
         setFilterNames(filterNames.filter(item => item !== title));
 
         setAdded(false);
-        // console.log("Filters:", filters);
     }
 
     return (
@@ -126,19 +120,31 @@ function FilterElement(props) {
 
 
 const styles = StyleSheet.create({
+    headerTextContainer: {
+        marginVertical: 20,
+        // flex: 1,
+    },
+
+    headerText: {
+        color: Colors.DARK_TEXT,
+        fontSize: Fonts.S,
+        fontWeight: 'bold',
+    },
+
     filterContainer: {
-        // flex: 8,
-        paddingTop: 50,
+        // height: '100%',
+        justifyContent: 'center',
+        alignItems: 'flex-start',
     },
 
     filterElement: {
         marginTop: 12,
-        paddingVertical: 6,
-        paddingHorizontal: 8,
+        paddingVertical: 4,
+        paddingHorizontal: 6,
         borderWidth: 1,
-        borderColor: Colors.BORDER,
+        borderColor: Colors.LIGHT_BORDER,
         borderRadius: 4,
-        width: '97%',
+        width: '100%',
         color: Colors.TEXT,
         flexDirection: "row",
     },
@@ -152,8 +158,7 @@ const styles = StyleSheet.create({
 
     filterElementText: {
         fontSize: Fonts.M,
-        color: Colors.TEXT,
-
+        color: Colors.DARK_TEXT,
     },
 
     filterElementAddButtonContainer: {
@@ -164,7 +169,6 @@ const styles = StyleSheet.create({
     },
 
     confirmButtonContainer: {
-        // flex: 2,
         paddingTop: 20,
     }
 })

@@ -1,145 +1,97 @@
-import firebaseDB from '../constants/firebaseDB';
+import * as firebase from 'firebase';
 
 import combineAllData from "./combineAllData";
 
-const helpCollection = firebaseDB.firestore().collection("HELPS");
-const foodCollection = firebaseDB.firestore().collection("FOODS");
+const helpCollection = firebase.firestore().collection("HELPS");
+const foodCollection = firebase.firestore().collection("FOODS");
 
-const date = new Date();
+const dateObj = new Date();
+const months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'June', 'July', 'Aug', 'Sept', 'Oct', 'Nov', 'Dec'];
 
 
 async function readHelps(setHelps) {
-    /*
-    Require:
-        (function) setHelps: setter function for useState
-    Returns
-        (Array) helps: [
-            (Object) combinedObj: {
-                        helpid: 'helpId',
-                        isOpen: (boolean) whether request is open,
-                        foodId: 'foodId',
-                        name: 'foodName',
-                        price: 'foodPrice',
-                        time: 'est time of food arrival'
-                        date: 'request date'
-                        storeId: 'store ID,
-                        store: {
-                            store_name: 'store name',
-                            location: 'store location',
-                            open_hours: 'open hours',
-                            close_hours: 'close hours'
-                        },
-                        asker: {
-                            name: 'asker name',
-                            contact: 'asker contact',
-                            dropOff: 'drop off location'
-                            remark: 'asker remark'
-                        }
-                     }
-        ]
-     */
-
     let helps = [];
 
-    // const today = date.getMonth() + '.' + date.getDate();
+    const todayDate = (dateObj.getMonth() + 1) + '.' + dateObj.getDate();
+
     const querySnapshot = await helpCollection
-        // .where('date', '==', today)
+        .where('dateInfo.dateShorten', '==', todayDate)
         .where('isOpen', '==', true)
-        .orderBy('timestamp', 'desc')
+        .orderBy('dateInfo.timestamp', 'desc')
+        .orderBy('dateInfo.timeETA', 'desc')
         .get()
 
 
     await forEachDoc(querySnapshot.docs, async function (docSnapshot) {
         const docData = docSnapshot.data();
         const foodSnapshot = await foodCollection.doc(docData.foodId).get();
-        const foodObj = foodSnapshot.data();
-        let combinedObj = await combineAllData(foodObj, docData.foodId);
 
-        combinedObj.helpId = docSnapshot.id;
-        combinedObj.isOpen = docData.isOpen;
+        let foodObj = await combineAllData(foodSnapshot.data(), docData.foodId);
 
-        combinedObj.foodId = docData.foodId;
-        combinedObj.time = docData.time;
-        combinedObj.date = docData.date;
+        const combinedObj = {
+            helpId: docData.helpId,
+            askerInfo: docData.askerInfo,
+            dateInfo: docData.dateInfo,
+            foodObj: foodObj,
+            isOpen: docData.isOpen,
+        };
 
-        combinedObj.asker = {
-            name: docData.askerId,
-            contact: docData.askerContact,
-            dropOff: docData.dropOffLocation,
-            remark: docData.askerRemark
-        }
-
+        // console.log(combinedObj);
         helps.push(combinedObj);
     });
 
-    // return helps;
     setHelps(helps);
 }
 
 
 async function setHelper(helpId, helperObj) {
-    /*
-    Require:
-        (String) helpId: 'help id',
-        (Object) helperObj: {
-                    id: 'helper's name',
-                    contact: 'helper's contact'
-                    remark: 'helper's remark'
-                 }
-     */
 
     await helpCollection.doc(helpId)
         .update({
-            helperId: helperObj.Id,
-            helperContact: helperObj.contact,
-            helperRemark: helperObj.remark,
-            isOpen: false
-        }
-        )
+            helperInfo: {
+                helperId: helperObj.userId,
+                helperContact: helperObj.contact,
+                helperRemark: helperObj.remark,
+            },
+            isOpen: false,
+        })
         .catch(err => console.log("Error updating help doc:", err));
 
 }
 
 
 async function writeHelp(foodId, userObj, timeObj) {
-    /*
-    Require:
-        (string) foodId: 'foodId',
-        (Object) userObj: {
-                    userId: 'asker name',
-                    contact: 'asker phone number',
-                    location: 'drop off location'
-                    askerRemark: 'asker remark'
-                 }
-        (Object) timeObj: {
-                    estTime: 'estimated time of food arrival',
-                    date: 'Request Date',
-                    time: 'today',
-                    timestamp: 'timestamp for ID'
-        }
 
-     */
+    const genHelpID = (userID) => firebase.database.ServerValue.TIMESTAMP + '_by_' + userID;
 
-    const genHelpID = (timestamp, userID) => timestamp + '_@' + userID;
-    // const timestamp = date.getTime();
-    const timestamp = timeObj.timestamp
-    // const today = date.getMonth() + '.' + date.getDate();
+    const todayDate = (dateObj.getMonth() + 1) + '.' + dateObj.getDate();
+    const date = months[dateObj.getMonth()] + ' ' + dateObj.getDate();
 
-    const helpId = genHelpID(timestamp, userObj.userId);
+    const helpId = genHelpID(userObj.userId);
 
     const helpObj = {
-        foodId: foodId,
+        helpId: helpId,
         isOpen: true,
-        timestamp: timeObj.time,
-        time: timeObj.estTime,
-        date: timeObj.date,
-        askerId: userObj.userId,
-        askerContact: userObj.contact,
-        askerRemark: userObj.askerRemark,
-        dropOffLocation: userObj.location
+        foodId: foodId,
+        dateInfo: {
+            date: date,
+            dateShorten: todayDate,
+            timestamp: timeObj.timestamp,
+            timeETA: timeObj.timeETA,
+            firebaseTimestamp: firebase.database.ServerValue.TIMESTAMP,
+        },
+
+        askerInfo: {
+            askerId: userObj.userId,
+            askerRemark: userObj.askerRemark,
+            askerContact: userObj.contact,
+            dropOffLocation: userObj.location,
+        }
     }
 
-    await helpCollection.doc(helpId).set(helpObj)
+    await helpCollection
+        .doc(helpId)
+        .set(helpObj)
         .catch(err => console.log("Error writing help:", err));
 
 }
@@ -148,94 +100,71 @@ async function writeHelp(foodId, userObj, timeObj) {
 async function getHelpUpdates(helpId, setHelpObj) {
     const docRef = await helpCollection.doc(helpId);
 
-    await docRef.onSnapshot(() => {
-        setHelpObj(docRef.get().data());
-    },
+    return await docRef.onSnapshot(() => {
+            setHelpObj(docRef.get().data());
+        },
         err => console.log('Error getting help doc updates:', err));
 }
 
-async function closeHelpRequest(helpId) {
-    await helpCollection.doc(helpId)
-        .set({
-            isOpen: false
-        })
-        .catch(err => console.log('Error closing request:', err));
-}
 
+async function readAllUserRelatedRequests(setRequests, setHelps) {
+    const username = firebase.auth().currentUser.displayName;
 
-async function readAllUserRelatedRequests(username, setRequests) {
     let requests = []; // requests i've made
     let helps = []; // requests i've helped
 
-    async function callBack(docSnapshot, arr) {
-        const docData = docSnapshot.data();
+    const requestSnapshot = await helpCollection
+        .where('askerInfo.askerId', '==', username)
+        .orderBy('dateInfo.timestamp', 'desc')
+        .get();
+
+    await forEachDoc(requestSnapshot.docs, async function (requestDoc) {
+        const docData = requestDoc.data();
         const foodSnapshot = await foodCollection.doc(docData.foodId).get();
 
-        const foodObj = foodSnapshot.data();
-        let combinedObj = await combineAllData(foodObj, docData.foodId);
+        let foodObj = await combineAllData(foodSnapshot.data(), docData.foodId);
 
-        combinedObj.helpId = docSnapshot.id;
+        const combinedObj = {
+            helpId: docData.helpId,
+            isOpen: docData.isOpen,
+            dateInfo: docData.dateInfo,
+            askerInfo: docData.askerInfo,
+            helperInfo: docData?.helperInfo,
+            foodObj: foodObj,
+        };
 
-        combinedObj.foodId = docData.foodId;
-        combinedObj.time = docData.time;
-        combinedObj.date = docData.date;
+        requests.push(combinedObj);
 
-        combinedObj.asker = {
-            name: docData.askerId,
-            contact: docData.askerContact,
-            dropOff: docData.dropOffLocation,
-            remark: docData.askerRemark
-        }
+    })
+        .then(() => setRequests(requests));
 
-        combinedObj.helper ={
-            name: docData.helperId,
-            contact: docData.helperContact,
-            remark: docData.helperRemark
-        }
-
-        arr.push(combinedObj);
-    }
-
-
-    const requestQuerySnapshot = await helpCollection
-        .where('askerId', '==', username)
-        .where('isOpen', '==', false)
-        .orderBy('timestamp', 'desc')
+    const helpsSnapshot = await helpCollection
+        .where('helperInfo.helperId', '==', username)
+        .orderBy('dateInfo.timestamp', 'desc')
         .get();
 
-    await forEachDoc(requestQuerySnapshot.docs, function (docSnapshot) {
-        callBack(docSnapshot, requests);
-    });
+    await forEachDoc(helpsSnapshot.docs, async function (helpDoc) {
+        const docData = helpDoc.data();
+        const foodSnapshot = await foodCollection.doc(docData.foodId).get();
 
-    // if above doesnt work, try this:
-    // await forEachDoc(requestQuerySnapshot.docs, async function (docSnapshot) {
-    //     await callBack(docSnapshot, requests);
-    // });
+        let foodObj = await combineAllData(foodSnapshot.data(), docData.foodId);
 
+        const combinedObj = {
+            helpId: docData.helpId,
+            isOpen: docData.isOpen,
+            dateInfo: docData.dateInfo,
+            askerInfo: docData.askerInfo,
+            helperInfo: docData?.helperInfo,
+            foodObj: foodObj,
+        };
 
-    const helpQuerySnapshot = await helpCollection
-        .where('helperId', '==', username)
-        .where('isOpen', '==', false)
-        .orderBy('timestamp', 'desc')
-        .get();
+        helps.push(combinedObj);
 
-    await forEachDoc(helpQuerySnapshot.docs, async function (docSnapshot) {
-        callBack(docSnapshot, helps);
-    });
+    })
+        .then(() => setHelps(helps));
 
-    // if above doesnt work, try this:
-    // await forEachDoc(helpQuerySnapshot.docs, async function (docSnapshot) {
-    //     await callBack(docSnapshot, helps);
-    // });
-
-
-    const allRequests = {
-        myRequests: requests,
-        myHelps: helps
-    }
-
-    setRequests(allRequests);
 }
+
 
 async function forEachDoc(doc, callback) {
     for (let i = 0; i < doc.length; i++) {
@@ -244,4 +173,4 @@ async function forEachDoc(doc, callback) {
 }
 
 
-export { readHelps, setHelper, writeHelp, getHelpUpdates, closeHelpRequest, readAllUserRelatedRequests };
+export {readHelps, setHelper, writeHelp, getHelpUpdates, readAllUserRelatedRequests};

@@ -1,9 +1,9 @@
 import React, {useState} from 'react';
-import {StyleSheet, View, Text, ScrollView} from 'react-native';
+import {StyleSheet, View, Text, ScrollView, SafeAreaView} from 'react-native';
 
-import FoodInfoContainer from "./FoodInfoContainer";
-import {Colors, Fonts, DefaultStyles} from '../constants';
-import {readFavourites} from "../api/FavouritesLogic";
+import FoodInfoContainer from "../support-components/FoodInfoContainer";
+import {Colors, Fonts, DefaultStyles} from '../../constants';
+import {readFavourites} from "../../api/FavouritesLogic";
 
 
 function Favourite({navigation}) {
@@ -12,11 +12,10 @@ function Favourite({navigation}) {
 
     const refresh = () => {
         setFavsArr(readFavourites())
-        // console.log('refreshed favourites:', favsArr);
     }
 
     return (
-        <View style={DefaultStyles.screen}>
+        <SafeAreaView style={DefaultStyles.screen}>
 
             <View style={styles.headerContainer}>
                 <Text style={styles.headerText}>Saved favourites:</Text>
@@ -29,7 +28,9 @@ function Favourite({navigation}) {
                     </View>
 
 
-                    : <ScrollView>
+                    : <ScrollView
+                        showsVerticalScrollIndicator={false}
+                    >
                         {
                             favsArr.map(item => getFavsItemElement(item, navigation, refresh))
                         }
@@ -38,7 +39,7 @@ function Favourite({navigation}) {
             </View>
 
 
-        </View>
+        </SafeAreaView>
     );
 
 }
@@ -52,6 +53,7 @@ function getFavsItemElement(item, navigation, refresh) {
             key={getKey(item.name, 'favsList')}
             item={item}
             navigation={navigation}
+            buttonType={'favs'}
             onGoBack={refresh}
         />
     );
@@ -80,7 +82,7 @@ const styles = StyleSheet.create({
     emptyFavContainer: {
         flex: 1,
         // marginTop: '20%',
-        marginBottom: '30%',
+        marginBottom: '5%',
         justifyContent: 'center',
         alignItems: 'center',
     },
@@ -98,7 +100,7 @@ const styles = StyleSheet.create({
         borderWidth: 1,
         borderColor: Colors.BORDER,
         borderRadius: 4,
-        width: '97%',
+        width: '100%',
         color: Colors.TEXT,
         flexDirection: 'row',
     },

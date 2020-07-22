@@ -1,7 +1,7 @@
 import React from 'react';
 import {StyleSheet, View, Button} from 'react-native';
 
-import {Colors} from '../constants';
+import {Colors} from '../../constants';
 
 
 function StartScreenButton(props) {

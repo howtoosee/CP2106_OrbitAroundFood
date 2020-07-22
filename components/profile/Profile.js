@@ -1,40 +1,37 @@
 import React from 'react';
-import {StyleSheet, Text, View, Image, Button, Alert} from 'react-native';
+import {StyleSheet, Text, View, Image, Button, Alert, SafeAreaView} from 'react-native';
 
+import Fonts from '../../constants/Fonts';
+import Colors from '../../constants/Colors';
+import DefaultStyles from "../../constants/DefaultStyles";
 
-import Fonts from '../constants/Fonts';
-import Colors from '../constants/Colors';
-import DefaultStyles from "../constants/DefaultStyles";
+import * as firebase from "firebase";
+import {signOut} from "../../api/AuthenticationApi";
 
-import firebaseDB from '../constants/firebaseDB';
 
 function Profile({navigation}) {
 
-    const {displayName, email} = firebaseDB.auth().currentUser
+    const {displayName, email} = firebase.auth().currentUser
 
     const signOutHandler = () => {
-        firebaseDB.auth()
-            .signOut()
-            .then(() => console.log("Successfully signed out:", displayName))
+        signOut()
             .then(() => Alert.alert(
                 'Success',
                 'Signed out from @' + displayName,
-                [{text: 'Ok'}]
-            ))
-            .catch(err => console.error("Error signing out:", err))
-            .then(() => navigation.goBack());
+                [{text: 'Ok', onPress: () => navigation.goBack()}]
+            ));
     };
 
     return (
 
-        <View style={DefaultStyles.screen}>
+        <SafeAreaView style={DefaultStyles.screen}>
 
             <View style={styles.profileContainer}>
 
                 <View style={styles.profileImageContainer}>
                     <Image
                         style={styles.image}
-                        source={require('../assets/potato.jpg')}/>
+                        source={require('../../assets/potato.jpg')}/>
                 </View>
 
                 <View style={styles.profileNameContainer}>
@@ -53,7 +50,7 @@ function Profile({navigation}) {
                         onPress={signOutHandler}/>
             </View>
 
-        </View>
+        </SafeAreaView>
     );
 }
 

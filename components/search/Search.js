@@ -1,12 +1,21 @@
 import React, {useState} from 'react';
-import {StyleSheet, Button, Text, TextInput, View, ScrollView, TouchableOpacity, Modal} from 'react-native';
+import {
+    StyleSheet,
+    Button,
+    Text,
+    TextInput,
+    View,
+    SafeAreaView,
+    ScrollView,
+    TouchableOpacity,
+    Modal
+} from 'react-native';
 import {Button as ButtonRNE} from 'react-native-elements';
 import Icon from 'react-native-vector-icons/FontAwesome';
 
+import {Colors, DefaultStyles, Fonts} from '../../constants';
 import Filter from './Filter';
-import {addHistory, clearHistory, getHistory} from '../api/SearchHistoryLogic';
-
-import {Colors, DefaultStyles, Fonts} from '../constants';
+import {addHistory, clearHistory, getHistory} from '../../api/SearchHistoryLogic';
 
 
 function Search({navigation}) {
@@ -63,7 +72,7 @@ function Search({navigation}) {
 
     return (
 
-        <View style={DefaultStyles.screen}>
+        <SafeAreaView style={DefaultStyles.screen}>
 
             <Modal animationType="slide"
                    transparent={false}
@@ -75,6 +84,10 @@ function Search({navigation}) {
                         setVisible={setFilterVisible}
                 />
             </Modal>
+
+            <View style={styles.headerTextContainer}>
+                <Text style={styles.headerText}>Search for what you wanna eat:</Text>
+            </View>
 
             <View style={styles.searchBar}>
 
@@ -90,29 +103,27 @@ function Search({navigation}) {
 
                 <View style={styles.searchButton}>
                     <ButtonRNE type='clear'
-                            icon={
-                                <Icon
-                                    name="search"
-                                    size={25}
-                                    color={Colors.BUTTON}
-                                />
-                            }
-                            color={Colors.BUTTON}
-                            onPress={searchHandler}
+                               icon={
+                                   <Icon name="search"
+                                         size={25}
+                                         color={Colors.BUTTON}
+                                   />
+                               }
+                               color={Colors.BUTTON}
+                               onPress={searchHandler}
                     />
                 </View>
 
                 <View style={styles.filterButton}>
                     <ButtonRNE type='clear'
-                            icon={
-                                <Icon
-                                    name="filter"
-                                    size={25}
-                                    color={Colors.BUTTON}
-                                />
-                            }
-                            color={Colors.BUTTON}
-                            onPress={filterHandler}
+                               icon={
+                                   <Icon name="filter"
+                                         size={25}
+                                         color={Colors.BUTTON}
+                                   />
+                               }
+                               color={Colors.BUTTON}
+                               onPress={filterHandler}
                     />
                 </View>
 
@@ -129,7 +140,9 @@ function Search({navigation}) {
                 </View>
 
                 <View style={styles.searchHistoryContainer}>
-                    <ScrollView>
+                    <ScrollView
+                        showsVerticalScrollIndicator={false}
+                    >
                         {searchHist.map(item => (
 
                             <TouchableOpacity
@@ -144,16 +157,9 @@ function Search({navigation}) {
                                 </View>
 
                             </TouchableOpacity>
+                        ))
+                        }
 
-                                // <Button key={getKey("button")}
-                                //         title={item}
-                                //         type="outline"
-                                //         color
-                                //         titleStyle={styles.searchHistoryText}
-                                //         containerStyle={{color: Colors.TEXT}}
-                                //         onPress={() => searchInputHandler(item)}
-                                // />
-                        ))}
                     </ScrollView>
                 </View>
 
@@ -167,16 +173,26 @@ function Search({navigation}) {
                 />
             </View>
 
-        </View>
+        </SafeAreaView>
     );
 }
 
 
 const styles = StyleSheet.create({
 
+    headerTextContainer: {
+        // paddingLeft: 20,
+        flex: 1,
+    },
+
+    headerText: {
+        color: Colors.TEXT,
+        fontSize: Fonts.S,
+        fontWeight: 'bold',
+    },
+
     searchBar: {
         flex: 2,
-        paddingTop: 10,
         flexDirection: 'row',
         justifyContent: 'space-between',
         alignItems: 'center',
@@ -252,8 +268,8 @@ const styles = StyleSheet.create({
     },
 
     searchHistoryClearButton: {
-        flex: 5,
-        paddingTop: 25,
+        flex: 4,
+        marginTop: 25,
         justifyContent: 'center',
     }
 });

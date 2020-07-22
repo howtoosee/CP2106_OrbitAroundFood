@@ -1,25 +1,24 @@
-import Favourite from './Favourite';
-import Filter from './Filter';
-import FoodDetails from './FoodDetails';
-import FoodInfoContainer from "./FoodInfoContainer";
-import HelpBuyPls from './HelpBuyPls';
-import LeaveReview from './LeaveReview';
-import SignInScreen from './SignInScreen';
-import Profile from './Profile';
-import Recommendation from './Recommendation';
-import NoSignInWarningDialogue from './NoSignInWarningDialogue';
-import ComponentRequiresSignInAlert from "./ComponentRequiresSignInAlert";
-import Search from './Search';
-import SearchResults from './SearchResults';
-import SignUpScreen from './SignUpScreen';
-import StartScreen from './StartScreen';
-import RequestDirectory from './RequestDirectory';
-import RequestResult from './RequestResult';
-import MyRequestInput from './MyRequestInput';
-import DateAndTimePicker from './DateAndTimePicker';
-import AcceptRequestInput from './AcceptRequestInput';
-import MyConfirmedRequestList from './MyConfirmedRequestList';
-import StartScreenButton from './StartScreenButton';
+import Favourite from './favourite/Favourite';
+import Filter from './search/Filter';
+import FoodDetails from './food-details/FoodDetails';
+import FoodInfoContainer from "./support-components/FoodInfoContainer";
+import LemmeHelpScreen from './lemmehelp/LemmeHelpScreen';
+import LeaveReview from './food-details/LeaveReview';
+import SignInScreen from './authentication/SignInScreen';
+import Profile from './profile/Profile';
+import Recommendation from './recommendation/Recommendation';
+import Search from './search/Search';
+import SearchResults from './search/SearchResults';
+import SignUpScreen from './authentication/SignUpScreen';
+import StartScreen from './start-screen/StartScreen';
+import RequestSearch from './lemmehelp/RequestSearch';
+import RequestSearchResult from './lemmehelp/RequestSearchResult';
+import CreateHelpRequest from './lemmehelp/CreateHelpRequest';
+import AcceptHelpRequest from './lemmehelp/AcceptHelpRequest';
+import RequestHistory from './lemmehelp/RequestHistory';
+import StartScreenButton from './start-screen/StartScreenButton';
+import ComponentRequiresSignInAlert from "./support-components/ComponentRequiresSignInAlert";
+import RequestDetails from "./lemmehelp/RequestDetails";
 
 
 export {
@@ -27,22 +26,21 @@ export {
     Filter,
     FoodDetails,
     FoodInfoContainer,
-    HelpBuyPls,
-    RequestDirectory,
-    RequestResult,
-    MyRequestInput,
+    LemmeHelpScreen,
+    RequestSearch,
+    RequestSearchResult,
+    CreateHelpRequest,
     LeaveReview,
     SignInScreen,
-    NoSignInWarningDialogue,
     Profile,
     Recommendation,
-    ComponentRequiresSignInAlert,
     Search,
     SearchResults,
     SignUpScreen,
     StartScreen,
-    DateAndTimePicker,
-    AcceptRequestInput,
-    MyConfirmedRequestList,
+    AcceptHelpRequest,
+    RequestHistory,
     StartScreenButton,
+    ComponentRequiresSignInAlert,
+    RequestDetails,
 };

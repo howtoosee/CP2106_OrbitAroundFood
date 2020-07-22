@@ -1,9 +1,9 @@
 import React, {useEffect, useState} from 'react';
 import {Image, StyleSheet, Text, TouchableOpacity, View} from 'react-native';
 
-import requireSignInAlert from './ComponentRequiresSignInAlert';
+import requireSignInAlert from '../support-components/ComponentRequiresSignInAlert';
 import StartScreenButton from "./StartScreenButton";
-import {Colors, DefaultStyles, firebaseDB, Fonts} from "../constants";
+import {Colors, DefaultStyles, firebaseDB, Fonts} from "../../constants";
 
 
 function StartScreen({navigation, route}) {
@@ -36,7 +36,7 @@ function StartScreen({navigation, route}) {
             <View style={styles.imageContainer}>
                 <Image
                     style={styles.image}
-                    source={require('../assets/icon.png')}
+                    source={require('../../assets/icon.png')}
                 />
             </View>
 
@@ -114,7 +114,7 @@ const styles = StyleSheet.create({
 
     userButton: {
         alignItems: "center",
-        backgroundColor: Colors.ALT_BUTTON,
+        backgroundColor: Colors.DARKER_BUTTON,
         borderRadius: 4,
         width: '100%',
         paddingVertical: 8,

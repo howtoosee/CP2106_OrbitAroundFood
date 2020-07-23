@@ -140,6 +140,7 @@ const styles = StyleSheet.create({
     },
 
     endOfResultsText: {
+        marginTop: 20,
         fontSize: Fonts.XS,
         color: Colors.TEXT,
         fontStyle: "italic",

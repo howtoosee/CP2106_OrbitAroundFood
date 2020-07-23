@@ -1,5 +1,5 @@
 import React, {useEffect, useState} from "react";
-import {ActivityIndicator, ScrollView, StyleSheet, Text, View} from "react-native";
+import {ActivityIndicator, SafeAreaView, ScrollView, StyleSheet, Text, View} from "react-native";
 
 import FoodInfoContainer from "../support-components/FoodInfoContainer";
 import {Colors, DefaultStyles, Fonts} from "../../constants";
@@ -9,8 +9,8 @@ function SearchResults({route, navigation}) {
     const {searchKey} = route.params;
     const {filters} = route.params;
     const {filterNames} = route.params;
-    const filterString =
-        filterNames.length === 0 ? "None" : filterNames.join(", ");
+    const filterString = filterNames.length === 0
+        ? "None" : filterNames.join(", ");
 
     const [isLoading, setLoading] = useState(true);
     const [results, setResList] = useState([]);
@@ -27,35 +27,44 @@ function SearchResults({route, navigation}) {
     );
 
     return (
-        <View style={DefaultStyles.screen}>
-            <View style={DefaultStyles.contentContainer}>
-                <View style={styles.resultStatInfo}>
-                    <Text style={styles.resultStatText}>
-                        Searching for: "{searchKey}"
-                    </Text>
-                    <Text style={styles.resultStatText}>
-                        Filters: {filterString}
-                    </Text>
+        <SafeAreaView style={DefaultStyles.screen}>
+
+            <View style={styles.resultStatInfo}>
+
+                <Text style={styles.resultStatText}>
+                    Searching for: "{searchKey}"
+                </Text>
+
+                <Text style={styles.resultStatText}>
+                    Filters: {filterString}
+                </Text>
+
+            </View>
+
+            {isLoading
+                ? <View style={styles.loadingContainer}>
+                    <ActivityIndicator size="large" color="black"/>
                 </View>
 
-                {isLoading ? (
-                    <View style={styles.loadingContainer}>
-                        <ActivityIndicator size="large" color="black"/>
-                    </View>
-                ) : results.length === 0 ? (
-                    <View style={styles.noResultsContainer}>
+                : (results.length === 0)
+                    ? <View style={styles.noResultsContainer}>
+
                         <View style={styles.resultStatInfo}>
                             <Text style={styles.noResultText}>
                                 No results found :(
                             </Text>
                         </View>
+
                     </View>
-                ) : (
-                    <View>
+
+                    : <View>
+
                         <View style={styles.resultStatInfo}>
+
                             <Text style={styles.resultStatText}>
                                 Results found: {results.length}
                             </Text>
+
                         </View>
 
                         <ScrollView
@@ -67,15 +76,19 @@ function SearchResults({route, navigation}) {
                             )}
 
                             <View style={styles.endOfResultsText}>
+
                                 <Text style={styles.endOfResultsText}>
                                     No more liao!
                                 </Text>
+
                             </View>
+
                         </ScrollView>
+
                     </View>
-                )}
-            </View>
-        </View>
+            }
+
+        </SafeAreaView>
     );
 }
 
@@ -93,23 +106,15 @@ function getResultItemElement(item, navigation) {
 }
 
 const styles = StyleSheet.create({
-    searchResults: {
-        marginLeft: 0,
-        paddingTop: 0,
-        overflow: "hidden",
-        height: "95%"
-    },
 
     loadingContainer: {
         flex: 1,
-        paddingBottom: 100,
         flexDirection: "row",
         alignItems: "center",
         justifyContent: "center"
     },
 
     noResultsContainer: {
-        paddingTop: 250,
         alignItems: "center",
         justifyContent: "center"
     },
@@ -135,7 +140,6 @@ const styles = StyleSheet.create({
     },
 
     endOfResultsText: {
-        paddingVertical: 20,
         fontSize: Fonts.XS,
         color: Colors.TEXT,
         fontStyle: "italic",

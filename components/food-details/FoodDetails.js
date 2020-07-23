@@ -94,8 +94,8 @@ function FoodDetails({route, navigation}) {
 
 
     return (
-
         <SafeAreaView style={DefaultStyles.screen}>
+
             <FoodInfoContainer
                 item={foodObj}
                 useFavButton={true}

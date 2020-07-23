@@ -10,6 +10,7 @@ import {getUserContact} from '../../api/AuthenticationApi';
 import {Colors, DefaultStyles, Fonts} from '../../constants';
 import {writeHelp} from '../../api/HelpApi';
 import FoodInfoContainer from '../support-components/FoodInfoContainer';
+import DismissKeyboardView from "../support-components/DismissKeyboardView";
 
 const today = new Date();
 
@@ -113,92 +114,96 @@ function CreateHelpRequest({navigation, route}) {
 
     return (
         <SafeAreaView style={DefaultStyles.screen}>
-            <DateTimePickerModal isVisible={showTimePicker}
-                                 mode='time'
-                                 date={today}
-                                 onConfirm={confirmTimeHandler}
-                                 onCancel={hideTimePicker}
-            />
+            <DismissKeyboardView style={{flex: 1}}>
 
-            <View style={styles.foodInfoContainer}>
-                <FoodInfoContainer
-                    item={foodObj}
-                    hideButton={true}
+                <DateTimePickerModal isVisible={showTimePicker}
+                                     mode='time'
+                                     date={today}
+                                     onConfirm={confirmTimeHandler}
+                                     onCancel={hideTimePicker}
                 />
-            </View>
 
-            <View style={styles.requestInfoContainer}>
-
-                <View style={styles.requestInfoHeaderContainer}>
-                    <Text style={styles.requestInfoHeaderText}>Enter your details:</Text>
+                <View style={styles.foodInfoContainer}>
+                    <FoodInfoContainer
+                        item={foodObj}
+                        hideButton={true}
+                    />
                 </View>
 
-                <View style={styles.textInputContainer}>
+                <View style={styles.requestInfoContainer}>
 
-                    <View style={styles.textInputContainer}>
-
-                        <Text style={styles.inputHeaderText}>Destination</Text>
-                        <TextInput style={styles.textInput}
-                                   numberOfLines={1}
-                                   placeholder="Meeting place"
-                                   placeholderTextColor={'grey'}
-                                   onChangeText={destinationInputHandler}
-                                   value={destination}
-                        />
-
+                    <View style={styles.requestInfoHeaderContainer}>
+                        <Text style={styles.requestInfoHeaderText}>Enter your details:</Text>
                     </View>
 
                     <View style={styles.textInputContainer}>
 
-                        <Text style={styles.inputHeaderText}>Remarks</Text>
-                        <TextInput style={styles.textInput}
-                                   numberOfLines={1}
-                                   placeholder="Remarks"
-                                   placeholderTextColor={'grey'}
-                                   onChangeText={remarksInputHandler}
-                                   value={remarks}
-                        />
+                        <View style={styles.textInputContainer}>
 
+                            <Text style={styles.inputHeaderText}>Destination</Text>
+                            <TextInput style={styles.textInput}
+                                       numberOfLines={1}
+                                       placeholder="Where to meet?"
+                                       placeholderTextColor={'grey'}
+                                       onChangeText={destinationInputHandler}
+                                       value={destination}
+                            />
+
+                        </View>
+
+                        <View style={styles.textInputContainer}>
+
+                            <Text style={styles.inputHeaderText}>Remarks</Text>
+                            <TextInput style={styles.textInput}
+                                       numberOfLines={1}
+                                       placeholder="Remarks (max 30 chars)"
+                                       placeholderTextColor={'grey'}
+                                       onChangeText={remarksInputHandler}
+                                       value={remarks}
+                                       maxLength={30}
+                            />
+
+                        </View>
                     </View>
                 </View>
-            </View>
 
-            <View style={styles.dateTimeContainer}>
+                <View style={styles.dateTimeContainer}>
 
-                <View style={styles.dateTimeStatsContainer}>
-                    <Text style={styles.dateTimeStatsText}>Time of Arrival:</Text>
-                    <Text style={styles.dateTimeText}>{timeETA}</Text>
+                    <View style={styles.dateTimeStatsContainer}>
+                        <Text style={styles.dateTimeStatsText}>Time of Arrival:</Text>
+                        <Text style={styles.dateTimeText}>{timeETA}</Text>
+                    </View>
+
+
+                    <View style={styles.timePickerButtonContainer}>
+                        <ButtonRNE title='Select Food ETA'
+                                   type='solid'
+                                   raised
+                                   buttonStyle={styles.timePickerButton}
+                                   onPress={showTimepicker}
+                        />
+                    </View>
+
+
                 </View>
 
+                <View style={styles.buttonContainer}>
+                    <View style={styles.cancelButton}>
+                        <Button title="CANCEL"
+                                color={Colors.BUTTON}
+                                onPress={() => navigation.goBack()}
+                        />
+                    </View>
 
-                <View style={styles.timePickerButtonContainer}>
-                    <ButtonRNE title='Select Food ETA'
-                               type='solid'
-                               raised
-                               buttonStyle={styles.timePickerButton}
-                               onPress={showTimepicker}
-                    />
+                    <View style={styles.confirmButton}>
+                        <Button title="CONFIRM"
+                                color={Colors.DARKER_BUTTON}
+                                onPress={confirmHelpHandler}
+                        />
+                    </View>
                 </View>
 
-
-            </View>
-
-            <View style={styles.buttonContainer}>
-                <View style={styles.cancelButton}>
-                    <Button title="CANCEL"
-                            color={Colors.BUTTON}
-                            onPress={() => navigation.goBack()}
-                    />
-                </View>
-
-                <View style={styles.confirmButton}>
-                    <Button title="CONFIRM"
-                            color={Colors.DARKER_BUTTON}
-                            onPress={confirmHelpHandler}
-                    />
-                </View>
-            </View>
-
+            </DismissKeyboardView>
         </SafeAreaView>
     );
 
@@ -290,7 +295,7 @@ const styles = StyleSheet.create({
         borderBottomWidth: 2,
         // borderRadius: 4,
         fontSize: Fonts.S,
-        paddingVertical: 8,
+        paddingVertical: 6,
         paddingHorizontal: 4,
         marginVertical: 8,
     },

@@ -13,6 +13,7 @@ import {
 
 import {Colors, DefaultStyles, Fonts} from '../../constants';
 import {createUser, signOut, userNameExists} from '../../api/AuthenticationApi';
+import DismissKeyboardView from "../support-components/DismissKeyboardView";
 
 
 function SignUpScreen({navigation}) {
@@ -101,113 +102,117 @@ function SignUpScreen({navigation}) {
     return (
         <SafeAreaView style={DefaultStyles.screen}>
 
-            <KeyboardAvoidingView style={DefaultStyles.keyboardAvoidScreen}
-                                  behavior={Platform.OS === "ios" ? "padding" : null}
-            >
+            <DismissKeyboardView style={{flex: 1}}>
 
-                <View style={{alignSelf: 'stretch', justifyContent: 'flex-end', paddingBottom: 10, height: '100%'}}>
+                <KeyboardAvoidingView style={DefaultStyles.keyboardAvoidScreen}
+                                      behavior={Platform.OS === "ios" ? "padding" : null}
+                >
 
-                    <View style={styles.titleTextContainer}>
-                        <Text style={styles.signUpTitleText}>Sign Up</Text>
-                        <Text style={styles.signUpSubtext}>Create an account to use OrbitAroundFood</Text>
+                    <View style={{alignSelf: 'stretch', justifyContent: 'flex-end', paddingBottom: 10, height: '100%'}}>
+
+                        <View style={styles.titleTextContainer}>
+                            <Text style={styles.signUpTitleText}>Sign Up</Text>
+                            <Text style={styles.signUpSubtext}>Create an account to use OrbitAroundFood</Text>
+                        </View>
+
+
+                        <View style={styles.inputContainer}>
+
+                            <View style={styles.inputSubContainer}>
+                                <Text style={styles.accDetailsHeader}>Email</Text>
+
+                                <View style={styles.textInputContainer}>
+                                    <TextInput
+                                        placeholder="Email"
+                                        style={styles.textInput}
+                                        autoCapitalize="none"
+                                        onChangeText={email => setEmail(email)}
+                                        value={email}
+                                    />
+                                </View>
+                            </View>
+
+                            <View style={styles.inputSubContainer}>
+                                <Text style={styles.accDetailsHeader}>Username</Text>
+
+                                <View style={styles.textInputContainer}>
+                                    <TextInput
+                                        placeholder="Username (min. 4 chars)"
+                                        style={styles.textInput}
+                                        autoCapitalize="none"
+                                        onChangeText={username => setUsername(username)}
+                                        value={username}
+                                    />
+                                </View>
+                            </View>
+
+                            <View style={styles.inputSubContainer}>
+                                <Text style={styles.accDetailsHeader}>Contact Number</Text>
+
+                                <View style={styles.textInputContainer}>
+                                    <TextInput
+                                        placeholder="Contact Number"
+                                        keyboardType="numeric"
+                                        style={styles.textInput}
+                                        autoCapitalize="none"
+                                        onChangeText={number => setNumber(number)}
+                                        value={number}
+                                    />
+                                </View>
+                            </View>
+
+                            <View style={styles.inputSubContainer}>
+                                <Text style={styles.accDetailsHeader}>Password</Text>
+
+                                <View style={styles.textInputContainer}>
+                                    <TextInput
+                                        placeholder="Password (min. 6 chars)"
+                                        style={styles.textInput}
+                                        autoCapitalize="none"
+                                        onChangeText={password => setPassword(password)}
+                                        value={password}
+                                        secureTextEntry={true}
+                                    />
+                                </View>
+                            </View>
+
+                            <View style={styles.inputSubContainer}>
+                                <Text style={styles.accDetailsHeader}>Confirm Password</Text>
+
+                                <View style={styles.textInputContainer}>
+                                    <TextInput
+                                        placeholder="Retype Password"
+                                        style={styles.textInput}
+                                        autoCapitalize="none"
+                                        onChangeText={retypePassword => setRetypedPassword(retypePassword)}
+                                        value={retypePassword}
+                                        secureTextEntry={true}
+                                    />
+                                </View>
+                            </View>
+                        </View>
+
+
+                        <View style={styles.buttonContainer}>
+                            <View style={styles.confirmButtonContainer}>
+                                <Button color={Colors.BUTTON}
+                                        title="Sign Up"
+                                        onPress={() => signUpHandler()}
+                                />
+                            </View>
+
+                            <View style={styles.signInButtonContainer}>
+                                <Text style={styles.haveAccountText}>Have an account? </Text>
+                                <Button title="Sign In"
+                                        color={Colors.DARKER_BUTTON}
+                                        onPress={() => navigation.goBack()}
+                                />
+                            </View>
+                        </View>
                     </View>
 
-
-                    <View style={styles.inputContainer}>
-
-                        <View style={styles.inputSubContainer}>
-                            <Text style={styles.accDetailsHeader}>Email</Text>
-
-                            <View style={styles.textInputContainer}>
-                                <TextInput
-                                    placeholder="Email"
-                                    style={styles.textInput}
-                                    autoCapitalize="none"
-                                    onChangeText={email => setEmail(email)}
-                                    value={email}
-                                />
-                            </View>
-                        </View>
-
-                        <View style={styles.inputSubContainer}>
-                            <Text style={styles.accDetailsHeader}>Username</Text>
-
-                            <View style={styles.textInputContainer}>
-                                <TextInput
-                                    placeholder="Username (min. 4 chars)"
-                                    style={styles.textInput}
-                                    autoCapitalize="none"
-                                    onChangeText={username => setUsername(username)}
-                                    value={username}
-                                />
-                            </View>
-                        </View>
-
-                        <View style={styles.inputSubContainer}>
-                            <Text style={styles.accDetailsHeader}>Contact Number</Text>
-
-                            <View style={styles.textInputContainer}>
-                                <TextInput
-                                    placeholder="Contact Number"
-                                    style={styles.textInput}
-                                    autoCapitalize="none"
-                                    onChangeText={number => setNumber(number)}
-                                    value={number}
-                                />
-                            </View>
-                        </View>
-
-                        <View style={styles.inputSubContainer}>
-                            <Text style={styles.accDetailsHeader}>Password</Text>
-
-                            <View style={styles.textInputContainer}>
-                                <TextInput
-                                    placeholder="Password (min. 6 chars)"
-                                    style={styles.textInput}
-                                    autoCapitalize="none"
-                                    onChangeText={password => setPassword(password)}
-                                    value={password}
-                                    secureTextEntry={true}
-                                />
-                            </View>
-                        </View>
-
-                        <View style={styles.inputSubContainer}>
-                            <Text style={styles.accDetailsHeader}>Confirm Password</Text>
-
-                            <View style={styles.textInputContainer}>
-                                <TextInput
-                                    placeholder="Retype Password"
-                                    style={styles.textInput}
-                                    autoCapitalize="none"
-                                    onChangeText={retypePassword => setRetypedPassword(retypePassword)}
-                                    value={retypePassword}
-                                    secureTextEntry={true}
-                                />
-                            </View>
-                        </View>
-                    </View>
-
-
-                    <View style={styles.buttonContainer}>
-                        <View style={styles.confirmButtonContainer}>
-                            <Button color={Colors.BUTTON}
-                                    title="Sign Up"
-                                    onPress={() => signUpHandler()}
-                            />
-                        </View>
-
-                        <View style={styles.signInButtonContainer}>
-                            <Text style={styles.haveAccountText}>Have an account? </Text>
-                            <Button title="Sign In"
-                                    color={Colors.DARKER_BUTTON}
-                                    onPress={() => navigation.goBack()}
-                            />
-                        </View>
-                    </View>
-                </View>
-
-            </KeyboardAvoidingView>
+                </KeyboardAvoidingView>
+            </DismissKeyboardView>
         </SafeAreaView>
     );
 }

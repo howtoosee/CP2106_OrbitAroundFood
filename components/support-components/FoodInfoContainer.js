@@ -3,6 +3,7 @@ import {StyleSheet, Text, View} from "react-native";
 import {Button} from 'react-native-elements';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import Icon5 from 'react-native-vector-icons/FontAwesome5';
+
 import {Colors, Fonts} from "../../constants";
 
 

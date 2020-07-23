@@ -6,6 +6,7 @@ import {Colors, DefaultStyles, Fonts} from '../../constants';
 import {setHelper} from '../../api/HelpApi';
 import {getUserContact} from "../../api/AuthenticationApi";
 import RequestInfoContainer from "./RequestInfoContainer";
+import DismissKeyboardView from "../support-components/DismissKeyboardView";
 
 
 function AcceptHelpRequest({navigation, route}) {
@@ -53,48 +54,50 @@ function AcceptHelpRequest({navigation, route}) {
 
     return (
         <SafeAreaView style={DefaultStyles.screen}>
+            <DismissKeyboardView style={{flex: 1}}>
 
-            <View style={styles.acceptRequestContainer}>
-                <View style={styles.foodInfoContainer}>
+                <View style={styles.acceptRequestContainer}>
+                    <View style={styles.foodInfoContainer}>
 
-                    <RequestInfoContainer item={requestObj}
-                                          showButton={false}
-                                          status={'helping'}
-                    />
-
-                </View>
-
-                <View style={styles.textInputContainer}>
-
-                    <TextInput placeholder="Remarks"
-                               placeholderTextColor={'grey'}
-                               style={styles.textInput}
-                               onChangeText={remarksInputHandler}
-                               value={remarks}
-                    />
-
-                </View>
-
-                <View style={styles.buttonContainer}>
-
-                    <View style={styles.cancelButton}>
-                        <Button title="CANCEL"
-                                color={Colors.BUTTON}
-                                onPress={() => navigation.goBack()}
+                        <RequestInfoContainer item={requestObj}
+                                              showButton={false}
+                                              status={'helping'}
                         />
+
                     </View>
 
-                    <View style={styles.confirmButton}>
-                        <Button title="CONFIRM"
-                                color={Colors.DARKER_BUTTON}
-                                onPress={confirmRequestHandler}
+                    <View style={styles.textInputContainer}>
+
+                        <TextInput placeholder="Remarks (max 30 chars)"
+                                   placeholderTextColor={Colors.TEXT}
+                                   style={styles.textInput}
+                                   onChangeText={remarksInputHandler}
+                                   value={remarks}
+                                   maxLength={30}
                         />
+
                     </View>
 
+                    <View style={styles.buttonContainer}>
+
+                        <View style={styles.cancelButton}>
+                            <Button title="CANCEL"
+                                    color={Colors.BUTTON}
+                                    onPress={() => navigation.goBack()}
+                            />
+                        </View>
+
+                        <View style={styles.confirmButton}>
+                            <Button title="CONFIRM"
+                                    color={Colors.DARKER_BUTTON}
+                                    onPress={confirmRequestHandler}
+                            />
+                        </View>
+
+                    </View>
                 </View>
-            </View>
 
-
+            </DismissKeyboardView>
         </SafeAreaView>
     );
 

@@ -9,6 +9,8 @@ const DefaultStyles = StyleSheet.create({
         marginVertical: 20,
         marginHorizontal: 30,
         alignSelf: 'stretch',
+        height: '100%',
+        // width: '100%',
     },
 
     keyboardAvoidScreen: {
@@ -18,7 +20,8 @@ const DefaultStyles = StyleSheet.create({
         justifyContent: 'center',
         alignItems: 'center',
         alignSelf: 'stretch',
-
+        height: '100%',
+        // width: '100%',
     },
 
     headerContainer: {

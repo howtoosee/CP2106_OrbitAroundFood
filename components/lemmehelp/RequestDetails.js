@@ -43,9 +43,11 @@ function RequestDetails({navigation, route}) {
 
     return (
         <SafeAreaView style={DefaultStyles.screen}>
+
             <View style={styles.headerTextContainer}>
                 <Text style={styles.headerText}>My request:</Text>
             </View>
+
             <RequestInfoContainer
                 item={item}
                 status={status}

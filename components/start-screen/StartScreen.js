@@ -1,5 +1,5 @@
 import React, {useEffect, useState} from "react";
-import {Image, StyleSheet, Text, TouchableOpacity, View} from "react-native";
+import {Image, SafeAreaView, StyleSheet, Text, TouchableOpacity, View} from "react-native";
 
 import requireSignInAlert from "../support-components/ComponentRequiresSignInAlert";
 import StartScreenButton from "./StartScreenButton";
@@ -7,7 +7,7 @@ import {Colors, DefaultStyles, Fonts} from "../../constants";
 
 import firebase from "firebase";
 
-function StartScreen({navigation, route}) {
+function StartScreen({navigation}) {
     const [displayName, setDisplayName] = useState();
     const [isSignedIn, setSignedIn] = useState(
         firebase.auth().currentUser !== null
@@ -31,7 +31,8 @@ function StartScreen({navigation, route}) {
     );
 
     return (
-        <View style={DefaultStyles.screen}>
+        <SafeAreaView style={DefaultStyles.screen}>
+
             <View style={styles.imageContainer}>
                 <Image
                     style={styles.image}
@@ -79,7 +80,8 @@ function StartScreen({navigation, route}) {
                     </TouchableOpacity>
                 </View>
             </View>
-        </View>
+
+        </SafeAreaView>
     );
 }
 

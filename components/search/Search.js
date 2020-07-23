@@ -16,6 +16,7 @@ import Icon from 'react-native-vector-icons/FontAwesome';
 import {Colors, DefaultStyles, Fonts} from '../../constants';
 import Filter from './Filter';
 import {addHistory, clearHistory, getHistory} from '../../api/SearchHistoryLogic';
+import DismissKeyboardView from "../support-components/DismissKeyboardView";
 
 
 function Search({navigation}) {
@@ -65,7 +66,6 @@ function Search({navigation}) {
         setSearchHist(getHistory());
     }
 
-
     const getKey = objType => objType + "_" + Math.floor(Math.random() * 10000);
     // creates key for object
 
@@ -73,106 +73,108 @@ function Search({navigation}) {
     return (
 
         <SafeAreaView style={DefaultStyles.screen}>
+            <DismissKeyboardView style={{flex: 1}}>
 
-            <Modal animationType="slide"
-                   transparent={false}
-                   visible={isFilterVisible}>
-                <Filter filters={filters}
-                        filterNames={filterNames}
-                        setFilters={setFilters}
-                        setFilterNames={setFilterNames}
-                        setVisible={setFilterVisible}
-                />
-            </Modal>
-
-            <View style={styles.headerTextContainer}>
-                <Text style={styles.headerText}>Search for what you wanna eat:</Text>
-            </View>
-
-            <View style={styles.searchBar}>
-
-                <View style={styles.inputContainer}>
-
-                    <TextInput style={styles.inputText}
-                               placeholder="What do you wanna eat?"
-                               onChangeText={searchInputHandler}
-                               value={searchString}
+                <Modal animationType="slide"
+                       transparent={false}
+                       visible={isFilterVisible}>
+                    <Filter filters={filters}
+                            filterNames={filterNames}
+                            setFilters={setFilters}
+                            setFilterNames={setFilterNames}
+                            setVisible={setFilterVisible}
                     />
+                </Modal>
+
+                <View style={styles.headerTextContainer}>
+                    <Text style={styles.headerText}>Search for what you wanna eat:</Text>
+                </View>
+
+                <View style={styles.searchBar}>
+
+                    <View style={styles.inputContainer}>
+
+                        <TextInput style={styles.inputText}
+                                   placeholder="What do you wanna eat?"
+                                   onChangeText={searchInputHandler}
+                                   value={searchString}
+                        />
+
+                    </View>
+
+                    <View style={styles.searchButton}>
+                        <ButtonRNE type='clear'
+                                   icon={
+                                       <Icon name="search"
+                                             size={25}
+                                             color={Colors.BUTTON}
+                                       />
+                                   }
+                                   color={Colors.BUTTON}
+                                   onPress={searchHandler}
+                        />
+                    </View>
+
+                    <View style={styles.filterButton}>
+                        <ButtonRNE type='clear'
+                                   icon={
+                                       <Icon name="filter"
+                                             size={25}
+                                             color={Colors.BUTTON}
+                                       />
+                                   }
+                                   color={Colors.BUTTON}
+                                   onPress={filterHandler}
+                        />
+                    </View>
+
 
                 </View>
 
-                <View style={styles.searchButton}>
-                    <ButtonRNE type='clear'
-                               icon={
-                                   <Icon name="search"
-                                         size={25}
-                                         color={Colors.BUTTON}
-                                   />
-                               }
-                               color={Colors.BUTTON}
-                               onPress={searchHandler}
+
+                <View style={styles.searchHistoryOverallContainer}>
+
+                    <View style={styles.searchHistoryTitle}>
+                        <Text style={styles.searchHistoryTitleText}>
+                            Search History
+                        </Text>
+                    </View>
+
+                    <View style={styles.searchHistoryContainer}>
+                        <ScrollView
+                            showsVerticalScrollIndicator={false}
+                        >
+                            {searchHist.map(item => (
+
+                                <TouchableOpacity
+                                    key={getKey("touchable_opacity")}
+                                    onPress={() => searchInputHandler(item)}>
+
+                                    <View style={styles.searchHistoryTextContainer}>
+                                        <Text style={styles.searchHistoryText}
+                                              key={getKey("search_hist")}>
+                                            {item}
+                                        </Text>
+                                    </View>
+
+                                </TouchableOpacity>
+                            ))
+                            }
+
+                        </ScrollView>
+                    </View>
+
+
+                </View>
+
+                <View style={styles.searchHistoryClearButton}>
+                    <Button title="Clear search history"
+                            color={Colors.BUTTON}
+                            onPress={clearSearchHistHandler}
                     />
                 </View>
 
-                <View style={styles.filterButton}>
-                    <ButtonRNE type='clear'
-                               icon={
-                                   <Icon name="filter"
-                                         size={25}
-                                         color={Colors.BUTTON}
-                                   />
-                               }
-                               color={Colors.BUTTON}
-                               onPress={filterHandler}
-                    />
-                </View>
-
-
-            </View>
-
-
-            <View style={styles.searchHistoryOverallContainer}>
-
-                <View style={styles.searchHistoryTitle}>
-                    <Text style={styles.searchHistoryTitleText}>
-                        Search History
-                    </Text>
-                </View>
-
-                <View style={styles.searchHistoryContainer}>
-                    <ScrollView
-                        showsVerticalScrollIndicator={false}
-                    >
-                        {searchHist.map(item => (
-
-                            <TouchableOpacity
-                                key={getKey("touchable_opacity")}
-                                onPress={() => searchInputHandler(item)}>
-
-                                <View style={styles.searchHistoryTextContainer}>
-                                    <Text style={styles.searchHistoryText}
-                                          key={getKey("search_hist")}>
-                                        {item}
-                                    </Text>
-                                </View>
-
-                            </TouchableOpacity>
-                        ))
-                        }
-
-                    </ScrollView>
-                </View>
-
-
-            </View>
-
-            <View style={styles.searchHistoryClearButton}>
-                <Button title="Clear search history"
-                        color={Colors.BUTTON}
-                        onPress={clearSearchHistHandler}
-                />
-            </View>
-
+            </DismissKeyboardView>
         </SafeAreaView>
     );
 }

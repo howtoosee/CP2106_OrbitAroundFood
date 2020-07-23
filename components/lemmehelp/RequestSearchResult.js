@@ -34,44 +34,58 @@ function RequestSearchResult({route, navigation}) {
     );
 
     return (
-        <SafeAreaView style={{flex: 1}}>
-            <View style={DefaultStyles.screen}>
+        <SafeAreaView style={DefaultStyles.screen}>
 
-                <View style={styles.resultStatInfo}>
-                    <Text style={styles.resultStatText}>Searching for: "{searchKey}"</Text>
+            <View style={styles.resultStatInfo}>
+
+                <Text style={styles.resultStatText}>
+                    Searching for: "{searchKey}"
+                </Text>
+
+            </View>
+
+            {isLoading
+                ? <View style={styles.loadingContainer}>
+                    <ActivityIndicator size="large" color="black"/>
                 </View>
 
-                {isLoading
-                    ? <View style={styles.loadingContainer}>
-                        <ActivityIndicator size="large" color="black"/>
+                : (results.length === 0)
+                    ? <View style={styles.noResultsContainer}>
+
+                        <View style={styles.searchResultInfo}>
+                            <Text style={styles.noResultText}>
+                                No results found :(
+                            </Text>
+                        </View>
+
                     </View>
 
-                    : (results.length === 0)
-                        ? <View style={styles.noResultsContainer}>
-                            <View style={styles.searchResultInfo}>
-                                <Text style={styles.noResultText}>No results found :(</Text>
-                            </View>
+                    : <View>
+
+                        <View style={styles.resultStatInfo}>
+                            <Text style={styles.resultStatText}>
+                                Results found: {results.length}
+                            </Text>
                         </View>
 
-                        : <View>
-                            <View style={styles.resultStatInfo}>
-                                <Text>Results found: {results.length}</Text>
+                        <ScrollView style={styles.searchResults}
+                                    showsVerticalScrollIndicator={false}
+                        >
+                            {results.map((item) =>
+                                getResultItemElement(item, navigation, onGoBack)
+                            )}
+
+                            <View style={styles.endOfResultsText}>
+
+                                <Text style={styles.endOfResultsText}>
+                                    No more liao!
+                                </Text>
+
                             </View>
+                        </ScrollView>
 
-                            <ScrollView style={styles.searchResults}
-                                        showsVerticalScrollIndicator={false}
-                            >
-                                {results.map((item) =>
-                                    getResultItemElement(item, navigation, onGoBack)
-                                )}
-
-                                <View style={styles.endOfResultsText}>
-                                    <Text style={styles.endOfResultsText}>No more liao!</Text>
-                                </View>
-                            </ScrollView>
-                        </View>
-                }
-            </View>
+                    </View>
+            }
         </SafeAreaView>
     );
 }
@@ -97,35 +111,24 @@ function getResultItemElement(item, navigation, onGoBack) {
 }
 
 const styles = StyleSheet.create({
-    searchResults: {
-        marginLeft: 0,
-        paddingTop: 0
-    },
-
 
     loadingContainer: {
         flex: 1,
-        paddingBottom: 100,
         flexDirection: "row",
         alignItems: "center",
         justifyContent: "center"
     },
 
     noResultsContainer: {
-        paddingTop: 250,
         alignItems: "center",
         justifyContent: "center"
     },
 
-    searchResultInfoContainer: {
-        flex: 10
-    },
-
     resultStatInfo: {
-        // marginTop: 4,
+        marginTop: 4,
         marginBottom: 4,
         color: Colors.TEXT,
-        fontStyle: 'italic',
+        fontStyle: "italic"
     },
 
     resultStatText: {
@@ -143,8 +146,6 @@ const styles = StyleSheet.create({
     },
 
     endOfResultsText: {
-        height: 180,
-        paddingVertical: 20,
         fontSize: Fonts.XS,
         color: Colors.TEXT,
         fontStyle: 'italic',

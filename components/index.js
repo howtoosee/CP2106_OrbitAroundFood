@@ -28,6 +28,7 @@ import StartScreen from './start-screen/StartScreen';
 import StartScreenButton from './start-screen/StartScreenButton';
 
 import ComponentRequiresSignInAlert from "./support-components/ComponentRequiresSignInAlert";
+import DismissKeyboardView from "./support-components/DismissKeyboardView";
 import FoodInfoContainer from "./support-components/FoodInfoContainer";
 
 
@@ -54,5 +55,6 @@ export {
     StartScreen,
     StartScreenButton,
     ComponentRequiresSignInAlert,
+    DismissKeyboardView,
     FoodInfoContainer
 };

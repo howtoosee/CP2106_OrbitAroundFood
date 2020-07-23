@@ -60,6 +60,7 @@ function SignInScreen({navigation}) {
 
     return (
         <SafeAreaView style={DefaultStyles.screen}>
+
             <KeyboardAvoidingView
                 style={DefaultStyles.keyboardAvoidScreen}
                 behavior={Platform.OS === "ios" ? "padding" : null}

@@ -38,7 +38,6 @@ function Favourite({navigation}) {
                 }
             </View>
 
-
         </SafeAreaView>
     );
 

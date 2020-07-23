@@ -5,6 +5,7 @@ import Icon from "react-native-vector-icons/FontAwesome";
 
 import {Colors, DefaultStyles, Fonts} from '../../constants';
 import {addHistory, clearHistory, getHistory} from "../../api/SearchHistoryLogic";
+import DismissKeyboardView from "../support-components/DismissKeyboardView";
 
 function RequestSearch({navigation, route}) {
     const onGoBack = route.params?.onGoBack;
@@ -44,8 +45,8 @@ function RequestSearch({navigation, route}) {
     const isValidString = str => str.length > 0 && str.trim().length > 0;
 
     return (
-        <SafeAreaView style={{flex: 1}}>
-            <View style={DefaultStyles.screen}>
+        <SafeAreaView style={DefaultStyles.screen}>
+            <DismissKeyboardView style={{flex: 1}}>
 
                 <View style={styles.headerTextContainer}>
                     <Text style={styles.headerText}>Search for what you wanna eat:</Text>
@@ -120,7 +121,7 @@ function RequestSearch({navigation, route}) {
                     />
                 </View>
 
-            </View>
+            </DismissKeyboardView>
         </SafeAreaView>
     );
 }

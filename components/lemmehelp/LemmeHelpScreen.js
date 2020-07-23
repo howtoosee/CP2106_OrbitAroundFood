@@ -98,6 +98,7 @@ function LemmeHelpScreen({navigation}) {
                 </View>
 
             </View>
+
         </SafeAreaView>
     );
 }

@@ -69,6 +69,7 @@ function RequestHistory({navigation, route}) {
 
                 }
             </View>
+
         </SafeAreaView>
     );
 

@@ -53,7 +53,7 @@ function getFavsItemElement(item, navigation, refresh) {
             key={getKey(item.name, 'favsList')}
             item={item}
             navigation={navigation}
-            buttonType={'favs'}
+            buttonType={'details'}
             onGoBack={refresh}
         />
     );

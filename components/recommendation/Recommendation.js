@@ -51,7 +51,7 @@ function Recommendation({navigation}) {
                     : <View style={{flex: 1, height: '100%', justifyContent: 'flex-start'}}>
                         <View style={styles.recommendationContainer}>
                             <FoodInfoContainer item={foodObj}
-                                               hideButton={true}
+                                               navigation={navigation}
                             />
                         </View>
 
@@ -70,23 +70,10 @@ function Recommendation({navigation}) {
 
                         <View style={styles.buttonContainer}>
 
-                            <View style={styles.detailsButtonContainer}>
-                                <Button title={'Details'}
-                                        color={Colors.BUTTON}
-                                        onPress={() => navigation.navigate('Food Details',
-                                            {
-                                                foodObj: foodObj
-                                            })}
-                                />
-                            </View>
-
-                            <View style={styles.refreshButtonContainer}>
-
-                                <Button title={"Another one!"}
-                                        color={Colors.DARKER_BUTTON}
-                                        onPress={refresh}
-                                />
-                            </View>
+                            <Button title={"Another one!"}
+                                    color={Colors.DARKER_BUTTON}
+                                    onPress={refresh}
+                            />
 
                         </View>
 
@@ -130,9 +117,8 @@ const styles = StyleSheet.create({
     },
 
     imageContainer: {
-        flex: 4,
+        flex: 5,
         marginVertical: 10,
-        // marginHorizontal: 20,
         alignItems: 'center',
         justifyContent: 'center',
     },
@@ -140,11 +126,9 @@ const styles = StyleSheet.create({
     image: {
         height: '100%',
         width: '100%',
-        marginVertical: 80,
-        alignSelf: 'center',
-        alignItems: 'center',
-        justifyContent: 'center',
-        overflow: 'hidden',
+        borderWidth: 1,
+        borderRadius: 4,
+        borderColor: Colors.LIGHT_BORDER
     },
 
     recommendationContainer: {
@@ -156,23 +140,11 @@ const styles = StyleSheet.create({
 
     buttonContainer: {
         flex: 4,
-        paddingBottom: 20,
-    },
-
-    detailsButtonContainer: {
-        flex: 6,
-        marginVertical: 20,
+        paddingBottom: 0,
+        height: '100%',
         alignItems: 'center',
         justifyContent: 'center',
     },
-
-    refreshButtonContainer: {
-        flex: 4,
-        marginVertical: 10,
-        alignItems: 'center',
-        justifyContent: 'flex-start',
-    }
-
 
 });
 

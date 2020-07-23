@@ -204,6 +204,9 @@ const styles = StyleSheet.create({
         alignItems: 'flex-start',
         justifyContent: 'center',
         overflow: 'hidden',
+        borderWidth: 1,
+        borderRadius: 4,
+        borderColor: Colors.LIGHT_BORDER
     },
 
     foodInfoContainer: {

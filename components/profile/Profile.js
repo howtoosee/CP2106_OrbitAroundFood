@@ -65,8 +65,12 @@ const styles = StyleSheet.create({
     },
 
     image: {
-        width: 280,
-        height: 280,
+        width: '90%',
+        height: '90%',
+        overflow: 'hidden',
+        borderWidth: 1,
+        borderRadius: 4,
+        borderColor: Colors.LIGHT_BORDER
     },
 
     profileNameContainer: {

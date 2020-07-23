@@ -94,8 +94,9 @@ const styles = StyleSheet.create({
     },
 
     image: {
-        width: 350,
-        height: 350
+        width: '100%',
+        height: '100%',
+        overflow: 'hidden',
     },
 
     userButtonContainer: {

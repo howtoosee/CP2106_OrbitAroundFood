@@ -120,7 +120,7 @@ if __name__ == '__main__':
         wb = load_workbook(filename="./Utown Food Menu Dataset.xlsx")
         writer = DBWriter(wb, db)
         writer.writeToFood()
-        # writer.writeToStore()
+        writer.writeToStore()
 
     except:
         traceback.print_exc()

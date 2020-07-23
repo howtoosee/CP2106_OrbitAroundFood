@@ -105,7 +105,7 @@ function SignUpScreen({navigation}) {
                                   behavior={Platform.OS === "ios" ? "padding" : null}
             >
 
-                <View style={{alignSelf: 'stretch', justifyContent: 'flex-end', paddingBottom: 10}}>
+                <View style={{alignSelf: 'stretch', justifyContent: 'flex-end', paddingBottom: 10, height: '100%'}}>
 
                     <View style={styles.titleTextContainer}>
                         <Text style={styles.signUpTitleText}>Sign Up</Text>

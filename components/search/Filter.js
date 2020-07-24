@@ -1,9 +1,11 @@
 import React, {useState} from 'react';
-import {Button, SafeAreaView, StyleSheet, Text, View} from 'react-native';
+import {Button, SafeAreaView, StyleSheet, Text, View, Dimensions} from 'react-native';
 import Icon from 'react-native-vector-icons/FontAwesome';
 
 
 import {Colors, DefaultStyles, Fonts} from '../../constants';
+
+const {width, height} = Dimensions.get('window');
 
 
 function Filter(props) {
@@ -26,33 +28,29 @@ function Filter(props) {
                 <Text style={styles.headerText}>Filters</Text>
             </View>
 
-            <View style={styles.filterContainer}>
-                <FilterElement title="Halal"
-                               keyword="halal"
-                               filters={filters}
-                               setFilters={setFilters}
-                               filterNames={filterNames}
-                               setFilterNames={setFilterNames}
-                />
+            <FilterElement title="Halal"
+                           keyword="halal"
+                           filters={filters}
+                           setFilters={setFilters}
+                           filterNames={filterNames}
+                           setFilterNames={setFilterNames}
+            />
 
-                <FilterElement title="Vegetarian"
-                               keyword="vegetarian"
-                               filters={filters}
-                               setFilters={setFilters}
-                               filterNames={filterNames}
-                               setFilterNames={setFilterNames}
-                />
+            <FilterElement title="Vegetarian"
+                           keyword="vegetarian"
+                           filters={filters}
+                           setFilters={setFilters}
+                           filterNames={filterNames}
+                           setFilterNames={setFilterNames}
+            />
 
-                <FilterElement title="Healthier Choice"
-                               keyword="healthy"
-                               filters={filters}
-                               setFilters={setFilters}
-                               filterNames={filterNames}
-                               setFilterNames={setFilterNames}
-                />
-
-
-            </View>
+            <FilterElement title="Healthier Choice"
+                           keyword="healthy"
+                           filters={filters}
+                           setFilters={setFilters}
+                           filterNames={filterNames}
+                           setFilterNames={setFilterNames}
+            />
 
 
             <View style={styles.confirmButtonContainer}>
@@ -95,22 +93,25 @@ function FilterElement(props) {
     return (
         <View style={styles.filterElement}>
 
-            <View style={styles.filterElementTextContainer}>
-                <Text style={styles.filterElementText}>{title}</Text>
-            </View>
+            <View style={styles.filterContentContainer}>
 
-            <View style={styles.filterElementAddButtonContainer}>
-                <Button title={isAdded ? "Remove" : "Add"}
-                        color={Colors.BUTTON}
-                        onPress={isAdded ? removeFilterHandler : addFilterHandler}
-                        icon={
-                            <Icon
-                                name={isAdded ? "minus-circle" : "plus-circle"}
-                                size={15}
-                                color="Black"
-                            />
-                        }
-                />
+                <View style={styles.filterElementTextContainer}>
+                    <Text style={styles.filterElementText}>{title}</Text>
+                </View>
+
+                <View style={styles.filterElementAddButtonContainer}>
+                    <Button title={isAdded ? "Remove" : "Add"}
+                            color={Colors.BUTTON}
+                            onPress={isAdded ? removeFilterHandler : addFilterHandler}
+                            icon={
+                                <Icon
+                                    name={isAdded ? "minus-circle" : "plus-circle"}
+                                    size={15}
+                                    color="Black"
+                                />
+                            }
+                    />
+                </View>
             </View>
 
         </View>
@@ -121,56 +122,56 @@ function FilterElement(props) {
 
 const styles = StyleSheet.create({
     headerTextContainer: {
-        marginVertical: 20,
+        // marginVertical: 20,
         // flex: 1,
+        marginBottom: '3%',
     },
 
     headerText: {
         color: Colors.DARK_TEXT,
-        fontSize: Fonts.S,
+        fontSize: Fonts.M,
         fontWeight: 'bold',
+        paddingVertical: '4%'
     },
 
-    filterContainer: {
-        // height: '100%',
-        justifyContent: 'center',
-        alignItems: 'flex-start',
+    confirmButtonContainer: {
+        marginTop: 0.02 * height,
+        flexDirection: "column",
+        justifyContent: "flex-start",
+        alignItems: "center"
     },
 
     filterElement: {
-        marginTop: 12,
-        paddingVertical: 4,
-        paddingHorizontal: 6,
         borderWidth: 1,
-        borderColor: Colors.LIGHT_BORDER,
         borderRadius: 4,
-        width: '100%',
-        color: Colors.TEXT,
-        flexDirection: "row",
+        borderColor: Colors.BORDER,
+        marginVertical: 0.004 * height,
+    },
+
+    filterContentContainer: {
+        flexDirection: 'row',
+        alignItems: 'center',
+        paddingHorizontal: '3%',
     },
 
     filterElementTextContainer: {
-        flex: 6,
-        paddingLeft: 10,
-        alignItems: "flex-start",
-        justifyContent: "center",
+        flex: 8,
+        width: '100%',
+        // borderWidth: 1,
+        justifyContent: 'center',
     },
 
     filterElementText: {
         fontSize: Fonts.M,
-        color: Colors.DARK_TEXT,
     },
 
     filterElementAddButtonContainer: {
-        flex: 4,
-        paddingRight: 10,
-        alignItems: "flex-end",
-        justifyContent: "center",
-    },
-
-    confirmButtonContainer: {
-        paddingTop: 20,
+        flex: 2,
+        alignItems: 'flex-end',
+        justifyContent: 'center',
     }
+
+
 })
 
 

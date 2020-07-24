@@ -129,11 +129,11 @@ function RequestSearch({navigation, route}) {
 const styles = StyleSheet.create({
 
     headerTextContainer: {
-        marginBottom: 4,
+        marginBottom: '1%',
     },
 
     headerText: {
-        paddingVertical: 2,
+        paddingVertical: '1%',
         color: Colors.TEXT,
         fontSize: Fonts.S,
         fontWeight: 'bold',
@@ -166,8 +166,8 @@ const styles = StyleSheet.create({
         borderBottomWidth: 2,
         borderColor: Colors.BORDER,
         borderRadius: 0,
-        paddingHorizontal: 4,
-        paddingVertical: 8,
+        paddingHorizontal: '1%',
+        paddingVertical: '2%',
     },
 
     inputText: {
@@ -181,13 +181,13 @@ const styles = StyleSheet.create({
 
     searchHistoryContainer: {
         flex: 18,
-        paddingTop: 10,
+        paddingTop: '3%',
         justifyContent: 'space-around'
     },
 
     searchHistoryTitle: {
         flex: 1,
-        marginTop: 25,
+        marginTop: '6%',
     },
 
     searchHistoryTitleText: {
@@ -206,8 +206,8 @@ const styles = StyleSheet.create({
     },
 
     searchHistoryTextContainer: {
-        marginVertical: 8,
-        padding: 8,
+        marginVertical: '2%',
+        padding: '2%',
         borderWidth: 1,
         borderColor: Colors.LIGHT_BORDER,
         borderRadius: 4,
@@ -217,7 +217,7 @@ const styles = StyleSheet.create({
 
     searchHistoryClearButton: {
         flex: 4,
-        marginTop: 25,
+        marginTop: '5%',
         justifyContent: 'center',
     }
 });

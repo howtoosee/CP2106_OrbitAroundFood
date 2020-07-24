@@ -1,5 +1,5 @@
 import React, {useEffect, useState} from 'react';
-import {Alert, Button, SafeAreaView, StyleSheet, Text, TextInput, View} from 'react-native';
+import {Alert, Button, SafeAreaView, StyleSheet, Text, TextInput, View, Dimensions} from 'react-native';
 import {Button as ButtonRNE} from 'react-native-elements';
 import DateTimePickerModal from 'react-native-modal-datetime-picker';
 
@@ -13,6 +13,8 @@ import FoodInfoContainer from '../support-components/FoodInfoContainer';
 import DismissKeyboardView from "../support-components/DismissKeyboardView";
 
 const today = new Date();
+const {width, height} = Dimensions.get('window');
+
 
 
 function CreateHelpRequest({navigation, route}) {
@@ -24,7 +26,7 @@ function CreateHelpRequest({navigation, route}) {
     const [destination, setDestination] = useState('');
     const [remarks, setRemarks] = useState('');
     const [showTimePicker, setTimePickerVisible] = useState(false);
-    const [timeETA, setTimeETA] = useState('Not set yet');
+    const [timeETA, setTimeETA] = useState('-not set yet-');
     const [userContact, setUserContact] = useState();
 
     const destinationInputHandler = (dest) => {
@@ -213,23 +215,24 @@ const styles = StyleSheet.create({
 
     foodInfoContainer: {
         // flex: 2,
-        marginBottom: 10,
+        // marginBottom: '1%',
+        height: height * 0.16,
     },
 
     dateTimeContainer: {
         // flex: 2,
-        marginBottom: 10,
+        marginBottom: '3%',
         alignItems: 'center',
     },
 
     dateTimePicker: {
-        marginVertical: 20,
+        marginVertical: '5%',
     },
 
     timePickerButtonContainer: {
         width: '100%',
-        marginTop: 10,
-        marginBottom: 20,
+        marginTop: '3%',
+        marginBottom: '5%',
     },
 
     timePickerButton: {
@@ -237,31 +240,33 @@ const styles = StyleSheet.create({
     },
 
     dateTimeStatsContainer: {
-        marginVertical: 10,
+        marginTop: '2%',
+        marginBottom: '3%',
         alignItems: 'center',
         justifyContent: 'center'
     },
 
     dateTimeStatsText: {
-        paddingVertical: 5,
+        paddingVertical: '2%',
         fontSize: Fonts.S,
         fontWeight: 'bold',
         color: Colors.DARK_TEXT
     },
 
     dateTimeText: {
-        paddingVertical: 5,
+        paddingVertical: '2%',
         fontSize: Fonts.M,
         fontWeight: 'bold',
+        fontStyle: 'italic',
         color: Colors.TEXT
     },
 
     requestInfoContainer: {
-        marginVertical: 20,
+        marginVertical: '5%',
     },
 
     requestInfoHeaderContainer: {
-        marginBottom: 10,
+        marginBottom: '3%',
     },
 
     requestInfoHeaderText: {
@@ -272,8 +277,8 @@ const styles = StyleSheet.create({
 
     textInputContainer: {
         // flex: 4,
-        marginBottom: 10,
-        // width: '90%',
+        marginBottom: '3%',
+        marginHorizontal: '0.3%',
         flexDirection: 'column',
         justifyContent: 'center',
         alignItems: 'stretch'
@@ -284,8 +289,8 @@ const styles = StyleSheet.create({
         fontSize: Fonts.S,
         fontStyle: 'italic',
         fontWeight: 'bold',
-        paddingTop: 10,
-        paddingBottom: 0,
+        paddingTop: '3%',
+        paddingBottom: '0%',
     },
 
     textInput: {
@@ -302,10 +307,11 @@ const styles = StyleSheet.create({
 
     buttonContainer: {
         // flex: 2,
+        width: '90%',
+        paddingTop: '3%',
         flexDirection: "row",
-        paddingTop: 15,
-        alignItems: 'center',
-        justifyContent: 'center'
+        justifyContent: 'center',
+        alignSelf: 'center',
     },
 
     confirmButton: {

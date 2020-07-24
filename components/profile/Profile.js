@@ -57,7 +57,7 @@ function Profile({navigation}) {
 const styles = StyleSheet.create({
     profileContainer: {
         flex: 6,
-        paddingTop: 40,
+        paddingTop: '6%',
     },
 
     profileImageContainer: {
@@ -75,8 +75,8 @@ const styles = StyleSheet.create({
 
     profileNameContainer: {
         alignItems: 'center',
-        paddingTop: 40,
-        paddingBottom: 20,
+        paddingTop: '8%',
+        paddingBottom: '4%',
     },
 
     profileEmailContainer: {
@@ -86,7 +86,7 @@ const styles = StyleSheet.create({
     name: {
         fontSize: Fonts.L,
         color: Colors.DARK_TEXT,
-        fontWeight: '600',
+        fontWeight: 'bold',
     },
 
     email: {
@@ -97,8 +97,7 @@ const styles = StyleSheet.create({
 
     buttonContainer: {
         flex: 4,
-        justifyContent: 'flex-end',
-        paddingBottom: 120,
+        justifyContent: 'center',
         width: '100%'
     },
 });

@@ -1,60 +1,28 @@
-import {StyleSheet} from 'react-native';
-import Colors from "./Colors";
+import {StyleSheet, Dimensions} from 'react-native';
 
+const {width, height} = Dimensions.get('window');
 
 const DefaultStyles = StyleSheet.create({
 
     screen: {
         flex: 1,
-        marginVertical: 20,
-        marginHorizontal: 30,
-        alignSelf: 'stretch',
-        height: '100%',
-        // width: '100%',
+        // alignItems: 'center',
+        // justifyContent: 'center',
+        marginVertical: height * 0.02,
+        height: height * 0.98,
+        width: width * 0.90,
+        alignSelf: 'center',
+        // borderWidth: 1,
     },
 
     keyboardAvoidScreen: {
         flex: 1,
-        marginVertical: 0,
-        marginHorizontal: 30,
-        justifyContent: 'center',
-        alignItems: 'center',
-        alignSelf: 'stretch',
+        // justifyContent: 'center',
+        // alignItems: 'center',
+        // alignSelf: 'stretch',
+        borderWidth: 1,
         height: '100%',
-        // width: '100%',
-    },
-
-    headerContainer: {
-        flex: 1,
-        flexDirection: 'row',
-        justifyContent: 'space-between',
-        paddingBottom: 10,
-    },
-
-    headerTextBox: {
-        width: '65%',
-        height: 52,
-        alignItems: 'center',
-        paddingTop: 10,
-        borderBottomWidth: 3,
-        borderBottomColor: Colors.BUTTON,
-        justifyContent: 'flex-start',
-    },
-
-    headerTitle: {
-        fontSize: 35,
-        color: Colors.BUTTON,
-        fontStyle: 'italic',
-        fontWeight: "bold",
-    },
-
-    headerBackButton: {
-        width: '20%',
-        paddingTop: 10,
-    },
-
-    contentContainer: {
-        flex: 16,
+        width: '100%',
     },
 
 });

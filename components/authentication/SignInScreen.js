@@ -61,13 +61,12 @@ function SignInScreen({navigation}) {
     return (
         <SafeAreaView style={DefaultStyles.screen}>
 
-            <KeyboardAvoidingView
-                style={DefaultStyles.keyboardAvoidScreen}
-                behavior={Platform.OS === "ios" ? "padding" : null}
+            <KeyboardAvoidingView style={DefaultStyles.keyboardAvoidScreen}
+                                  behavior={"padding"}
             >
-                <View
-                    style={{flex: 1, alignSelf: "stretch", marginBottom: 20}}
-                >
+                {/*<View style={{flex: 1, width: '65%', alignSelf: 'center'}}>*/}
+                <View style={{flex: 1, width: '70%', alignSelf: 'center'}}>
+
                     <View style={styles.imageContainer}>
                         <Image
                             style={styles.image}
@@ -77,6 +76,7 @@ function SignInScreen({navigation}) {
 
                     <View style={styles.titleTextContainer}>
                         <Text style={styles.signInTitleText}>Sign In</Text>
+
                         <Text style={styles.signInSubtext}>
                             Sign in to OrbitAroundFood
                         </Text>
@@ -150,41 +150,40 @@ function SignInScreen({navigation}) {
 const styles = StyleSheet.create({
     imageContainer: {
         flex: 4,
-        marginVertical: 2,
-        marginHorizontal: 10,
-        alignSelf: "stretch"
+        marginVertical: '1%',
+        marginHorizontal: '1%',
+        alignSelf: "center"
     },
 
     image: {
-        height: 280,
-        width: 280
+        height: '100%',
+        width: '100%',
+        aspectRatio: 1,
     },
 
     inputContainer: {
         flex: 2,
         width: "100%",
-        // alignSelf: 'stretch',
-        marginVertical: 20,
         justifyContent: "center"
     },
 
     buttonContainer: {
         flex: 2,
-        marginBottom: 20,
-        justifyContent: "flex-start",
-        alignItems: "center"
+        // marginBottom: '8%',
+        justifyContent: "center",
+        alignItems: "center",
     },
 
     titleTextContainer: {
         flex: 2,
-        paddingBottom: 10,
+        paddingBottom: '1%',
         justifyContent: "center"
     },
 
     signInTitleText: {
         fontSize: Fonts.XL,
         fontWeight: "bold",
-        paddingVertical: 8
+        paddingVertical: '4%'
     },
 
     signInSubtext: {
@@ -194,7 +193,7 @@ const styles = StyleSheet.create({
     inputSubContainer: {
         width: "100%",
         // alignSelf: 'stretch',
-        marginVertical: 10
+        marginVertical: '3%'
     },
 
     inputIndividualContainer: {
@@ -204,12 +203,12 @@ const styles = StyleSheet.create({
     accDetailsHeader: {
         fontWeight: "bold",
         fontSize: Fonts.M,
-        paddingVertical: 4
+        paddingVertical: '2%'
     },
 
     textInputContainer: {
         // borderWidth: 2,
-        marginTop: 4,
+        marginTop: '2%',
         borderBottomWidth: 2,
         borderRadius: 0,
         borderColor: Colors.LIGHT_BORDER
@@ -217,12 +216,12 @@ const styles = StyleSheet.create({
 
     textInput: {
         color: Colors.DARK_TEXT,
-        paddingVertical: 8,
-        paddingHorizontal: 4
+        paddingVertical: '2%',
+        paddingHorizontal: '1%'
     },
 
     confirmButtonContainer: {
-        marginTop: 20,
+        marginTop: '3%',
         flexDirection: "row",
         justifyContent: "flex-start",
         alignItems: "center"
@@ -236,7 +235,7 @@ const styles = StyleSheet.create({
     },
 
     noAccountText: {
-        padding: 6,
+        padding: '2%',
         color: Colors.DARK_TEXT,
         fontSize: Fonts.M
     }

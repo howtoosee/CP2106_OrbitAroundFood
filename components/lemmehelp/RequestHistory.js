@@ -1,9 +1,11 @@
 import React, {useEffect, useState} from 'react';
-import {ActivityIndicator, SafeAreaView, ScrollView, StyleSheet, Text, View} from 'react-native';
+import {ActivityIndicator, SafeAreaView, ScrollView, StyleSheet, Text, View, Dimensions} from 'react-native';
 
 import {Colors, DefaultStyles, Fonts} from '../../constants';
 import RequestInfoContainer from './RequestInfoContainer';
 import {readAllUserRelatedRequests} from '../../api/HelpApi';
+
+const {width, height} = Dimensions.get('window');
 
 
 function RequestHistory({navigation, route}) {
@@ -18,6 +20,9 @@ function RequestHistory({navigation, route}) {
             readAllUserRelatedRequests(setRequests, setHelps)
                 .then(() => setLoading(false))
                 .catch(err => console.log('Error loading requests:', err));
+
+            console.log(myRequests);
+            console.log(myHelps)
         }
 
     }, [isLoading, readAllUserRelatedRequests, setRequests, setHelps, setLoading]);
@@ -45,7 +50,7 @@ function RequestHistory({navigation, route}) {
                             </View>
                         </View>
 
-                        : <View>
+                        : <View style={{flex: 1}}>
 
                             <View style={styles.requestInfoHeading}>
                                 <Text style={styles.resultStatText}>
@@ -94,7 +99,7 @@ const styles = StyleSheet.create({
 
     headerTextContainer: {
         // paddingLeft: 20,
-        flex: 1
+        // flex: 1
     },
 
     headerText: {
@@ -104,19 +109,20 @@ const styles = StyleSheet.create({
     },
 
     contentContainer: {
-        flex: 25
+        // flex: 29
+        flex: 1,
     },
 
     loadingContainer: {
         flex: 1,
-        marginBottom: 100,
+        // marginBottom: ,
         flexDirection: 'row',
         alignItems: 'center',
         justifyContent: 'center',
     },
 
     noResultsContainer: {
-        marginTop: 250,
+        // marginTop: '',
         alignItems: 'center',
         justifyContent: 'center'
     },
@@ -130,23 +136,22 @@ const styles = StyleSheet.create({
         color: Colors.DARK_TEXT,
         fontSize: Fonts.XS,
         fontWeight: 'bold',
+        paddingTop: '3%',
+        paddingBottom: '3%',
     },
 
     requestInfoHeading: {
-        paddingHorizontal: 2,
-        paddingVertical: 4,
+        marginVertical: '1%',
     },
 
     searchResults: {
-        marginLeft: 0,
-        // paddingTop: 0,
-        marginTop: 10,
-        overflow: 'hidden',
-        height: '95%'
+        marginTop: '0%',
+        overflow: 'scroll',
+        // height: '95%',
     },
 
     endOfResultsText: {
-        paddingVertical: 20,
+        paddingVertical: '5%',
         fontSize: Fonts.XS,
         color: Colors.TEXT,
         fontStyle: 'italic',

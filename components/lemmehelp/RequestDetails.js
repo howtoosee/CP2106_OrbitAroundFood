@@ -63,13 +63,15 @@ function RequestDetails({navigation, route}) {
 
 const styles = StyleSheet.create({
     headerTextContainer: {
-        marginVertical: 4,
+        marginVertical: '1%',
+        justifyContent: 'center',
     },
 
     headerText: {
         color: Colors.DARK_TEXT,
         fontSize: Fonts.M,
         fontWeight: 'bold',
+        paddingVertical: '3%',
         // fontStyle: 'italic',
     },
 })

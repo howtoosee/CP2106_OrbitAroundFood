@@ -1,5 +1,16 @@
 import React, {useEffect, useState} from 'react';
-import {ActivityIndicator, Alert, Button, Image, SafeAreaView, ScrollView, StyleSheet, Text, View} from 'react-native';
+import {
+    ActivityIndicator,
+    Alert,
+    Button,
+    Image,
+    SafeAreaView,
+    ScrollView,
+    StyleSheet,
+    Text,
+    View,
+    Dimensions
+} from 'react-native';
 
 import {readReviews} from "../../api/ReviewsApi";
 import getImage from "../../api/FoodImage";
@@ -9,6 +20,8 @@ import requireSignInAlert from "../support-components/ComponentRequiresSignInAle
 
 import {Colors, DefaultStyles, Fonts} from "../../constants";
 import firebase from 'firebase';
+
+const {width, height} = Dimensions.get('window');
 
 
 function FoodDetails({route, navigation}) {
@@ -96,15 +109,17 @@ function FoodDetails({route, navigation}) {
     return (
         <SafeAreaView style={DefaultStyles.screen}>
 
-            <FoodInfoContainer
-                item={foodObj}
-                useFavButton={true}
-                isSaved={isSaved}
-                addFavHandler={addFavHandler}
-                removeFavHandler={removeFavHandler}
-                buttonType={'favs'}
-                onGoBack={() => onGoBack()}
-            />
+            <View style={{height: height * 0.16}}>
+                <FoodInfoContainer
+                    item={foodObj}
+                    useFavButton={true}
+                    isSaved={isSaved}
+                    addFavHandler={addFavHandler}
+                    removeFavHandler={removeFavHandler}
+                    buttonType={'favs'}
+                    onGoBack={() => onGoBack()}
+                />
+            </View>
 
             <View style={styles.imageContainer}>
                 {(isLoading || photoUri === '')
@@ -136,12 +151,15 @@ function FoodDetails({route, navigation}) {
                         : <View>
 
                             <View style={styles.reviewsHeader}>
-                                <Text style={styles.ratingText}>Rating: {rating}</Text>
+                                <View style={{flexDirection: 'row'}}>
+                                <Text style={styles.ratingText}>Rating: </Text>
+                                <Text style={styles.ratingNumberText}>{rating}</Text>
+                                </View>
 
                                 <Text style={styles.reviewsHeaderText}>Reviews:</Text>
                             </View>
 
-                            <ScrollView style={{overflow: 'hidden'}}
+                            <ScrollView style={{overflow: 'hidden', marginHorizontal: '2%'}}
                                         showsVerticalScrollIndicator={false}
                             >
                                 {
@@ -191,8 +209,9 @@ function reviewElement(rev) {
 const styles = StyleSheet.create({
 
     imageContainer: {
-        flex: 10,
-        paddingTop: 10,
+        // flex: 10,
+        height: height * 0.25,
+        paddingTop: '3%',
         // paddingBottom: 20,
         alignItems: 'center',
         justifyContent: 'center',
@@ -209,44 +228,20 @@ const styles = StyleSheet.create({
         borderColor: Colors.LIGHT_BORDER
     },
 
-    foodInfoContainer: {
-        flex: 10,
-        marginVertical: 4,
-    },
-
-    favButtonContainer: {
-        flex: 2,
-        justifyContent: 'center',
-        alignItems: 'flex-start',
-        // borderWidth: 1,
-    },
-
-    searchResultKey: {
-        color: Colors.DARK_TEXT,
-        fontSize: Fonts.S,
-        fontWeight: "bold",
-        paddingBottom: 4,
-        marginRight: 10,
-    },
-
-    searchResultInfo: {
-        color: Colors.TEXT,
-        fontSize: Fonts.XS,
-        paddingBottom: 4,
-    },
 
     reviewResultContainer: {
-        flex: 18,
+        // flex: 18,
         overflow: 'hidden',
+        height: '50%',
     },
 
     addReviewContainer: {
-        flex: 2,
+        // flex: 2,
     },
 
     reviewResultIndivContainer: {
-        marginTop: 10,
-        padding: 8,
+        marginTop: '3%',
+        padding: '2%',
         borderWidth: 1,
         borderColor: Colors.BORDER,
         borderRadius: 4,
@@ -256,7 +251,7 @@ const styles = StyleSheet.create({
         color: Colors.TEXT,
         fontSize: Fonts.XS,
         fontWeight: "bold",
-        paddingBottom: 4,
+        paddingBottom: '1%',
     },
 
     reviewResultInfo: {
@@ -268,19 +263,27 @@ const styles = StyleSheet.create({
         color: Colors.DARK_TEXT,
         fontSize: Fonts.S,
         fontWeight: "bold",
-        marginBottom: 6,
+        marginBottom: '2%',
+    },
+
+    ratingNumberText: {
+        color: Colors.DARKER_BUTTON,
+        fontSize: Fonts.S,
+        fontWeight: "bold",
+        fontStyle: 'italic',
+        marginBottom: '2%',
     },
 
     reviewsHeader: {
-        marginTop: 20,
-        marginBottom: 5,
+        marginTop: '4%',
+        marginBottom: '1%',
     },
 
     reviewsHeaderText: {
         color: Colors.DARK_TEXT,
         fontSize: Fonts.S,
         fontWeight: "bold",
-        marginTop: 4,
+        marginTop: '1%',
     },
 
     loadingContainer: {
@@ -290,8 +293,9 @@ const styles = StyleSheet.create({
     },
 
     noResultsContainer: {
-        paddingTop: 150,
+        height: '100%',
         alignItems: 'center',
+        alignSelf: 'center',
         justifyContent: 'center'
     },
 
@@ -303,8 +307,9 @@ const styles = StyleSheet.create({
     },
 
     endOfResultsTextContainer: {
-        height: 180,
-        paddingVertical: 20,
+        height: '100%',
+        marginTop: 0.05 * height,
+        marginBottom: 0.1 * height,
         fontStyle: 'italic',
         alignItems: 'center',
 // justifyContent: 'center'

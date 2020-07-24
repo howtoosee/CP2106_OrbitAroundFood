@@ -73,7 +73,8 @@ function Search({navigation}) {
     return (
 
         <SafeAreaView style={DefaultStyles.screen}>
-            <DismissKeyboardView style={{flex: 1}}>
+
+            <DismissKeyboardView style={{flex: 1, marginHorizontal: '1%'}}>
 
                 <Modal animationType="slide"
                        transparent={false}
@@ -141,9 +142,7 @@ function Search({navigation}) {
                     </View>
 
                     <View style={styles.searchHistoryContainer}>
-                        <ScrollView
-                            showsVerticalScrollIndicator={false}
-                        >
+                        <ScrollView showsVerticalScrollIndicator={false}>
                             {searchHist.map(item => (
 
                                 <TouchableOpacity
@@ -217,11 +216,12 @@ const styles = StyleSheet.create({
     inputContainer: {
         flex: 10,
         // borderWidth: 2,
+        marginLeft: '2%',
         borderBottomWidth: 2,
         borderColor: Colors.BORDER,
         borderRadius: 0,
-        paddingHorizontal: 4,
-        paddingVertical: 8,
+        paddingHorizontal: '1%',
+        paddingVertical: '2%',
     },
 
     inputText: {
@@ -235,13 +235,14 @@ const styles = StyleSheet.create({
 
     searchHistoryContainer: {
         flex: 18,
-        paddingTop: 10,
+        marginTop: '2%',
+        paddingLeft: '1%',
         justifyContent: 'space-around'
     },
 
     searchHistoryTitle: {
         flex: 1,
-        marginTop: 25,
+        marginTop: '6%',
     },
 
     searchHistoryTitleText: {
@@ -260,18 +261,20 @@ const styles = StyleSheet.create({
     },
 
     searchHistoryTextContainer: {
-        marginVertical: 8,
-        padding: 8,
+        marginVertical: '2%',
+        // marginHorizontal: '4%',
+        paddingHorizontal: '3%',
+        paddingVertical: '3%',
         borderWidth: 1,
         borderColor: Colors.LIGHT_BORDER,
         borderRadius: 4,
-        width: '97%',
+        width: '95%',
         color: Colors.TEXT,
     },
 
     searchHistoryClearButton: {
         flex: 4,
-        marginTop: 25,
+        marginTop: 0,
         justifyContent: 'center',
     }
 });

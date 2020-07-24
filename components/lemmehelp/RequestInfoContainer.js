@@ -140,12 +140,12 @@ function RequestInfoContainer(props) {
 const styles = StyleSheet.create({
     boxContainer: {
         // width: '98%',
-        marginTop: 10,
+        marginTop: '3%',
         flexDirection: 'column',
         alignItems: 'flex-start',
         justifyContent: 'space-around',
-        paddingHorizontal: 12,
-        paddingVertical: 8,
+        paddingHorizontal: '3%',
+        paddingVertical: '2%',
         borderWidth: 1,
         borderRadius: 4,
     },
@@ -156,8 +156,8 @@ const styles = StyleSheet.create({
 
     buttonContainer: {
         flex: 1,
-        marginVertical: 4,
-        marginHorizontal: 4,
+        marginVertical: '1%',
+        marginHorizontal: '1%',
         alignItems: 'flex-end',
         justifyContent: 'center',
     },
@@ -165,16 +165,16 @@ const styles = StyleSheet.create({
     sectionContainer: {
         width: '100%',
         // borderBottomWidth: 1,
-        paddingBottom: 4,
-        marginTop: 2,
+        paddingBottom: '1%',
+        marginTop: '0.5%',
         borderColor: Colors.LINE_SEPARATOR_BORDER,
     },
 
     sectionContainerBottomSeparator: {
         width: '100%',
         borderBottomWidth: 1,
-        paddingBottom: 4,
-        marginTop: 2,
+        paddingBottom: '2%',
+        marginTop: '0.5%',
         borderColor: Colors.LINE_SEPARATOR_BORDER,
     },
 
@@ -183,7 +183,7 @@ const styles = StyleSheet.create({
         fontStyle: 'italic',
         fontWeight: 'bold',
         color: Colors.DARK_TEXT,
-        paddingBottom: 4,
+        paddingBottom: '1%',
     },
 
     headerText: {
@@ -203,7 +203,7 @@ const styles = StyleSheet.create({
         // fontStyle: 'italic',
         fontWeight: 'bold',
         color: Colors.TEXT,
-        paddingLeft: 4,
+        paddingLeft: '1%',
         alignItems: 'center',
         justifyContent: 'center'
     }

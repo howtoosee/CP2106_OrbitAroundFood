@@ -1,10 +1,12 @@
 import React, {useEffect, useState} from 'react';
-import {ActivityIndicator, Button, Image, SafeAreaView, StyleSheet, Text, View} from 'react-native';
+import {ActivityIndicator, Button, Image, SafeAreaView, StyleSheet, Text, View, Dimensions} from 'react-native';
 
 import getImage from "../../api/FoodImage";
 import getRandomFood from "../../api/RecommApi";
 import {Colors, DefaultStyles} from "../../constants";
 import FoodInfoContainer from "../support-components/FoodInfoContainer";
+
+const {width, height} = Dimensions.get('window');
 
 
 function Recommendation({navigation}) {
@@ -49,6 +51,7 @@ function Recommendation({navigation}) {
                     </View>
 
                     : <View style={{flex: 1, height: '100%', justifyContent: 'flex-start'}}>
+
                         <View style={styles.recommendationContainer}>
                             <FoodInfoContainer item={foodObj}
                                                navigation={navigation}
@@ -89,18 +92,19 @@ function Recommendation({navigation}) {
 const styles = StyleSheet.create({
 
     headerInfoContainer: {
-        marginTop: 10,
-        marginBottom: 20,
+        flex: 1,
     },
 
     headerInfoText: {
         color: Colors.DARK_TEXT,
-        fontStyle: 'italic'
+        fontStyle: 'italic',
+        paddingVertical: '2%',
     },
 
     mainContentContainer: {
+        flex: 29,
         height: '100%',
-        paddingBottom: 10,
+        // paddingBottom: '3%',
     },
 
     headerLineContainer: {
@@ -117,15 +121,19 @@ const styles = StyleSheet.create({
     },
 
     imageContainer: {
-        flex: 5,
-        marginVertical: 10,
+        flex: 4,
+        height: height * 0.25,
+        marginTop: '3%',
         alignItems: 'center',
         justifyContent: 'center',
     },
 
     image: {
-        height: '100%',
         width: '100%',
+        height: '100%',
+        alignItems: 'flex-start',
+        justifyContent: 'center',
+        overflow: 'hidden',
         borderWidth: 1,
         borderRadius: 4,
         borderColor: Colors.LIGHT_BORDER
@@ -135,12 +143,10 @@ const styles = StyleSheet.create({
         flex: 2,
         justifyContent: 'center',
         alignItems: 'stretch',
-        marginBottom: 8,
     },
 
     buttonContainer: {
         flex: 4,
-        paddingBottom: 0,
         height: '100%',
         alignItems: 'center',
         justifyContent: 'center',

@@ -88,20 +88,33 @@ function StartScreen({navigation}) {
 const styles = StyleSheet.create({
     imageContainer: {
         flex: 4,
-        paddingTop: 40,
-        paddingBottom: 30,
-        alignItems: "center"
+        alignItems: "center",
+        alignSelf: 'center',
+        justifyContent: "center",
+        aspectRatio: 1
     },
 
     image: {
-        width: '100%',
-        height: '100%',
+        height: '110%',
+        width: '110%',
         overflow: 'hidden',
+        aspectRatio: 1,
+    },
+
+    buttonContainer: {
+        flex: 6,
+        flexDirection: 'column',
+        alignItems: 'center',
+        alignSelf: 'center',
+        justifyContent: 'center',
     },
 
     userButtonContainer: {
-        flex: 1,
-        paddingTop: 40
+        // flex: 2,
+        alignSelf: 'center',
+        alignItems: 'flex-end',
+        justifyContent: 'center',
+        marginVertical: '8%',
     },
 
     userButton: {
@@ -109,17 +122,11 @@ const styles = StyleSheet.create({
         backgroundColor: Colors.DARKER_BUTTON,
         borderRadius: 4,
         width: "100%",
-        paddingVertical: 8,
-        paddingHorizontal: 10,
+        paddingVertical: '2%',
+        paddingHorizontal: '3%',
         borderColor: "white"
-    },
-
-    buttonContainer: {
-        flex: 6,
-        flexDirection: "column",
-        alignItems: "center",
-        paddingHorizontal: 15
     }
+
 });
 
 export default StartScreen;

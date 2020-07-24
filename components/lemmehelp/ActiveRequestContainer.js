@@ -112,12 +112,12 @@ function ActiveRequestContainer(props) {
 const styles = StyleSheet.create({
     boxContainer: {
         width: '100%',
-        marginTop: 10,
         flexDirection: 'column',
         alignItems: 'flex-start',
         justifyContent: 'space-evenly',
-        paddingHorizontal: 12,
-        paddingVertical: 8,
+        marginTop: '3%',
+        paddingHorizontal: '3%',
+        paddingVertical: '2%',
         borderWidth: 1,
         borderRadius: 4,
     },
@@ -128,7 +128,7 @@ const styles = StyleSheet.create({
 
     buttonContainer: {
         flex: 2,
-        marginVertical: 4,
+        marginVertical: '1%',
         alignItems: 'center',
         justifyContent: 'center',
     },
@@ -138,22 +138,22 @@ const styles = StyleSheet.create({
         fontStyle: 'italic',
         fontWeight: 'bold',
         color: Colors.DARK_TEXT,
-        paddingBottom: 4,
+        paddingBottom: '1%',
     },
 
     sectionContainer: {
         width: '100%',
         // borderBottomWidth: 1,
-        paddingBottom: 4,
-        marginTop: 2,
+        paddingBottom: '1%',
+        marginTop: '0.5%',
         borderColor: Colors.LINE_SEPARATOR_BORDER,
     },
 
     sectionContainerBottomSeparator: {
         width: '100%',
         borderBottomWidth: 1,
-        paddingBottom: 4,
-        marginTop: 2,
+        paddingBottom: '2%',
+        marginTop: '0.5%',
         borderColor: Colors.LINE_SEPARATOR_BORDER,
     },
 

@@ -6,7 +6,8 @@ import {
     Text,
     TextInput,
     View,
-    SafeAreaView
+    SafeAreaView,
+    Dimensions
 } from 'react-native';
 import {AirbnbRating} from 'react-native-ratings';
 
@@ -16,6 +17,9 @@ import DismissKeyboardView from "../support-components/DismissKeyboardView";
 import {Colors, DefaultStyles, Fonts} from '../../constants';
 
 import firebase from 'firebase';
+
+const {width, height} = Dimensions.get('window');
+
 
 
 function LeaveReview({route, navigation}) {
@@ -100,6 +104,7 @@ function LeaveReview({route, navigation}) {
                     </View>
 
                     <View style={styles.ratingSectionContainer}>
+
                         <Text style={styles.reviewHeaderText}>{'@' + userID}'s rating:</Text>
                         <View style={styles.ratingContainer}>
                             <AirbnbRating
@@ -153,29 +158,17 @@ const styles = StyleSheet.create({
         // borderRadius: 2,
         width: '100%',
         justifyContent: 'center',
-    },
-
-    searchResultKey: {
-        color: Colors.DARK_TEXT,
-        fontSize: Fonts.S,
-        fontWeight: "bold",
-        paddingBottom: 6,
-    },
-
-    searchResultInfo: {
-        color: Colors.TEXT,
-        fontSize: Fonts.XS,
-        paddingBottom: 2,
+        height: height * 0.16
     },
 
     reviewContainer: {
-        marginTop: 20,
-        marginBottom: 30,
+        marginTop: '5%',
+        marginBottom: '6%',
     },
 
     reviewTitleContainer: {
-        marginTop: 4,
-        marginBottom: 10,
+        marginTop: '1%',
+        marginBottom: '3%',
     },
 
     reviewTitleText: {
@@ -184,7 +177,8 @@ const styles = StyleSheet.create({
     },
 
     ratingSectionContainer: {
-        marginTop: 8,
+        marginTop: '2%',
+        marginBottom: '3%'
     },
 
     reviewHeaderText: {
@@ -193,8 +187,8 @@ const styles = StyleSheet.create({
     },
 
     ratingContainer: {
-        marginVertical: 10,
-        paddingLeft: 4,
+        marginVertical: '3%',
+        paddingLeft: '1%',
         justifyContent: 'center',
         alignItems: 'flex-start',
     },
@@ -205,27 +199,27 @@ const styles = StyleSheet.create({
     },
 
     usernameSectionContainer: {
-        paddingTop: 6,
-        paddingBottom: 8,
+        paddingTop: '2%',
+        paddingBottom: '2%',
     },
 
     msgSectionContainer: {
-        marginTop: 8,
+        marginTop: '2%',
     },
 
     msgInputContainer: {
-        marginTop: 8,
-        padding: 8,
+        marginTop: '2%',
+        marginHorizontal: '2%',
+        paddingVertical: '1%',
+        paddingHorizontal: '2%',
         borderWidth: 1,
-        // borderBottomWidth: 1,
         borderRadius: 0,
         borderColor: Colors.BORDER,
-        height: 150,
+        height: height * 0.18,
     },
 
     inputText: {
-        width: '98%',
-        alignSelf: 'center',
+        alignSelf: 'flex-start',
         color: Colors.DARK_TEXT,
         fontSize: Fonts.S,
     },

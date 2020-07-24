@@ -109,20 +109,21 @@ const styles = StyleSheet.create({
         alignSelf: 'center',
         alignItems: 'center',
         justifyContent: 'flex-start',
-        width: '95%',
+        width: '100%',
     },
 
     foodInfoContainer: {
         // flex: 2,
         width: '100%',
         // height: '100%',
-        marginBottom: 20,
+        // paddingBottom: '4%'
     },
 
     textInputContainer: {
         // flex: 4,
-        marginBottom: 10,
-        width: '100%',
+        marginTop: '10%',
+        marginBottom: '2%',
+        width: '98%',
         flexDirection: 'column',
         justifyContent: 'center',
         alignItems: 'stretch'
@@ -131,19 +132,19 @@ const styles = StyleSheet.create({
     textInput: {
         width: '100%',
         borderColor: Colors.BORDER,
-        // borderWidth: 1,
         borderBottomWidth: 2,
-        // borderRadius: 4,
         fontSize: Fonts.S,
-        paddingVertical: 8,
-        paddingHorizontal: 4,
-        marginVertical: 8,
+        paddingVertical: '4%',
+        paddingHorizontal: '1%',
+        marginVertical: '2%',
     },
 
     buttonContainer: {
+        width: '90%',
+        marginTop: '3%',
         flexDirection: "row",
         justifyContent: 'center',
-        marginVertical: 20,
+        // marginVertical: '5%',
     },
 
     confirmButton: {

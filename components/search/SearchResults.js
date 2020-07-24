@@ -1,9 +1,12 @@
 import React, {useEffect, useState} from "react";
-import {ActivityIndicator, SafeAreaView, ScrollView, StyleSheet, Text, View} from "react-native";
+import {ActivityIndicator, SafeAreaView, ScrollView, StyleSheet, Text, View, Dimensions} from "react-native";
 
 import FoodInfoContainer from "../support-components/FoodInfoContainer";
 import {Colors, DefaultStyles, Fonts} from "../../constants";
 import searchQueryFood from "../../api/SearchApi";
+
+const {width, height} = Dimensions.get('window');
+
 
 function SearchResults({route, navigation}) {
     const {searchKey} = route.params;
@@ -41,52 +44,54 @@ function SearchResults({route, navigation}) {
 
             </View>
 
-            {isLoading
-                ? <View style={styles.loadingContainer}>
-                    <ActivityIndicator size="large" color="black"/>
-                </View>
+            <View style={{flex: 19}}>
 
-                : (results.length === 0)
-                    ? <View style={styles.noResultsContainer}>
-
-                        <View style={styles.resultStatInfo}>
-                            <Text style={styles.noResultText}>
-                                No results found :(
-                            </Text>
-                        </View>
-
+                {isLoading
+                    ? <View style={styles.loadingContainer}>
+                        <ActivityIndicator size="large" color="black"/>
                     </View>
 
-                    : <View>
+                    : (results.length === 0)
+                        ? <View style={styles.noResultsContainer}>
 
-                        <View style={styles.resultStatInfo}>
-
-                            <Text style={styles.resultStatText}>
-                                Results found: {results.length}
-                            </Text>
+                            <View style={styles.resultStatInfo}>
+                                <Text style={styles.noResultText}>
+                                    No results found :(
+                                </Text>
+                            </View>
 
                         </View>
 
-                        <ScrollView
-                            style={styles.searchResults}
-                            showsVerticalScrollIndicator={false}
-                        >
-                            {results.map((item) =>
-                                getResultItemElement(item, navigation)
-                            )}
+                        : <View>
 
-                            <View style={styles.endOfResultsText}>
+                            <View style={styles.resultLengthStatInfo}>
 
-                                <Text style={styles.endOfResultsText}>
-                                    No more liao!
+                                <Text style={styles.resultLengthStatText}>
+                                    Results found: {results.length}
                                 </Text>
 
                             </View>
 
-                        </ScrollView>
+                            <ScrollView style={styles.searchResults}
+                                        showsVerticalScrollIndicator={false}
+                            >
+                                {results.map((item) =>
+                                    getResultItemElement(item, navigation)
+                                )}
 
-                    </View>
-            }
+                                <View style={styles.endOfResultsText}>
+
+                                    <Text style={styles.endOfResultsText}>
+                                        No more liao!
+                                    </Text>
+
+                                </View>
+
+                            </ScrollView>
+
+                        </View>
+                }
+            </View>
 
         </SafeAreaView>
     );
@@ -120,16 +125,41 @@ const styles = StyleSheet.create({
     },
 
     resultStatInfo: {
-        marginTop: 4,
-        marginBottom: 4,
+        flex: 1,
+        marginTop: '2%',
+        marginBottom: '2%',
         color: Colors.TEXT,
-        fontStyle: "italic"
+        fontStyle: "italic",
+        justifyContent: "center",
+    },
+
+    resultLengthStatInfo: {
+        // borderWidth: 1,
+        marginTop: '2%',
+        // marginBottom: '0%',
+        color: Colors.TEXT,
+        fontStyle: "italic",
+        justifyContent: "center",
     },
 
     resultStatText: {
         color: Colors.DARK_TEXT,
         fontSize: Fonts.XS,
-        fontWeight: "bold"
+        fontWeight: "bold",
+        paddingVertical: '1%',
+    },
+
+    resultLengthStatText: {
+        color: Colors.DARK_TEXT,
+        fontSize: Fonts.XS,
+        fontWeight: "bold",
+        paddingBottom: '3%',
+    },
+
+    searchResults: {
+        // paddingTop: 0,
+        // marginHorizontal: '1%',
+        marginTop: 10,
     },
 
     noResultText: {
@@ -140,12 +170,14 @@ const styles = StyleSheet.create({
     },
 
     endOfResultsText: {
-        marginTop: 20,
+        flex: 1,
+        marginTop: 0.05 * height,
+        marginBottom: 0.1 * height,
         fontSize: Fonts.XS,
         color: Colors.TEXT,
         fontStyle: "italic",
-        alignItems: "center"
-        // justifyContent: 'center'
+        alignItems: "center",
+        justifyContent: 'flex-start',
     }
 });
 

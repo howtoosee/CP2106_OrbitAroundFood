@@ -127,7 +127,7 @@ const styles = StyleSheet.create({
 
     loadingContainer: {
         flex: 1,
-        marginBottom: 100,
+        // marginBottom: ,
         flexDirection: "row",
         alignItems: "center",
         justifyContent: "center"
@@ -140,11 +140,13 @@ const styles = StyleSheet.create({
     },
 
     resultStatInfo: {
-        marginBottom: 10,
+        height: '5%',
+        // marginBottom: '4%',
         color: Colors.TEXT,
         fontStyle: 'italic',
         alignItems: 'flex-start',
-        justifyContent: 'center',
+        justifyContent: 'flex-start',
+        // borderWidth: 1,
     },
 
     resultStatText: {
@@ -172,14 +174,12 @@ const styles = StyleSheet.create({
 
     requestResultsContainer: {
         // height: '90%',
-        marginLeft: 0,
-        paddingTop: 0,
         overflow: 'hidden',
     },
 
     endOfResultsText: {
         // height: 180,
-        paddingVertical: 20,
+        paddingVertical: '5%',
         fontSize: Fonts.XS,
         color: Colors.TEXT,
         fontStyle: 'italic',
@@ -189,19 +189,20 @@ const styles = StyleSheet.create({
 
     buttonContainer: {
         flex: 2,
+        height: '5%',
         flexDirection: 'row',
-        marginTop: 20,
-        // marginBottom: 40,
+        marginVertical: '5%',
         justifyContent: 'center',
+        alignItems: 'center',
     },
 
     buttonIndivContainer: {
-        // width: "100%",
         flex: 1,
-        marginVertical: 10,
-        marginHorizontal: 20,
+        marginVertical: '3%',
+        marginHorizontal: '5%',
         justifyContent: "center",
         alignContent: "center",
+        height: '100%',
     }
 
 });

@@ -28,9 +28,7 @@ function Favourite({navigation}) {
                     </View>
 
 
-                    : <ScrollView
-                        showsVerticalScrollIndicator={false}
-                    >
+                    : <ScrollView showsVerticalScrollIndicator={false}>
                         {
                             favsArr.map(item => getFavsItemElement(item, navigation, refresh))
                         }
@@ -63,9 +61,10 @@ const styles = StyleSheet.create({
 
     headerContainer: {
         flex: 1,
-        justifyContent: 'center',
+        justifyContent: 'flex-start',
         alignItems: 'flex-start',
-        marginTop: 10,
+        // marginVertical: '1%',
+        borderWidth: 1,
     },
 
     headerText: {
@@ -75,13 +74,13 @@ const styles = StyleSheet.create({
     },
 
     contentContainer: {
-        flex: 29,
+        flex: 19,
     },
 
     emptyFavContainer: {
         flex: 1,
         // marginTop: '20%',
-        marginBottom: '5%',
+        // marginBottom: '5%',
         justifyContent: 'center',
         alignItems: 'center',
     },
@@ -91,60 +90,6 @@ const styles = StyleSheet.create({
         color: Colors.TEXT,
         fontStyle: 'italic',
         fontWeight: 'bold',
-    },
-
-    searchResultContainer: {
-        marginTop: 10,
-        padding: 10,
-        borderWidth: 1,
-        borderColor: Colors.BORDER,
-        borderRadius: 4,
-        width: '100%',
-        color: Colors.TEXT,
-        flexDirection: 'row',
-    },
-
-    searchResultKey: {
-        color: Colors.DARK_TEXT,
-        fontSize: Fonts.S,
-        fontWeight: "bold",
-        paddingBottom: 4,
-        marginRight: 10,
-    },
-
-    searchResultInfo: {
-        color: Colors.TEXT,
-        fontSize: Fonts.XS,
-        paddingBottom: 4,
-    },
-
-    loadingContainer: {
-        flex: 1,
-        paddingBottom: 100,
-        flexDirection: 'row',
-        alignItems: 'center',
-        justifyContent: 'center',
-    },
-
-    noResultsContainer: {
-        paddingTop: 250,
-        alignItems: 'center',
-        justifyContent: 'center'
-    },
-
-    searchResultInfoContainer: {
-        flex: 10,
-    },
-
-    detailsButtonContainer: {
-        flex: 4,
-        justifyContent: 'space-around',
-        alignItems: 'flex-end',
-
-    },
-
-    detailsButton: {
-        fontSize: 12,
     },
 });
 

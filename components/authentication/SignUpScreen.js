@@ -61,7 +61,7 @@ function SignUpScreen({navigation}) {
         } else if (password.length === 0) {
             signUpAlert('Password cannot be empty!');
         } else if (password.length < 6) {
-            signUpAlert('Password must be of at least 4 characters!');
+            signUpAlert('Password must be of at least 6 characters!');
 
         } else if (password !== retypePassword) {
             signUpAlert('Passwords do not match!');

@@ -105,7 +105,7 @@ function SignUpScreen({navigation}) {
             <DismissKeyboardView style={{flex: 1}}>
 
                 <KeyboardAvoidingView style={DefaultStyles.keyboardAvoidScreen}
-                                      behavior={Platform.OS === "ios" ? "padding" : null}
+                                      behavior={"padding"}
                 >
 
                     <View style={{alignSelf: 'stretch', justifyContent: 'flex-end', paddingBottom: 10, height: '100%'}}>

@@ -98,10 +98,11 @@ function RequestSearch({navigation, route}) {
                                     onPress={() => searchInputHandler(item)}>
 
                                     <View style={styles.searchHistoryTextContainer}>
-                                        <Text style={styles.searchHistoryText}
-                                              key={getKey("search_hist")}>
+
+                                        <Text style={styles.searchHistoryText} key={getKey("search_hist")}>
                                             {item}
                                         </Text>
+                                        
                                     </View>
 
                                 </TouchableOpacity>

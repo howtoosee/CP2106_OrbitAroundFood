@@ -16,12 +16,12 @@ const today = new Date();
 const {width, height} = Dimensions.get('window');
 
 
-
 function CreateHelpRequest({navigation, route}) {
 
     const {displayName} = firebase.auth().currentUser;
     const foodObj = route.params?.foodObj;
-    const onGoBack = route.params?.onGoBack;
+    const onGoBack = ('onGoBack' in route.params) ? route.params.onGoBack : () => null;
+    console.log('onGoBack in params?', (onGoBack in route.params));
 
     const [destination, setDestination] = useState('');
     const [remarks, setRemarks] = useState('');
@@ -110,7 +110,7 @@ function CreateHelpRequest({navigation, route}) {
 
     useEffect(() => {
         getUserContact(setUserContact)
-            .catch(err => console.log(err));
+            .catch(err => console.log('Error getting user contact:', err));
     }, [getUserContact]);
 
 

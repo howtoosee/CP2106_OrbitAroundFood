@@ -50,7 +50,7 @@ export async function writeReviews(foodObjID, reviewObj) {
 
     await reviewsCollection
         .add(reviewObj)
-        .catch((err) => console.log("Error adding review:", err));
+        .catch(err => console.log("Error adding review:", err));
 
     const ratingSnapshot = ratingsCollection.doc(foodObjID);
     const ratingDoc = await ratingSnapshot.get();
@@ -67,7 +67,7 @@ export async function writeReviews(foodObjID, reviewObj) {
                 numRating: newNumRating,
                 avgRating: newAvgRating
             })
-            .catch((err) => console.log("Error updating rating:", err));
+            .catch(err => console.log("Error updating rating:", err));
     } else {
         await ratingSnapshot
             .set({
@@ -75,7 +75,7 @@ export async function writeReviews(foodObjID, reviewObj) {
                 numRating: 1,
                 avgRating: reviewObj.rating
             })
-            .catch((err) => console.log("Error updating rating:", err));
+            .catch(err => console.log("Error updating rating:", err));
     }
 }
 

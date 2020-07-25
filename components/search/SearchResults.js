@@ -23,7 +23,7 @@ function SearchResults({route, navigation}) {
             if (isLoading) {
                 searchQueryFood(searchKey, setResList, filters)
                     .then(() => setLoading(false))
-                    .catch((err) => console.log("Error querying:", err));
+                    .catch((err) => console.log("Error during search querying:", err));
             }
         },
         [isLoading, searchKey, searchQueryFood, setResList, setLoading]
@@ -54,7 +54,7 @@ function SearchResults({route, navigation}) {
                     : (results.length === 0)
                         ? <View style={styles.noResultsContainer}>
 
-                            <View style={styles.resultStatInfo}>
+                            <View style={styles.noResultTextContainer}>
                                 <Text style={styles.noResultText}>
                                     No results found :(
                                 </Text>
@@ -162,11 +162,18 @@ const styles = StyleSheet.create({
         marginTop: 10,
     },
 
+    noResultTextContainer: {
+        height: '100%',
+        justifyContent: 'center',
+        marginBottom: '10%',
+    },
+
     noResultText: {
         fontSize: Fonts.M,
         color: Colors.TEXT,
         fontStyle: "italic",
-        fontWeight: "bold"
+        fontWeight: "bold",
+        paddingBottom: '5%',
     },
 
     endOfResultsText: {

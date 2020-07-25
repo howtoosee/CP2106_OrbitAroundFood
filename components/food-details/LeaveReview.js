@@ -7,7 +7,8 @@ import {
     TextInput,
     View,
     SafeAreaView,
-    Dimensions
+    Dimensions,
+    KeyboardAvoidingView
 } from 'react-native';
 import {AirbnbRating} from 'react-native-ratings';
 
@@ -19,7 +20,6 @@ import {Colors, DefaultStyles, Fonts} from '../../constants';
 import firebase from 'firebase';
 
 const {width, height} = Dimensions.get('window');
-
 
 
 function LeaveReview({route, navigation}) {
@@ -86,7 +86,11 @@ function LeaveReview({route, navigation}) {
     return (
 
         <SafeAreaView style={DefaultStyles.screen}>
-            <DismissKeyboardView style={{flex: 1}}>
+
+            <KeyboardAvoidingView style={DefaultStyles.keyboardAvoidScreen}
+                                  behavior={"padding"}
+            >
+            <DismissKeyboardView style={{flex: 1, justifyContent: 'flex-end', marginBottom: '25%'}}>
 
                 <View style={styles.foodInfoContainer}>
 
@@ -125,11 +129,11 @@ function LeaveReview({route, navigation}) {
                         <Text style={styles.reviewHeaderText}>{'@' + userID}'s comments:</Text>
                         <View style={styles.msgInputContainer}>
                             <TextInput style={styles.inputText}
-                                       numberOfLines={10}
-                                       placeholder="nice dish!"
+                                       placeholder="nice dish! (max 200 chars)"
                                        onChangeText={msgInputHandler}
                                        value={msgString}
                                        multiline={true}
+                                       maxLength={200}
                             />
                         </View>
                     </View>
@@ -143,6 +147,7 @@ function LeaveReview({route, navigation}) {
                 </View>
 
             </DismissKeyboardView>
+            </KeyboardAvoidingView>
         </SafeAreaView>
 
     );
@@ -209,13 +214,13 @@ const styles = StyleSheet.create({
 
     msgInputContainer: {
         marginTop: '2%',
-        marginHorizontal: '2%',
+        marginHorizontal: '0%',
         paddingVertical: '1%',
         paddingHorizontal: '2%',
         borderWidth: 1,
         borderRadius: 0,
-        borderColor: Colors.BORDER,
-        height: height * 0.18,
+        borderColor: Colors.LIGHT_BORDER,
+        height: height * 0.15,
     },
 
     inputText: {

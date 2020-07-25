@@ -26,7 +26,7 @@ export default async function combineAllData(foodData, id) {
                 console.log("Store does not exist: ", foodData.store);
             }
         })
-        .catch((err) => console.log("Error getting store data:", err));
+        .catch(err => console.log("Error getting store data:", err));
 
     return newData;
 }

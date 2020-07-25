@@ -77,7 +77,7 @@ function RequestSearchResult({route, navigation}) {
                                         showsVerticalScrollIndicator={false}
                             >
                                 {results.map((item) =>
-                                    getResultItemElement(item, navigation)
+                                    getResultItemElement(item, navigation, onGoBack)
                                 )}
 
                                 <View style={styles.endOfResultsText}>

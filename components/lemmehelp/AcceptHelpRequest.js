@@ -1,5 +1,5 @@
 import React, {useEffect, useState} from 'react';
-import {Alert, Button, SafeAreaView, StyleSheet, TextInput, View} from 'react-native';
+import {Alert, Button, SafeAreaView, StyleSheet, TextInput, View, Dimensions} from 'react-native';
 import * as firebase from 'firebase';
 
 import {Colors, DefaultStyles, Fonts} from '../../constants';
@@ -8,6 +8,8 @@ import {getUserContact} from "../../api/AuthenticationApi";
 import RequestInfoContainer from "./RequestInfoContainer";
 import DismissKeyboardView from "../support-components/DismissKeyboardView";
 
+
+const {width, height} = Dimensions.get('window');
 
 function AcceptHelpRequest({navigation, route}) {
     const requestObj = route.params?.requestObj;
@@ -49,7 +51,7 @@ function AcceptHelpRequest({navigation, route}) {
 
     useEffect(() => {
         getUserContact(setUserContact)
-            .catch(err => console.log(err));
+            .catch(err => console.log('Error getting user contact:', err));
     }, [getUserContact, setUserContact]);
 
     return (
@@ -65,6 +67,7 @@ function AcceptHelpRequest({navigation, route}) {
                         />
 
                     </View>
+
 
                     <View style={styles.textInputContainer}>
 
@@ -95,6 +98,7 @@ function AcceptHelpRequest({navigation, route}) {
                         </View>
 
                     </View>
+
                 </View>
 
             </DismissKeyboardView>
@@ -110,41 +114,40 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         justifyContent: 'flex-start',
         width: '100%',
+        height: '100%',
+        // borderWidth: 1,
+
     },
 
     foodInfoContainer: {
-        // flex: 2,
+        flex: 4,
         width: '100%',
-        // height: '100%',
-        // paddingBottom: '4%'
+        // borderWidth: 1,
     },
 
     textInputContainer: {
-        // flex: 4,
-        marginTop: '10%',
-        marginBottom: '2%',
-        width: '98%',
-        flexDirection: 'column',
-        justifyContent: 'center',
-        alignItems: 'stretch'
+        flex: 5,
+        width: '100%',
+        height: '100%',
+        justifyContent: 'flex-start',
+        alignItems: 'center',
     },
 
     textInput: {
-        width: '100%',
-        borderColor: Colors.BORDER,
+        width: '98%',
+        borderColor: Colors.LIGHT_BORDER,
         borderBottomWidth: 2,
         fontSize: Fonts.S,
-        paddingVertical: '4%',
-        paddingHorizontal: '1%',
-        marginVertical: '2%',
+        paddingVertical: 0.01 * height,
+        paddingHorizontal: 0.015 * width,
     },
 
     buttonContainer: {
+        flex: 1,
         width: '90%',
-        marginTop: '3%',
         flexDirection: "row",
         justifyContent: 'center',
-        // marginVertical: '5%',
+        // borderWidth: 1,
     },
 
     confirmButton: {

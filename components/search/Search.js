@@ -242,14 +242,15 @@ const styles = StyleSheet.create({
 
     searchHistoryTitle: {
         flex: 1,
-        marginTop: '6%',
+        marginTop: '3%',
+        // borderWidth: 1
     },
 
     searchHistoryTitleText: {
-        flex: 8,
         color: Colors.DARK_TEXT,
         fontSize: Fonts.S,
         fontWeight: 'bold',
+        paddingBottom: '3%',
     },
 
 

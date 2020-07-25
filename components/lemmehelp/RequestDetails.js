@@ -7,7 +7,6 @@ import * as firebase from 'firebase';
 
 const helpCollection = firebase.firestore().collection("HELPS");
 
-
 function RequestDetails({navigation, route}) {
     const [item, setItem] = useState(route.params?.item);
     const [status, setStatus] = useState(route.params?.status);
@@ -39,7 +38,8 @@ function RequestDetails({navigation, route}) {
             },
             err => console.log('Error on listener:', err)
         );
-    })
+
+    }, [helpCollection, refresh, updateItem]);
 
     return (
         <SafeAreaView style={DefaultStyles.screen}>
@@ -48,22 +48,24 @@ function RequestDetails({navigation, route}) {
                 <Text style={styles.headerText}>My request:</Text>
             </View>
 
-            <RequestInfoContainer
-                item={item}
-                status={status}
-                showButton={false}
-                navigation={navigation}
-            />
+            <View style={{justifyContent: 'flex-start', alignItems: 'center'}}>
+                <RequestInfoContainer
+                    item={item}
+                    status={status}
+                    showButton={false}
+                    navigation={navigation}
+                />
+            </View>
 
         </SafeAreaView>
 
-    )
+    );
 
 }
 
 const styles = StyleSheet.create({
     headerTextContainer: {
-        marginVertical: '1%',
+        marginBottom: '2%',
         justifyContent: 'center',
     },
 
@@ -71,7 +73,7 @@ const styles = StyleSheet.create({
         color: Colors.DARK_TEXT,
         fontSize: Fonts.M,
         fontWeight: 'bold',
-        paddingVertical: '3%',
+        paddingBottom: '2%',
         // fontStyle: 'italic',
     },
 })

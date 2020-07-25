@@ -9,11 +9,15 @@ import {
     StyleSheet,
     Text,
     TextInput,
-    View
+    View,
+    Dimensions
 } from "react-native";
 
 import {Colors, DefaultStyles, Fonts} from "../../constants";
 import firebase from "firebase";
+import DismissKeyboardView from "../support-components/DismissKeyboardView";
+
+const {width, height} = Dimensions.get("window");
 
 function SignInScreen({navigation}) {
     const [email, setEmailInput] = useState("");
@@ -64,8 +68,14 @@ function SignInScreen({navigation}) {
             <KeyboardAvoidingView style={DefaultStyles.keyboardAvoidScreen}
                                   behavior={"padding"}
             >
-                {/*<View style={{flex: 1, width: '65%', alignSelf: 'center'}}>*/}
-                <View style={{flex: 1, width: '70%', alignSelf: 'center'}}>
+                <View style={{
+                    flex: 9,
+                    width: '80%',
+                    height: '100%',
+                    alignSelf: 'center',
+                    justifyContent: 'center',
+                    // borderWidth: 1
+                }}>
 
                     <View style={styles.imageContainer}>
                         <Image
@@ -121,26 +131,25 @@ function SignInScreen({navigation}) {
                         </View>
                     </View>
 
-                    <View style={styles.buttonContainer}>
-                        <View style={styles.confirmButtonContainer}>
-                            <Button
-                                color={Colors.BUTTON}
-                                title="Confirm"
-                                onPress={signInHandler}
-                            />
-                        </View>
-
-                        <View style={styles.signUpButtonContainer}>
-                            <Text style={styles.noAccountText}>
-                                No account yet?{" "}
-                            </Text>
-                            <Button
-                                title="Sign Up"
-                                color={Colors.DARKER_BUTTON}
-                                onPress={() => navigation.navigate("Sign Up")}
-                            />
-                        </View>
+                    <View style={styles.confirmButtonContainer}>
+                        <Button
+                            color={Colors.BUTTON}
+                            title="Confirm"
+                            onPress={signInHandler}
+                        />
                     </View>
+
+                </View>
+
+                <View style={styles.signUpButtonContainer}>
+                    <Text style={styles.noAccountText}>
+                        No account yet?{" "}
+                    </Text>
+                    <Button
+                        title="Sign Up"
+                        color={Colors.DARKER_BUTTON}
+                        onPress={() => navigation.navigate("Sign Up")}
+                    />
                 </View>
             </KeyboardAvoidingView>
         </SafeAreaView>
@@ -162,20 +171,13 @@ const styles = StyleSheet.create({
     },
 
     inputContainer: {
-        flex: 2,
+        flex: 3,
         width: "100%",
         justifyContent: "center"
     },
 
-    buttonContainer: {
-        flex: 2,
-        // marginBottom: '8%',
-        justifyContent: "center",
-        alignItems: "center",
-    },
-
     titleTextContainer: {
-        flex: 2,
+        flex: 1,
         paddingBottom: '1%',
         justifyContent: "center"
     },
@@ -221,17 +223,18 @@ const styles = StyleSheet.create({
     },
 
     confirmButtonContainer: {
-        marginTop: '3%',
-        flexDirection: "row",
-        justifyContent: "flex-start",
-        alignItems: "center"
+        flex: 1,
+        justifyContent: 'center',
+        alignItems: 'center',
+        marginVertical: height * 0.02,
     },
 
     signUpButtonContainer: {
-        marginTop: 20,
-        flexDirection: "row",
-        justifyContent: "flex-start",
-        alignItems: "center"
+        flex: 1,
+        flexDirection: 'row',
+        alignSelf: 'center',
+        justifyContent: 'flex-start',
+        alignItems: 'center',
     },
 
     noAccountText: {

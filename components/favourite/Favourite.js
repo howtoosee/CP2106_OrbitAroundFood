@@ -64,7 +64,7 @@ const styles = StyleSheet.create({
         justifyContent: 'flex-start',
         alignItems: 'flex-start',
         // marginVertical: '1%',
-        borderWidth: 1,
+        // borderWidth: 1,
     },
 
     headerText: {

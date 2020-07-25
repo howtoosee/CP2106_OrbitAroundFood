@@ -4,6 +4,10 @@ import {ActivityIndicator, Button, SafeAreaView, ScrollView, StyleSheet, Text, V
 import {Colors, DefaultStyles, Fonts} from "../../constants";
 import {readHelps} from "../../api/HelpApi";
 import ActiveRequestContainer from "./ActiveRequestContainer";
+import firebase from 'firebase';
+
+
+const helpCollection = firebase.firestore().collection('HELPS');
 
 
 function LemmeHelpScreen({navigation}) {
@@ -24,10 +28,7 @@ function LemmeHelpScreen({navigation}) {
     // Import Info from database
     useEffect(() => {
         if (isLoading) {
-            readHelps(setRequests)
-                // .then(() => console.log('Finished loading requests:', requests))
-                .then(() => setLoading(false))
-                .catch(err => console.log("Error loading Requests:", err));
+            loadRequests();
         }
     }, [isLoading, loadRequests, readHelps, setLoading, setRequests]);
 
@@ -189,10 +190,9 @@ const styles = StyleSheet.create({
 
     buttonContainer: {
         flex: 2,
-        height: '5%',
+        height: '10%',
         flexDirection: 'row',
-        marginVertical: '5%',
-        justifyContent: 'center',
+        marginTop: '5%',
         alignItems: 'center',
     },
 
@@ -200,7 +200,7 @@ const styles = StyleSheet.create({
         flex: 1,
         marginVertical: '3%',
         marginHorizontal: '5%',
-        justifyContent: "center",
+        justifyContent: "flex-end",
         alignContent: "center",
         height: '100%',
     }

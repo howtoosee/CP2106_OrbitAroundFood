@@ -232,11 +232,13 @@ const styles = StyleSheet.create({
     reviewResultContainer: {
         // flex: 18,
         overflow: 'hidden',
-        height: '50%',
+        height: '45%',
+        // borderWidth: 1,
     },
 
     addReviewContainer: {
         // flex: 2,
+        height: '8%',
     },
 
     reviewResultIndivContainer: {

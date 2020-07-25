@@ -6,13 +6,8 @@ import Icon from 'react-native-vector-icons/FontAwesome5';
 
 
 function RequestInfoContainer(props) {
-    const {navigation} = props;
-
-    const [item, setItem] = useState(props?.item);
-    const [status, setStatus] = useState(props?.status);
+    const {navigation, item, status} = props;
     const showButton = ('showButton' in props) ? props.showButton : true;
-
-    console.log('Item:', item);
 
     const ItemField = ({title, info}) => {
         return (
@@ -183,6 +178,7 @@ const styles = StyleSheet.create({
         fontStyle: 'italic',
         fontWeight: 'bold',
         color: Colors.DARK_TEXT,
+        // paddingTop: '1%',
         paddingBottom: '1%',
     },
 

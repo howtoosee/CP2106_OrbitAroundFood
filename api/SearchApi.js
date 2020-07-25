@@ -10,10 +10,10 @@ export default async function searchQueryFood(searchKey, setResList, filters) {
         const docFoodName = docData.name
             .toLowerCase()
             .replace(/[^0-9a-z]/gi, "");
-        // const docStoreName = docData.storeID.toLowerCase().replace(/[^0-9a-z]/gi, '');
+        const docStoreName = docData.storeID.toLowerCase().replace(/[^0-9a-z]/gi, '');
 
-        return docFoodName.includes(cleanKeyword);
-        // || docStoreName.includes(cleanKeyword)
+        return docFoodName.includes(cleanKeyword)
+        || docStoreName.includes(cleanKeyword);
     }
 
     function matchFilter(filterArr, docData) {

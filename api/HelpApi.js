@@ -36,7 +36,6 @@ async function readHelps(setHelps) {
             isOpen: docData.isOpen,
         };
 
-        // console.log(combinedObj);
         helps.push(combinedObj);
     });
 
@@ -55,6 +54,7 @@ async function setHelper(helpId, helperObj) {
             },
             isOpen: false,
         })
+        .then(() => console.log('Set helper for request', helpId))
         .catch(err => console.log("Error updating help doc:", err));
 
 }
@@ -92,6 +92,7 @@ async function writeHelp(foodId, userObj, timeObj) {
     await helpCollection
         .doc(helpId)
         .set(helpObj)
+        .then(() => console.log('Created request', helpId))
         .catch(err => console.log("Error writing help:", err));
 
 }

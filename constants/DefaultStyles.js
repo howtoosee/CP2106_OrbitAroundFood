@@ -20,7 +20,7 @@ const DefaultStyles = StyleSheet.create({
         // justifyContent: 'center',
         // alignItems: 'center',
         // alignSelf: 'stretch',
-        borderWidth: 1,
+        // borderWidth: 1,
         height: '100%',
         width: '100%',
     },

@@ -35,5 +35,5 @@ export default async function getRandomFood(setFood) {
         .then((res) => {
             setFood(res);
         })
-        .catch((err) => console.log("Error setting recommendation:", err));
+        .catch(err => console.log("Error setting recommendation:", err));
 }

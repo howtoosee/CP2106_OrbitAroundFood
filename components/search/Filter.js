@@ -155,7 +155,7 @@ const styles = StyleSheet.create({
     },
 
     filterElementTextContainer: {
-        flex: 8,
+        flex: 6,
         width: '100%',
         // borderWidth: 1,
         justifyContent: 'center',
@@ -166,7 +166,7 @@ const styles = StyleSheet.create({
     },
 
     filterElementAddButtonContainer: {
-        flex: 2,
+        flex: 4,
         alignItems: 'flex-end',
         justifyContent: 'center',
     }

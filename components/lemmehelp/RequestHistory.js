@@ -4,28 +4,39 @@ import {ActivityIndicator, SafeAreaView, ScrollView, StyleSheet, Text, View, Dim
 import {Colors, DefaultStyles, Fonts} from '../../constants';
 import RequestInfoContainer from './RequestInfoContainer';
 import {readAllUserRelatedRequests} from '../../api/HelpApi';
+import firebase from 'firebase';
+
 
 const {width, height} = Dimensions.get('window');
+const helpCollection = firebase.firestore().collection('HELPS');
 
 
 function RequestHistory({navigation, route}) {
 
+    const username = firebase.auth().currentUser.displayName;
+
     const [isLoading, setLoading] = useState(true);
-    const [myRequests, setRequests] = useState([])
+    const [myRequests, setRequests] = useState([]);
     const [myHelps, setHelps] = useState([]);
 
+    const loadRequests = () => {
+        readAllUserRelatedRequests(setRequests, setHelps)
+            .then(() => setLoading(false))
+            .catch(err => console.log('Error loading requests:', err));
+    }
+
+    const sortRequests = (req, helps) => {
+        let newArr = [...req, ...helps];
+        newArr.sort((a, b) => a.dateInfo.timestamp - b.dateInfo.timestamp);
+        return newArr;
+    }
 
     useEffect(() => {
         if (isLoading) {
-            readAllUserRelatedRequests(setRequests, setHelps)
-                .then(() => setLoading(false))
-                .catch(err => console.log('Error loading requests:', err));
-
-            console.log(myRequests);
-            console.log(myHelps)
+            loadRequests();
         }
 
-    }, [isLoading, readAllUserRelatedRequests, setRequests, setHelps, setLoading]);
+    }, [isLoading, readAllUserRelatedRequests, setRequests, setLoading]);
 
 
     return (
@@ -61,8 +72,11 @@ function RequestHistory({navigation, route}) {
                             <ScrollView style={styles.searchResults}
                                         showsVerticalScrollIndicator={false}
                             >
-                                {myRequests.map(item => getConfirmedRequestItemElement(item, 'req', navigation))}
-                                {myHelps.map(item => getConfirmedRequestItemElement(item, 'help', navigation))}
+                                {
+                                    (sortRequests(myRequests, myHelps))
+                                        .map(item => getConfirmedRequestItemElement(item, username, navigation))
+                                }
+
 
                                 <View style={styles.endOfResultsText}>
                                     <Text style={styles.endOfResultsText}>No more liao!</Text>
@@ -81,8 +95,9 @@ function RequestHistory({navigation, route}) {
 }
 
 
-function getConfirmedRequestItemElement(item, status, navigation) {
+function getConfirmedRequestItemElement(item, username, navigation) {
     const helpID = item.helpId;
+    const status = (username === item.askerInfo.askerId) ? 'req' : 'help';
 
     return (
         <View key={helpID}>

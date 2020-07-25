@@ -33,11 +33,9 @@ function Search({navigation}) {
 
     const searchHandler = () => {
         if (isValidString(searchString)) {
-            console.log("Searching for: " + searchString);
             addSearchHistHandler();
             setSearchString('');
 
-            console.log("Active filters:", filters);
             navigation.navigate('Search Results',
                 {
                     searchKey: searchString,

@@ -16,6 +16,7 @@ import {
 import {Colors, DefaultStyles, Fonts} from "../../constants";
 import firebase from "firebase";
 import DismissKeyboardView from "../support-components/DismissKeyboardView";
+import HideWithKeyboard from "react-native-hide-with-keyboard";
 
 const {width, height} = Dimensions.get("window");
 
@@ -29,18 +30,38 @@ function SignInScreen({navigation}) {
                 text: "Dismiss"
             }
         ]);
-    };
+    }
+
+    const checkFields = () => {
+        const emailFormat = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
+
+        if (email.length === 0) {
+            signInErrorAlert('Email cannot be empty!');
+        } else if (!email.match(emailFormat)) {
+            signInErrorAlert('Incorrect email format!');
+        } else if (password.length === 0) {
+            signInErrorAlert('Password cannot be empty!');
+        } else if (password.length < 6) {
+            signInErrorAlert('Password must be of at least 6 characters!');
+        } else {
+            return true;
+        }
+
+        return false;
+    }
 
     const signInHandler = () => {
-        firebase
-            .auth()
-            .signInWithEmailAndPassword(email, password)
-            .catch((err) => {
-                signInErrorAlert(err);
-                console.log("Error signing in:", err.code, err.message);
-            })
-            .then(() => signInSuccessHandler());
-    };
+        if (checkFields()) {
+            firebase
+                .auth()
+                .signInWithEmailAndPassword(email, password)
+                .catch((err) => {
+                    signInErrorAlert(err);
+                    console.log("Error signing in:", err.code, err.message);
+                })
+                .then(() => signInSuccessHandler());
+        }
+    }
 
     const signInSuccessHandler = () => {
         const user = firebase.auth().currentUser;
@@ -66,91 +87,94 @@ function SignInScreen({navigation}) {
         <SafeAreaView style={DefaultStyles.screen}>
 
             <KeyboardAvoidingView style={DefaultStyles.keyboardAvoidScreen}
-                                  behavior={"padding"}
+                                  behavior={Platform.OS === 'ios' ? "padding" : null}
             >
-                <View style={{
-                    flex: 9,
-                    width: '80%',
-                    height: '100%',
-                    alignSelf: 'center',
-                    justifyContent: 'center',
-                    // borderWidth: 1
-                }}>
+                <DismissKeyboardView style={{flex: 1}}>
 
-                    <View style={styles.imageContainer}>
-                        <Image
-                            style={styles.image}
-                            source={require("../../assets/icon.png")}
-                        />
-                    </View>
+                    <View style={{
+                        flex: 9,
+                        width: '80%',
+                        height: '100%',
+                        alignSelf: 'center',
+                        justifyContent: 'center',
+                        // borderWidth: 1
+                    }}>
 
-                    <View style={styles.titleTextContainer}>
-                        <Text style={styles.signInTitleText}>Sign In</Text>
+                        <View style={styles.imageContainer}>
+                            <Image
+                                style={styles.image}
+                                source={require("../../assets/icon.png")}
+                            />
+                        </View>
 
-                        <Text style={styles.signInSubtext}>
-                            Sign in to OrbitAroundFood
-                        </Text>
-                    </View>
+                        <View style={styles.titleTextContainer}>
+                            <HideWithKeyboard>
+                                <Text style={styles.signInTitleText}>Sign In</Text>
+                                <Text style={styles.signInSubtext}>Sign in to OrbitAroundFood</Text>
+                            </HideWithKeyboard>
+                        </View>
 
-                    <View style={styles.inputContainer}>
-                        <View style={styles.inputSubContainer}>
-                            <View style={styles.inputIndividualContainer}>
-                                <Text style={styles.accDetailsHeader}>
-                                    Email
-                                </Text>
+                        <View style={styles.inputContainer}>
+                            <View style={styles.inputSubContainer}>
+                                <View style={styles.inputIndividualContainer}>
+                                    <Text style={styles.accDetailsHeader}>
+                                        Email
+                                    </Text>
 
-                                <View style={styles.textInputContainer}>
-                                    <TextInput
-                                        placeholder="Email"
-                                        style={styles.textInput}
-                                        autoCapitalize="none"
-                                        onChangeText={(email) =>
-                                            setEmailInput(email)}
-                                        value={email}
-                                    />
+                                    <View style={styles.textInputContainer}>
+                                        <TextInput
+                                            placeholder="Email"
+                                            style={styles.textInput}
+                                            autoCapitalize="none"
+                                            onChangeText={(email) =>
+                                                setEmailInput(email)}
+                                            value={email}
+                                        />
+                                    </View>
                                 </View>
-                            </View>
 
-                            <View style={styles.inputIndividualContainer}>
-                                <Text style={styles.accDetailsHeader}>
-                                    Password
-                                </Text>
+                                <View style={styles.inputIndividualContainer}>
+                                    <Text style={styles.accDetailsHeader}>
+                                        Password
+                                    </Text>
 
-                                <View style={styles.textInputContainer}>
-                                    <TextInput
-                                        placeholder="Password"
-                                        style={styles.textInput}
-                                        autoCapitalize="none"
-                                        onChangeText={(password) =>
-                                            setPasswordInput(password)}
-                                        value={password}
-                                        secureTextEntry={true}
-                                    />
+                                    <View style={styles.textInputContainer}>
+                                        <TextInput
+                                            placeholder="Password"
+                                            style={styles.textInput}
+                                            autoCapitalize="none"
+                                            onChangeText={(password) =>
+                                                setPasswordInput(password)}
+                                            value={password}
+                                            secureTextEntry={true}
+                                        />
+                                    </View>
                                 </View>
                             </View>
                         </View>
+
+                        <View style={styles.confirmButtonContainer}>
+                            <Button
+                                color={Colors.BUTTON}
+                                title="Confirm"
+                                onPress={signInHandler}
+                            />
+                        </View>
+
                     </View>
 
-                    <View style={styles.confirmButtonContainer}>
+                    <View style={styles.signUpButtonContainer}>
+                        <Text style={styles.noAccountText}>
+                            No account yet?{" "}
+                        </Text>
                         <Button
-                            color={Colors.BUTTON}
-                            title="Confirm"
-                            onPress={signInHandler}
+                            title="Sign Up"
+                            color={Colors.DARKER_BUTTON}
+                            onPress={() => navigation.navigate("Sign Up")}
                         />
                     </View>
 
-                </View>
-
-                <View style={styles.signUpButtonContainer}>
-                    <Text style={styles.noAccountText}>
-                        No account yet?{" "}
-                    </Text>
-                    <Button
-                        title="Sign Up"
-                        color={Colors.DARKER_BUTTON}
-                        onPress={() => navigation.navigate("Sign Up")}
-                    />
-                </View>
+                </DismissKeyboardView>
             </KeyboardAvoidingView>
         </SafeAreaView>
     );

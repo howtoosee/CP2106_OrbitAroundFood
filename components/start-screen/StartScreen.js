@@ -58,7 +58,7 @@ function StartScreen({navigation}) {
 
                 <StartScreenButton
                     title="LEMME HELP"
-                    color={isSignedIn ? Colors.BUTTON : Colors.TEXT}
+                    color={isSignedIn ? Colors.BUTTON : Colors.DISABLED_BUTTON}
                     onPress={() => {
                         isSignedIn
                             ? navigation.navigate("Lemme Help")

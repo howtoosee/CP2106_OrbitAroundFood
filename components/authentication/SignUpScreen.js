@@ -15,6 +15,7 @@ import {
 import {Colors, DefaultStyles, Fonts} from '../../constants';
 import {createUser, signOut, userNameExists} from '../../api/AuthenticationApi';
 import DismissKeyboardView from "../support-components/DismissKeyboardView";
+import HideWithKeyboard from "react-native-hide-with-keyboard";
 
 const {width, height} = Dimensions.get("window");
 
@@ -123,11 +124,13 @@ function SignUpScreen({navigation}) {
                         alignSelf: 'center',
                         justifyContent: 'center',
                         // borderWidth: 1
-                    }}>
+                    }}>w
 
                         <View style={styles.titleTextContainer}>
-                            <Text style={styles.signUpTitleText}>Sign Up</Text>
-                            <Text style={styles.signUpSubtext}>Create an account to use OrbitAroundFood</Text>
+                            <HideWithKeyboard>
+                                <Text style={styles.signUpTitleText}>Sign Up</Text>
+                                <Text style={styles.signUpSubtext}>Create an account to use OrbitAroundFood</Text>
+                            </HideWithKeyboard>
                         </View>
 
 

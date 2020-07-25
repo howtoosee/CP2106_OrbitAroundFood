@@ -102,7 +102,7 @@ function RequestSearch({navigation, route}) {
                                         <Text style={styles.searchHistoryText} key={getKey("search_hist")}>
                                             {item}
                                         </Text>
-                                        
+
                                     </View>
 
                                 </TouchableOpacity>
@@ -164,6 +164,7 @@ const styles = StyleSheet.create({
     inputContainer: {
         flex: 10,
         // borderWidth: 2,
+        marginLeft: '1%',
         borderBottomWidth: 2,
         borderColor: Colors.BORDER,
         borderRadius: 0,

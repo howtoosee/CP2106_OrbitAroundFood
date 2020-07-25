@@ -21,7 +21,6 @@ function CreateHelpRequest({navigation, route}) {
     const {displayName} = firebase.auth().currentUser;
     const foodObj = route.params?.foodObj;
     const onGoBack = ('onGoBack' in route.params) ? route.params.onGoBack : () => null;
-    console.log('onGoBack in params?', (onGoBack in route.params));
 
     const [destination, setDestination] = useState('');
     const [remarks, setRemarks] = useState('');

@@ -3,7 +3,6 @@ import firebase from "firebase";
 const reviewsCollection = firebase.firestore().collection("REVIEWS");
 const ratingsCollection = firebase.firestore().collection("RATINGS");
 
-const date = new Date();
 
 export async function readReviews(foodObjID, setRating, setReviews) {
     let reviewsArr = [];
@@ -47,7 +46,7 @@ export async function readReviews(foodObjID, setRating, setReviews) {
 
 
 export async function writeReviews(foodObjID, reviewObj) {
-    reviewObj.timestamp = date.getTime();
+    reviewObj.timestamp = Date.now();
     reviewObj.foodID = foodObjID;
 
     await reviewsCollection

@@ -28,6 +28,9 @@ import {
 
 export default function App() {
 
+    // disable warnings during debugging:
+    console.disableYellowBox = true;
+    
     const stack = createStackNavigator();
 
     return (

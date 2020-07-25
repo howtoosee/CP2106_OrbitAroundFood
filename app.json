@@ -5,7 +5,6 @@
     "platforms": [
       "ios",
       "android",
-      "web"
     ],
     "version": "1.0.0",
     "orientation": "portrait",
@@ -22,7 +21,7 @@
       "**/*"
     ],
     "ios": {
-      "supportsTablet": true
+      "supportsTablet": false
     },
     "description": "Xihao and Xin Yee's CP2106 Independent Software Development Project (Orbital) project on food around NUS. \n\nWe aim to develop an application which collates all the food options in NUS (Currently limited to UTown due to Covid'19). The project will allow users to make a more informed decision on our food choices. The application will be very useful for incoming freshmen who wish to explore the campus and discover their favourite stores without much hassle.",
     "githubUrl": "https://github.com/howtoosee/CP2106_OrbitAroundFood"

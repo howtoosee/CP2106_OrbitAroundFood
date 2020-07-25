@@ -4,6 +4,8 @@ import combineAllData from "./combineAllData";
 const foodCollection = firebase.firestore().collection("FOODS");
 
 export default async function searchQueryFood(searchKey, setResList, filters) {
+    console.log('Search for:', searchKey, 'with filters:', filters);
+
     // checks if a given foodDoc matches the searchKey
     function matchKeyword(keyword, docData) {
         const cleanKeyword = keyword.toLowerCase().replace(/[^0-9a-z]/gi, "");

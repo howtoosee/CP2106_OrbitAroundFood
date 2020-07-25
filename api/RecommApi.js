@@ -32,8 +32,7 @@ export default async function getRandomFood(setFood) {
 
     // combine food object with store object
     await combineAllData(foodObj, foodId)
-        .then((res) => {
-            setFood(res);
-        })
+        .then(res => setFood(res))
+        .then(() => console.log('Fetched recommendation'))
         .catch(err => console.log("Error setting recommendation:", err));
 }

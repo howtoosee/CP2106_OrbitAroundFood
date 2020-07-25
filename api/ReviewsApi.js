@@ -40,9 +40,11 @@ export async function readReviews(foodObjID, setRating, setReviews) {
         rating = "no ratings yet";
     }
 
+    console.log('Fetched ratings and reviews for:', foodObjID);
     setRating(rating);
     setReviews(reviewsArr);
 }
+
 
 export async function writeReviews(foodObjID, reviewObj) {
     reviewObj.timestamp = date.getTime();
@@ -50,6 +52,7 @@ export async function writeReviews(foodObjID, reviewObj) {
 
     await reviewsCollection
         .add(reviewObj)
+        .then(() => console.log('Created review for:', foodObjID))
         .catch(err => console.log("Error adding review:", err));
 
     const ratingSnapshot = ratingsCollection.doc(foodObjID);
@@ -67,6 +70,7 @@ export async function writeReviews(foodObjID, reviewObj) {
                 numRating: newNumRating,
                 avgRating: newAvgRating
             })
+            .then(() => console.log('Updated rating for:', foodObjID))
             .catch(err => console.log("Error updating rating:", err));
     } else {
         await ratingSnapshot
@@ -75,9 +79,11 @@ export async function writeReviews(foodObjID, reviewObj) {
                 numRating: 1,
                 avgRating: reviewObj.rating
             })
+            .then(() => console.log('Updated rating for:', foodObjID))
             .catch(err => console.log("Error updating rating:", err));
     }
 }
+
 
 async function forEachField(doc, callback) {
     for (let i = 0; i < doc.length; i++) {

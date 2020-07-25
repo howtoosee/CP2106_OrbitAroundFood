@@ -39,6 +39,7 @@ async function readHelps(setHelps) {
         helps.push(combinedObj);
     });
 
+    console.log('Fetched all requests');
     setHelps(helps);
 }
 
@@ -54,7 +55,7 @@ async function setHelper(helpId, helperObj) {
             },
             isOpen: false,
         })
-        .then(() => console.log('Set helper for request', helpId))
+        .then(() => console.log('Set helper for request:', helpId))
         .catch(err => console.log("Error updating help doc:", err));
 
 }
@@ -92,7 +93,7 @@ async function writeHelp(foodId, userObj, timeObj) {
     await helpCollection
         .doc(helpId)
         .set(helpObj)
-        .then(() => console.log('Created request', helpId))
+        .then(() => console.log('Created request:', helpId))
         .catch(err => console.log("Error writing help:", err));
 
 }
@@ -127,7 +128,8 @@ async function readAllUserRelatedRequests(setRequests, setHelps) {
         requests.push(combinedObj);
 
     })
-        .then(() => setRequests(requests));
+        .then(() => setRequests(requests))
+        .then(() => console.log('Fetched all user requests'));
 
     const helpsSnapshot = await helpCollection
         .where('helperInfo.helperId', '==', username)
@@ -152,7 +154,9 @@ async function readAllUserRelatedRequests(setRequests, setHelps) {
         helps.push(combinedObj);
 
     })
-        .then(() => setHelps(helps));
+        .then(() => setHelps(helps))
+        .then(() => console.log('Fetched all user helps'));
+
 
 }
 

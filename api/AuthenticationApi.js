@@ -10,6 +10,7 @@ async function createUserDoc(email, number, username) {
                 contact: number,
                 email: email
             })
+            .then(() => console.log('Created user doc:', email, username))
             .catch(err => console.log('Error creating user doc:', err));
     } else {
         console.log('No current user');
@@ -31,7 +32,7 @@ async function createUser(email, password, number, username, alert) {
             console.log('Error creating user:', err);
             alert(err.message)
         })
-        .then(() => console.log('User created:', email, username))
+        .then(() => console.log('Created user:', email, username))
         .then(() => updateProfile(email, username))
         .then(() => createUserDoc(email, number, username));
 }
@@ -45,6 +46,7 @@ async function updateProfile(email, username) {
                 displayName: username,
                 email: email
             })
+            .then('User profile updated:', email, username)
             .catch(err => console.log('Error updating displayName:', err));
     } else {
         console.log('No current user');
@@ -53,8 +55,10 @@ async function updateProfile(email, username) {
 
 async function signOut() {
     if (firebase.auth().currentUser) {
+        const name = firebase.auth().currentUser.displayName;
         await firebase.auth()
             .signOut()
+            .then(() => console.log('Signed out from:', name))
             .catch(err => console.log('Error signing out:', err));
     } else {
         console.log('No current user');
@@ -68,6 +72,7 @@ async function getUserContact(setUserContact) {
         const docRef = firebase.firestore().collection('USERS').doc(username);
         const snapshot = await docRef.get();
         setUserContact(await snapshot.data().contact);
+        console.log('Fetched user contact:', username);
     } else {
         console.log('No current user');
     }

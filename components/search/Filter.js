@@ -1,5 +1,5 @@
 import React, {useState} from 'react';
-import {Button, SafeAreaView, StyleSheet, Text, View, Dimensions} from 'react-native';
+import {Button, Dimensions, SafeAreaView, StyleSheet, Text, View} from 'react-native';
 import Icon from 'react-native-vector-icons/FontAwesome';
 
 

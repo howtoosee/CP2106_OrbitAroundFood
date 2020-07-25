@@ -1,5 +1,5 @@
 import React, {useEffect, useState} from 'react';
-import {Alert, Button, SafeAreaView, StyleSheet, Text, TextInput, View, Dimensions} from 'react-native';
+import {Alert, Button, Dimensions, SafeAreaView, StyleSheet, Text, TextInput, View} from 'react-native';
 import {Button as ButtonRNE} from 'react-native-elements';
 import DateTimePickerModal from 'react-native-modal-datetime-picker';
 
@@ -14,7 +14,7 @@ import DismissKeyboardView from "../support-components/DismissKeyboardView";
 const {width, height} = Dimensions.get('window');
 
 
-function CreateHelpRequest({navigation, route}) {
+function CreateRequest({navigation, route}) {
 
     const {displayName} = firebase.auth().currentUser;
     const foodObj = route.params?.foodObj;
@@ -328,4 +328,4 @@ const styles = StyleSheet.create({
     }
 });
 
-export default CreateHelpRequest;
+export default CreateRequest;

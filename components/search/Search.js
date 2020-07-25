@@ -1,5 +1,6 @@
 import React, {useState} from 'react';
 import {
+    Alert,
     Button,
     Modal,
     SafeAreaView,
@@ -8,8 +9,7 @@ import {
     Text,
     TextInput,
     TouchableOpacity,
-    View,
-    Alert
+    View
 } from 'react-native';
 import {Button as ButtonRNE} from 'react-native-elements';
 import Icon from 'react-native-vector-icons/FontAwesome';

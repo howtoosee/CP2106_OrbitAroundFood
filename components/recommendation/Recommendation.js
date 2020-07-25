@@ -1,5 +1,5 @@
 import React, {useEffect, useState} from 'react';
-import {ActivityIndicator, Button, Image, SafeAreaView, StyleSheet, Text, View, Dimensions} from 'react-native';
+import {ActivityIndicator, Button, Dimensions, Image, SafeAreaView, StyleSheet, Text, View} from 'react-native';
 
 import getImage from "../../api/FoodImage";
 import getRandomFood from "../../api/RecommApi";

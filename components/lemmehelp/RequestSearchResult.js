@@ -1,5 +1,5 @@
 import React, {useEffect, useState} from "react";
-import {ActivityIndicator, ScrollView, StyleSheet, Text, View, Dimensions, SafeAreaView} from "react-native";
+import {ActivityIndicator, Dimensions, SafeAreaView, ScrollView, StyleSheet, Text, View} from "react-native";
 
 import {Colors, DefaultStyles, Fonts} from "../../constants";
 import searchQueryFood from "../../api/SearchApi";
@@ -109,7 +109,7 @@ function getResultItemElement(item, navigation, onGoBack) {
                 navigation={navigation}
                 buttonType='lemmehelp'
                 onPress={() =>
-                    navigation.navigate("New Request", {
+                    navigation.navigate("Create Request", {
                         onGoBack: () => onGoBack(),
                         foodObj: item
                     })

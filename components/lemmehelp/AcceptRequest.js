@@ -1,5 +1,5 @@
 import React, {useEffect, useState} from 'react';
-import {Alert, Button, SafeAreaView, StyleSheet, TextInput, View, Dimensions} from 'react-native';
+import {Alert, Button, Dimensions, SafeAreaView, StyleSheet, TextInput, View} from 'react-native';
 import * as firebase from 'firebase';
 
 import {Colors, DefaultStyles, Fonts} from '../../constants';
@@ -11,7 +11,7 @@ import DismissKeyboardView from "../support-components/DismissKeyboardView";
 
 const {width, height} = Dimensions.get('window');
 
-function AcceptHelpRequest({navigation, route}) {
+function AcceptRequest({navigation, route}) {
     const requestObj = route.params?.requestObj;
     const onGoBack = route.params?.onGoBack;
 
@@ -160,5 +160,5 @@ const styles = StyleSheet.create({
     }
 });
 
-export default AcceptHelpRequest;
+export default AcceptRequest;
 

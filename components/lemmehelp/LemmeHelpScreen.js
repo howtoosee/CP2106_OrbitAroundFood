@@ -199,8 +199,7 @@ const styles = StyleSheet.create({
     buttonIndivContainer: {
         flex: 1,
         marginVertical: '3%',
-        marginHorizontal: '5%',
-        justifyContent: "flex-end",
+        justifyContent: "center",
         alignContent: "center",
         height: '100%',
     }

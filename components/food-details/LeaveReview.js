@@ -2,13 +2,13 @@ import React, {useState} from 'react';
 import {
     Alert,
     Button,
+    Dimensions,
+    KeyboardAvoidingView,
+    SafeAreaView,
     StyleSheet,
     Text,
     TextInput,
-    View,
-    SafeAreaView,
-    Dimensions,
-    KeyboardAvoidingView
+    View
 } from 'react-native';
 import {AirbnbRating} from 'react-native-ratings';
 

@@ -7,7 +7,7 @@ import * as firebase from 'firebase';
 
 const helpCollection = firebase.firestore().collection("HELPS");
 
-function RequestDetails({navigation, route}) {
+function RequestDetail({navigation, route}) {
     const [item, setItem] = useState(route.params?.item);
     const [status, setStatus] = useState(route.params?.status);
     const [refreshing, setRefreshing] = useState(false);
@@ -78,5 +78,5 @@ const styles = StyleSheet.create({
     },
 })
 
-export default RequestDetails;
+export default RequestDetail;
 

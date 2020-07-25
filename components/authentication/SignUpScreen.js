@@ -2,14 +2,13 @@ import React, {useState} from 'react';
 import {
     Alert,
     Button,
+    Dimensions,
     KeyboardAvoidingView,
-    Platform,
     SafeAreaView,
     StyleSheet,
     Text,
     TextInput,
-    View,
-    Dimensions
+    View
 } from 'react-native';
 
 import {Colors, DefaultStyles, Fonts} from '../../constants';

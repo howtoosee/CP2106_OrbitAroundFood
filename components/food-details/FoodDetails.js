@@ -3,13 +3,13 @@ import {
     ActivityIndicator,
     Alert,
     Button,
+    Dimensions,
     Image,
     SafeAreaView,
     ScrollView,
     StyleSheet,
     Text,
-    View,
-    Dimensions
+    View
 } from 'react-native';
 
 import {readReviews} from "../../api/ReviewsApi";

@@ -2,6 +2,7 @@ import React, {useState} from "react";
 import {
     Alert,
     Button,
+    Dimensions,
     Image,
     KeyboardAvoidingView,
     Platform,
@@ -9,8 +10,7 @@ import {
     StyleSheet,
     Text,
     TextInput,
-    View,
-    Dimensions
+    View
 } from "react-native";
 
 import {Colors, DefaultStyles, Fonts} from "../../constants";

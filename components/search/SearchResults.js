@@ -1,5 +1,5 @@
 import React, {useEffect, useState} from "react";
-import {ActivityIndicator, SafeAreaView, ScrollView, StyleSheet, Text, View, Dimensions} from "react-native";
+import {ActivityIndicator, Dimensions, SafeAreaView, ScrollView, StyleSheet, Text, View} from "react-native";
 
 import FoodInfoContainer from "../support-components/FoodInfoContainer";
 import {Colors, DefaultStyles, Fonts} from "../../constants";

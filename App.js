@@ -3,18 +3,17 @@ import {NavigationContainer} from '@react-navigation/native';
 import {createStackNavigator} from '@react-navigation/stack';
 import {SafeAreaProvider} from 'react-native-safe-area-context';
 import getSlideFromRightTransition from 'react-navigation-slide-from-right-transition';
-import firebase from 'firebase';
 
 import {
-    AcceptHelpRequest,
-    CreateHelpRequest,
+    AcceptRequest,
+    CreateRequest,
     Favourite,
     FoodDetails,
     LeaveReview,
     LemmeHelpScreen,
     Profile,
     Recommendation,
-    RequestDetails,
+    RequestDetail,
     RequestHistory,
     RequestSearch,
     RequestSearchResult,
@@ -30,7 +29,7 @@ export default function App() {
 
     // disable warnings during debugging:
     console.disableYellowBox = true;
-    
+
     const stack = createStackNavigator();
 
     return (
@@ -38,12 +37,12 @@ export default function App() {
 
             <NavigationContainer>
 
-                <stack.Navigator initialRouteName="Welcome"
+                <stack.Navigator initialRouteName="OrbitAroundFood"
                                  mode={'card'}
                                  transitionConfig={getSlideFromRightTransition}
                 >
 
-                    <stack.Screen name="Welcome"
+                    <stack.Screen name="OrbitAroundFood"
                                   component={StartScreen}
                     />
 
@@ -83,8 +82,8 @@ export default function App() {
                                   component={LemmeHelpScreen}
                     />
 
-                    <stack.Screen name="New Request"
-                                  component={CreateHelpRequest}
+                    <stack.Screen name="Create Request"
+                                  component={CreateRequest}
                     />
 
                     <stack.Screen name="Request Search"
@@ -92,15 +91,15 @@ export default function App() {
                     />
 
                     <stack.Screen name="Accept Request"
-                                  component={AcceptHelpRequest}
+                                  component={AcceptRequest}
                     />
 
                     <stack.Screen name="Request History"
                                   component={RequestHistory}
                     />
 
-                    <stack.Screen name='Request Details'
-                                  component={RequestDetails}
+                    <stack.Screen name='Request Detail'
+                                  component={RequestDetail}
                     />
 
                     <stack.Screen name="Request Search Results"

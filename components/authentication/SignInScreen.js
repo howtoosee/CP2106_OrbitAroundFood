@@ -243,7 +243,9 @@ const styles = StyleSheet.create({
     textInput: {
         color: Colors.DARK_TEXT,
         paddingVertical: '2%',
-        paddingHorizontal: '1%'
+        paddingHorizontal: '1%',
+        // height: '100%',
+        width: '100%',
     },
 
     confirmButtonContainer: {

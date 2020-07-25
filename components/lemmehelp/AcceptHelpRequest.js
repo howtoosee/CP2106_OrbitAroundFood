@@ -72,7 +72,6 @@ function AcceptHelpRequest({navigation, route}) {
                     <View style={styles.textInputContainer}>
 
                         <TextInput placeholder="Remarks (max 30 chars)"
-                                   placeholderTextColor={Colors.TEXT}
                                    style={styles.textInput}
                                    onChangeText={remarksInputHandler}
                                    value={remarks}

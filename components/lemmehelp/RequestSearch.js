@@ -1,5 +1,15 @@
 import React, {useState} from 'react';
-import {Button, SafeAreaView, ScrollView, StyleSheet, Text, TextInput, TouchableOpacity, View} from 'react-native';
+import {
+    Alert,
+    Button,
+    SafeAreaView,
+    ScrollView,
+    StyleSheet,
+    Text,
+    TextInput,
+    TouchableOpacity,
+    View
+} from 'react-native';
 import {Button as ButtonRNE,} from 'react-native-elements';
 import Icon from "react-native-vector-icons/FontAwesome";
 
@@ -42,7 +52,21 @@ function RequestSearch({navigation, route}) {
 
     const getKey = (name, objType) => name + "_" + objType + "_" + Math.floor(Math.random() * 10000);
 
-    const isValidString = str => str.length > 0 && str.trim().length > 0;
+    const isValidString = str => {
+        const ENGLISH_CHAR_PLUS_STRING = /^[A-Za-z ]+$/;
+
+        if (str.length === 0 || str.trim().length === 0) {
+            return false;
+        } else if (!str.match(ENGLISH_CHAR_PLUS_STRING)) {
+            Alert.alert('Invalid key',
+                'Please enter English characters only!',
+                [{ text: 'Dismiss'}]
+            );
+            return false;
+        } else {
+            return true;
+        }
+    }
 
     return (
         <SafeAreaView style={DefaultStyles.screen}>
@@ -90,6 +114,7 @@ function RequestSearch({navigation, route}) {
                     </View>
 
                     <View style={styles.searchHistoryContainer}>
+
                         <ScrollView showsVerticalScrollIndicator={false}>
                             {searchHist.map(item => (
 
@@ -174,6 +199,8 @@ const styles = StyleSheet.create({
 
     inputText: {
         fontSize: Fonts.XS,
+        height: '50%',
+        width: '100%',
     },
 
     searchHistoryOverallContainer: {
@@ -184,7 +211,8 @@ const styles = StyleSheet.create({
     searchHistoryContainer: {
         flex: 18,
         paddingTop: '3%',
-        justifyContent: 'space-around'
+        justifyContent: 'space-around',
+        paddingHorizontal: '1%',
     },
 
     searchHistoryTitle: {

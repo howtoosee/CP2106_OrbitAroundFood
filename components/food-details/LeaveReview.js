@@ -90,7 +90,7 @@ function LeaveReview({route, navigation}) {
             <KeyboardAvoidingView style={DefaultStyles.keyboardAvoidScreen}
                                   behavior={"padding"}
             >
-            <DismissKeyboardView style={{flex: 1, justifyContent: 'flex-end', marginBottom: '25%'}}>
+            <DismissKeyboardView style={{flex: 1, justifyContent: 'flex-start', marginBottom: '25%'}}>
 
                 <View style={styles.foodInfoContainer}>
 
@@ -133,7 +133,10 @@ function LeaveReview({route, navigation}) {
                                        onChangeText={msgInputHandler}
                                        value={msgString}
                                        multiline={true}
+                                       numberOfLines={4}
                                        maxLength={200}
+                                       autoCapitalize={'sentences'}
+                                       enablesReturnKeyAutomatically={true}
                             />
                         </View>
                     </View>
@@ -220,13 +223,15 @@ const styles = StyleSheet.create({
         borderWidth: 1,
         borderRadius: 0,
         borderColor: Colors.LIGHT_BORDER,
-        height: height * 0.15,
+        height: height * 0.11,
     },
 
     inputText: {
         alignSelf: 'flex-start',
         color: Colors.DARK_TEXT,
         fontSize: Fonts.S,
+        height: '100%',
+        width: '100%'
     },
 
     sendButtonContainer: {

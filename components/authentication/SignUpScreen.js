@@ -124,7 +124,7 @@ function SignUpScreen({navigation}) {
                         alignSelf: 'center',
                         justifyContent: 'center',
                         // borderWidth: 1
-                    }}>w
+                    }}>
 
                         <View style={styles.titleTextContainer}>
                             <HideWithKeyboard>
@@ -287,6 +287,7 @@ const styles = StyleSheet.create({
         color: Colors.DARK_TEXT,
         paddingVertical: '2%',
         paddingHorizontal: '1%',
+        width: '100%',
     },
 
     confirmButtonContainer: {

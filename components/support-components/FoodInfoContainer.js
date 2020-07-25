@@ -15,16 +15,13 @@ function FoodInfoContainer(props) {
     const onGoBack = props?.onGoBack ? props?.onGoBack : () => null;
     const hideButton = props?.hideButton ? props.hideButton : false;
 
-    const MAX_LENGTH = 60;
-    const trimmedString = str => str.length > MAX_LENGTH ? str.substring(0, MAX_LENGTH) + '...' : str;
-
     return (
         <View style={styles.searchResultContainer}>
 
             <View style={styles.searchResultInfoContainer}>
 
-                <Text style={styles.searchResultKey}>
-                    {trimmedString(item.name)}
+                <Text style={styles.searchResultKey} numberOfLines={2} ellipsizeMode={'tail'}>
+                    {item.name}
                 </Text>
 
                 <Text style={styles.searchResultPrice}>

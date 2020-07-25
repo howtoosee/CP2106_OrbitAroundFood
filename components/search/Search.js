@@ -8,7 +8,8 @@ import {
     Text,
     TextInput,
     TouchableOpacity,
-    View
+    View,
+    Alert
 } from 'react-native';
 import {Button as ButtonRNE} from 'react-native-elements';
 import Icon from 'react-native-vector-icons/FontAwesome';
@@ -51,7 +52,21 @@ function Search({navigation}) {
         setFilterVisible(true);
     }
 
-    const isValidString = str => str.length > 0 && str.trim().length > 0;
+    const isValidString = str => {
+        const ENGLISH_CHAR_PLUS_STRING = /^[A-Za-z ]+$/;
+
+        if (str.length === 0 || str.trim().length === 0) {
+            return false;
+        } else if (!str.match(ENGLISH_CHAR_PLUS_STRING)) {
+            Alert.alert('Invalid key',
+                'Please enter English characters only!',
+                [{ text: 'Dismiss'}]
+            );
+            return false;
+        } else {
+            return true;
+        }
+    }
     // checks if string is valid
 
     const addSearchHistHandler = () => {
@@ -220,10 +235,13 @@ const styles = StyleSheet.create({
         borderRadius: 0,
         paddingHorizontal: '1%',
         paddingVertical: '2%',
+        // borderWidth: 1,
     },
 
     inputText: {
         fontSize: Fonts.XS,
+        height: '50%',
+        width: '100%',
     },
 
     searchHistoryOverallContainer: {
@@ -234,7 +252,7 @@ const styles = StyleSheet.create({
     searchHistoryContainer: {
         flex: 18,
         marginTop: '2%',
-        paddingLeft: '1%',
+        paddingHorizontal: '1%',
         justifyContent: 'space-around'
     },
 

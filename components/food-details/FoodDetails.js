@@ -152,8 +152,8 @@ function FoodDetails({route, navigation}) {
 
                             <View style={styles.reviewsHeader}>
                                 <View style={{flexDirection: 'row'}}>
-                                <Text style={styles.ratingText}>Rating: </Text>
-                                <Text style={styles.ratingNumberText}>{rating}</Text>
+                                    <Text style={styles.ratingText}>Rating: </Text>
+                                    <Text style={styles.ratingNumberText}>{rating}</Text>
                                 </View>
 
                                 <Text style={styles.reviewsHeaderText}>Reviews:</Text>
@@ -198,7 +198,7 @@ function reviewElement(rev) {
                 @{rev.userID} on {formatDate(rev.time)}:
             </Text>
 
-            <Text style={styles.reviewResultInfo}>
+            <Text style={styles.reviewResultInfo} numberOfLines={3} ellipsizeMode={'tail'}>
                 {rev.comments}
             </Text>
         </View>

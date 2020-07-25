@@ -4,15 +4,13 @@ import {Button as ButtonRNE} from 'react-native-elements';
 import DateTimePickerModal from 'react-native-modal-datetime-picker';
 
 import * as firebase from 'firebase';
+
 import {getUserContact} from '../../api/AuthenticationApi';
-
-
-import {Colors, DefaultStyles, Fonts} from '../../constants';
 import {writeHelp} from '../../api/HelpApi';
+import {Colors, DefaultStyles, Fonts} from '../../constants';
 import FoodInfoContainer from '../support-components/FoodInfoContainer';
 import DismissKeyboardView from "../support-components/DismissKeyboardView";
 
-const today = new Date();
 const {width, height} = Dimensions.get('window');
 
 
@@ -26,6 +24,8 @@ function CreateHelpRequest({navigation, route}) {
     const [remarks, setRemarks] = useState('');
     const [showTimePicker, setTimePickerVisible] = useState(false);
     const [timeETA, setTimeETA] = useState('-not set yet-');
+    const [timeStamp, setTimeStamp] = useState(null);
+
     const [userContact, setUserContact] = useState();
 
     const destinationInputHandler = (dest) => {
@@ -50,13 +50,15 @@ function CreateHelpRequest({navigation, route}) {
         const min = ('0' + dateObj.getMinutes()).slice(-2);
         const ampm = hr24 > 12 ? 'pm' : 'am';
         const timeString = hr + ':' + min + ' ' + ampm;
-        if (dateObj < today.getTime()) {
+
+        if (dateObj < Date.now()) {
             Alert.alert('Error',
                 'Time cannot be in the past!',
                 [{text: 'Dismiss'}]
             );
         } else {
             setTimeETA(timeString);
+            setTimeStamp(dateObj);
             hideTimePicker();
         }
     }
@@ -74,6 +76,11 @@ function CreateHelpRequest({navigation, route}) {
                 [{
                     text: 'Dismiss'
                 }]);
+        } else if (timeStamp < Date.now()) {
+            Alert.alert('Error',
+                'Time cannot be in the past!',
+                [{text: 'Dismiss'}]
+            );
         } else {
 
             const userObj = {
@@ -85,7 +92,7 @@ function CreateHelpRequest({navigation, route}) {
 
             const timeObj = {
                 timeETA: timeETA,
-                timestamp: today.getTime(),
+                timestamp: Date.now(),
             }
 
             writeHelp(foodObj.id, userObj, timeObj)
@@ -119,9 +126,10 @@ function CreateHelpRequest({navigation, route}) {
 
                 <DateTimePickerModal isVisible={showTimePicker}
                                      mode='time'
-                                     date={today}
+                                     date={timeStamp === null ? new Date() : timeStamp}
                                      onConfirm={confirmTimeHandler}
                                      onCancel={hideTimePicker}
+                                     headerTextIOS={'Select time to meet:'}
                 />
 
                 <View style={styles.foodInfoContainer}>
@@ -145,7 +153,6 @@ function CreateHelpRequest({navigation, route}) {
                             <TextInput style={styles.textInput}
                                        numberOfLines={1}
                                        placeholder="Where to meet?"
-                                       placeholderTextColor={'grey'}
                                        onChangeText={destinationInputHandler}
                                        value={destination}
                             />
@@ -158,7 +165,6 @@ function CreateHelpRequest({navigation, route}) {
                             <TextInput style={styles.textInput}
                                        numberOfLines={1}
                                        placeholder="Remarks (max 30 chars)"
-                                       placeholderTextColor={'grey'}
                                        onChangeText={remarksInputHandler}
                                        value={remarks}
                                        maxLength={30}
@@ -171,13 +177,13 @@ function CreateHelpRequest({navigation, route}) {
                 <View style={styles.dateTimeContainer}>
 
                     <View style={styles.dateTimeStatsContainer}>
-                        <Text style={styles.dateTimeStatsText}>Time of Arrival:</Text>
+                        <Text style={styles.dateTimeStatsText}>Time to Meet:</Text>
                         <Text style={styles.dateTimeText}>{timeETA}</Text>
                     </View>
 
 
                     <View style={styles.timePickerButtonContainer}>
-                        <ButtonRNE title='Select Food ETA'
+                        <ButtonRNE title='Select Time to Meet'
                                    type='solid'
                                    raised
                                    buttonStyle={styles.timePickerButton}
@@ -229,7 +235,7 @@ const styles = StyleSheet.create({
     },
 
     timePickerButtonContainer: {
-        width: '100%',
+        width: '75%',
         marginTop: '3%',
         marginBottom: '5%',
     },

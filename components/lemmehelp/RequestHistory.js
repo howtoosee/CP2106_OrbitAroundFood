@@ -28,7 +28,7 @@ function RequestHistory({navigation, route}) {
 
     const sortRequests = (req, helps) => {
         let newArr = [...req, ...helps];
-        newArr.sort((a, b) => a.dateInfo.timestamp - b.dateInfo.timestamp);
+        newArr.sort((a, b) => b.dateInfo.timestamp - a.dateInfo.timestamp);
         return newArr;
     }
 

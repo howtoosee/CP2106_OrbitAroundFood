@@ -144,7 +144,8 @@ const styles = StyleSheet.create({
         flex: 1,
         flexDirection: "row",
         alignItems: "center",
-        justifyContent: "center"
+        justifyContent: "center",
+        marginBottom: '10%',
     },
 
     noResultsContainer: {

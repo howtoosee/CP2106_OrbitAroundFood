@@ -28,14 +28,14 @@ function FoodDetails({route, navigation}) {
     const [isLoading, setLoading] = useState(true);
     const [isRefreshing, setRefreshing] = useState(false);
 
+    const [user, setUser] = useState(firebase.auth().currentUser);
+
     const onGoBack = route.params?.onGoBack ? route.params.onGoBack : () => null;
     const foodObj = route.params?.foodObj;
     const [isSaved, setSaved] = useState(isFavourite(foodObj));
     const [rating, setRating] = useState(null);
     const [reviews, setReviews] = useState(null);
     const [photoUri, setPhotoUri] = useState('');
-
-    const [user, setUser] = useState(firebase.auth().currentUser);
 
     const addReviewHandler = () => {
         if (user) {
@@ -100,7 +100,7 @@ function FoodDetails({route, navigation}) {
     const refresh = useCallback(() => {
         setRefreshing(true);
         loadReviews();
-        wait(2000).then(() => setRefreshing(false));
+        wait(1000).then(() => setRefreshing(false));
     });
 
     useEffect(() => {
@@ -188,8 +188,8 @@ function FoodDetails({route, navigation}) {
             </View>
 
             <View style={styles.addReviewContainer}>
-                <Button title={'Lemme comment'}
-                        color={Colors.BUTTON}
+                <Button title={'Lemme review'}
+                        color={user ? Colors.BUTTON : Colors.DISABLED_BUTTON}
                         onPress={addReviewHandler}
                 />
             </View>
@@ -251,6 +251,7 @@ const styles = StyleSheet.create({
     addReviewContainer: {
         // flex: 2,
         height: '8%',
+        justifyContent: 'center',
     },
 
     reviewResultIndivContainer: {

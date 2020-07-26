@@ -167,7 +167,7 @@ function FoodDetails({route, navigation}) {
                                 <Text style={styles.reviewsHeaderText}>Reviews:</Text>
                             </View>
 
-                            <ScrollView style={{overflow: 'hidden', marginHorizontal: '2%'}}
+                            <ScrollView style={{overflow: 'hidden', marginHorizontal: '1%'}}
                                         showsVerticalScrollIndicator={false}
                                         refreshControl={
                                             <RefreshControl refreshing={isRefreshing} onRefresh={refresh}/>
@@ -223,7 +223,7 @@ const styles = StyleSheet.create({
     imageContainer: {
         // flex: 10,
         height: height * 0.25,
-        paddingTop: '3%',
+        paddingTop: height * 0.008,
         // paddingBottom: 20,
         alignItems: 'center',
         justifyContent: 'center',
@@ -254,8 +254,8 @@ const styles = StyleSheet.create({
     },
 
     reviewResultIndivContainer: {
-        marginTop: '3%',
-        padding: '2%',
+        marginTop: 0.01 * height,
+        padding: 0.006 * height,
         borderWidth: 1,
         borderColor: Colors.BORDER,
         borderRadius: 4,

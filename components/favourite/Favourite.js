@@ -1,5 +1,5 @@
-import React, {useState} from 'react';
-import {SafeAreaView, ScrollView, StyleSheet, Text, View} from 'react-native';
+import React, {useCallback, useState} from 'react';
+import {SafeAreaView, ScrollView, StyleSheet, Text, View, RefreshControl} from 'react-native';
 
 import FoodInfoContainer from "../support-components/FoodInfoContainer";
 import {Colors, DefaultStyles, Fonts} from '../../constants';
@@ -9,10 +9,20 @@ import {readFavourites} from "../../api/FavouritesLogic";
 function Favourite({navigation}) {
 
     const [favsArr, setFavsArr] = useState(readFavourites());
+    const [isRefreshing, setRefreshing] = useState(false);
 
-    const refresh = () => {
-        setFavsArr(readFavourites())
+    const wait = (timeout) => {
+        return new Promise(resolve => {
+            setTimeout(resolve, timeout);
+        });
     }
+
+    const refresh = useCallback(() => {
+        setRefreshing(true);
+        setFavsArr(readFavourites());
+        wait(500).then(() => setRefreshing(false));
+    });
+
 
     return (
         <SafeAreaView style={DefaultStyles.screen}>
@@ -28,7 +38,13 @@ function Favourite({navigation}) {
                     </View>
 
 
-                    : <ScrollView showsVerticalScrollIndicator={false}>
+                    : <ScrollView showsVerticalScrollIndicator={false}
+                                  refreshControl={
+                                      <RefreshControl refreshing={isRefreshing} onRefresh={refresh}/>
+                                  }
+                    >
+
+
                         {
                             favsArr.map(item => getFavsItemElement(item, navigation, refresh))
                         }

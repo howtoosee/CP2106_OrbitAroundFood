@@ -123,6 +123,7 @@ function SearchResults({route, navigation}) {
     );
 }
 
+
 function getResultItemElement(item, navigation) {
     const getKey = (name, objType) =>
         name + "_" + objType + "_" + Math.floor(Math.random() * 10000);
@@ -135,6 +136,7 @@ function getResultItemElement(item, navigation) {
         />
     );
 }
+
 
 const styles = StyleSheet.create({
 

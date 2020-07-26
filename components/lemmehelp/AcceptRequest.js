@@ -79,23 +79,22 @@ function AcceptRequest({navigation, route}) {
                         />
 
                     </View>
+                </View>
 
-                    <View style={styles.buttonContainer}>
+                <View style={styles.buttonContainer}>
 
-                        <View style={styles.cancelButton}>
-                            <Button title="CANCEL"
-                                    color={Colors.BUTTON}
-                                    onPress={() => navigation.goBack()}
-                            />
-                        </View>
+                    <View style={styles.cancelButton}>
+                        <Button title="CANCEL"
+                                color={Colors.BUTTON}
+                                onPress={() => navigation.goBack()}
+                        />
+                    </View>
 
-                        <View style={styles.confirmButton}>
-                            <Button title="CONFIRM"
-                                    color={Colors.DARKER_BUTTON}
-                                    onPress={confirmRequestHandler}
-                            />
-                        </View>
-
+                    <View style={styles.confirmButton}>
+                        <Button title="CONFIRM"
+                                color={Colors.DARKER_BUTTON}
+                                onPress={confirmRequestHandler}
+                        />
                     </View>
 
                 </View>
@@ -108,7 +107,7 @@ function AcceptRequest({navigation, route}) {
 
 const styles = StyleSheet.create({
     acceptRequestContainer: {
-        flex: 1,
+        flex: 9,
         alignSelf: 'center',
         alignItems: 'center',
         justifyContent: 'flex-start',
@@ -119,15 +118,13 @@ const styles = StyleSheet.create({
     },
 
     foodInfoContainer: {
-        flex: 4,
         width: '100%',
         // borderWidth: 1,
     },
 
     textInputContainer: {
-        flex: 5,
         width: '100%',
-        height: '100%',
+        // height: '100%',
         justifyContent: 'flex-start',
         alignItems: 'center',
     },
@@ -139,24 +136,28 @@ const styles = StyleSheet.create({
         fontSize: Fonts.S,
         paddingVertical: 0.01 * height,
         paddingHorizontal: 0.015 * width,
+        marginVertical: 0.02 * height,
     },
 
     buttonContainer: {
         flex: 1,
         width: '90%',
         flexDirection: "row",
+        alignSelf: 'center',
+        alignItems: 'center',
         justifyContent: 'center',
-        // borderWidth: 1,
     },
 
     confirmButton: {
         flex: 1,
         width: '100%',
+        justifyContent: 'flex-start',
     },
 
     cancelButton: {
         flex: 1,
         width: '100%',
+        justifyContent: 'flex-start',
     }
 });
 

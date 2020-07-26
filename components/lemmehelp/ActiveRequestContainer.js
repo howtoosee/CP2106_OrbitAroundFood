@@ -1,9 +1,11 @@
 import React from 'react';
-import {Alert, StyleSheet, Text, View} from 'react-native';
+import {Alert, StyleSheet, Text, View, Dimensions} from 'react-native';
 import {Colors, Fonts} from '../../constants';
 import {Button} from 'react-native-elements';
 import Icon from 'react-native-vector-icons/FontAwesome5';
 import * as firebase from 'firebase';
+
+const {width, height} = Dimensions.get('window');
 
 function ActiveRequestContainer(props) {
     const {item, onPress} = props;
@@ -115,9 +117,9 @@ const styles = StyleSheet.create({
         flexDirection: 'column',
         alignItems: 'flex-start',
         justifyContent: 'space-evenly',
-        marginTop: '3%',
-        paddingHorizontal: '3%',
-        paddingVertical: '2%',
+        marginTop: '1%',
+        paddingHorizontal: width * 0.02,
+        paddingVertical: height * 0.008,
         borderWidth: 1,
         borderRadius: 4,
     },

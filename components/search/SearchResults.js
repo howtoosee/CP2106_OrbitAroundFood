@@ -123,6 +123,7 @@ function SearchResults({route, navigation}) {
     );
 }
 
+
 function getResultItemElement(item, navigation) {
     const getKey = (name, objType) =>
         name + "_" + objType + "_" + Math.floor(Math.random() * 10000);
@@ -136,13 +137,15 @@ function getResultItemElement(item, navigation) {
     );
 }
 
+
 const styles = StyleSheet.create({
 
     loadingContainer: {
         flex: 1,
         flexDirection: "row",
         alignItems: "center",
-        justifyContent: "center"
+        justifyContent: "center",
+        marginBottom: '10%',
     },
 
     noResultsContainer: {

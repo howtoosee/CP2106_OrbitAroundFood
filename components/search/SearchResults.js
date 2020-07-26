@@ -1,5 +1,14 @@
-import React, {useEffect, useState} from "react";
-import {ActivityIndicator, Dimensions, SafeAreaView, ScrollView, StyleSheet, Text, View} from "react-native";
+import React, {useEffect, useState, useCallback} from "react";
+import {
+    ActivityIndicator,
+    Dimensions,
+    RefreshControl,
+    SafeAreaView,
+    ScrollView,
+    StyleSheet,
+    Text,
+    View
+} from "react-native";
 
 import FoodInfoContainer from "../support-components/FoodInfoContainer";
 import {Colors, DefaultStyles, Fonts} from "../../constants";
@@ -16,18 +25,32 @@ function SearchResults({route, navigation}) {
         ? "None" : filterNames.join(", ");
 
     const [isLoading, setLoading] = useState(true);
+    const [isRefreshing, setRefreshing] = useState(false);
     const [results, setResList] = useState([]);
 
-    useEffect(
-        () => {
-            if (isLoading) {
-                searchQueryFood(searchKey, setResList, filters)
-                    .then(() => setLoading(false))
-                    .catch((err) => console.log("Error during search querying:", err));
-            }
-        },
-        [isLoading, searchKey, searchQueryFood, setResList, setLoading]
-    );
+    const loadSearchResults = () => {
+        searchQueryFood(searchKey, setResList, filters)
+            .then(() => setLoading(false))
+            .catch((err) => console.log("Error during search querying:", err));
+    }
+
+    const wait = (timeout) => {
+        return new Promise(resolve => {
+            setTimeout(resolve, timeout);
+        });
+    }
+
+    const refresh = useCallback(() => {
+        setRefreshing(true);
+        loadSearchResults();
+        wait(2000).then(() => setRefreshing(false));
+    });
+
+    useEffect(() => {
+        if (isLoading) {
+            loadSearchResults();
+        }
+    }, [isLoading, searchKey, searchQueryFood, setResList, setLoading]);
 
     return (
         <SafeAreaView style={DefaultStyles.screen}>
@@ -74,6 +97,9 @@ function SearchResults({route, navigation}) {
 
                             <ScrollView style={styles.searchResults}
                                         showsVerticalScrollIndicator={false}
+                                        refreshControl={
+                                            <RefreshControl refreshing={isRefreshing} onRefresh={refresh}/>
+                                        }
                             >
                                 {results.map((item) =>
                                     getResultItemElement(item, navigation)

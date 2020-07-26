@@ -1,10 +1,10 @@
-import React, {useEffect, useState} from 'react';
+import React, {useEffect, useState, useCallback} from 'react';
 import {
     ActivityIndicator,
     Alert,
     Button,
     Dimensions,
-    Image,
+    Image, RefreshControl,
     SafeAreaView,
     ScrollView,
     StyleSheet,
@@ -26,6 +26,7 @@ const {width, height} = Dimensions.get('window');
 
 function FoodDetails({route, navigation}) {
     const [isLoading, setLoading] = useState(true);
+    const [isRefreshing, setRefreshing] = useState(false);
 
     const onGoBack = route.params?.onGoBack ? route.params.onGoBack : () => null;
     const foodObj = route.params?.foodObj;
@@ -90,10 +91,17 @@ function FoodDetails({route, navigation}) {
             .then(() => setLoading(false));
     }
 
-    const refresh = () => {
-        setLoading(true);
-        loadReviews();
+    const wait = (timeout) => {
+        return new Promise(resolve => {
+            setTimeout(resolve, timeout);
+        });
     }
+
+    const refresh = useCallback(() => {
+        setRefreshing(true);
+        loadReviews();
+        wait(2000).then(() => setRefreshing(false));
+    });
 
     useEffect(() => {
         if (isLoading) {
@@ -161,6 +169,10 @@ function FoodDetails({route, navigation}) {
 
                             <ScrollView style={{overflow: 'hidden', marginHorizontal: '2%'}}
                                         showsVerticalScrollIndicator={false}
+                                        refreshControl={
+                                            <RefreshControl refreshing={isRefreshing} onRefresh={refresh}/>
+                                        }
+
                             >
                                 {
                                     reviews.map(rev => reviewElement(rev))

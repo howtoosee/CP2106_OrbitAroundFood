@@ -1,5 +1,5 @@
-import React, {useEffect, useState} from 'react';
-import {ActivityIndicator, Dimensions, SafeAreaView, ScrollView, StyleSheet, Text, View} from 'react-native';
+import React, {useEffect, useState, useCallback} from 'react';
+import {ActivityIndicator, Dimensions, SafeAreaView, ScrollView, StyleSheet, Text, View, RefreshControl} from 'react-native';
 
 import {Colors, DefaultStyles, Fonts} from '../../constants';
 import RequestInfoContainer from './RequestInfoContainer';
@@ -16,6 +16,7 @@ function RequestHistory({navigation, route}) {
     const username = firebase.auth().currentUser.displayName;
 
     const [isLoading, setLoading] = useState(true);
+    const [isRefreshing, setRefreshing] = useState(false);
     const [myRequests, setRequests] = useState([]);
     const [myHelps, setHelps] = useState([]);
 
@@ -30,6 +31,18 @@ function RequestHistory({navigation, route}) {
         newArr.sort((a, b) => a.dateInfo.timestamp - b.dateInfo.timestamp);
         return newArr;
     }
+
+    const wait = (timeout) => {
+        return new Promise(resolve => {
+            setTimeout(resolve, timeout);
+        });
+    }
+
+    const refresh = useCallback(() => {
+        setRefreshing(true);
+        loadRequests();
+        wait(2000).then(() => setRefreshing(false));
+    });
 
     useEffect(() => {
         if (isLoading) {
@@ -71,6 +84,9 @@ function RequestHistory({navigation, route}) {
 
                             <ScrollView style={styles.searchResults}
                                         showsVerticalScrollIndicator={false}
+                                        refreshControl={
+                                            <RefreshControl refreshing={isRefreshing} onRefresh={refresh}/>
+                                        }
                             >
                                 {
                                     (sortRequests(myRequests, myHelps))
@@ -162,6 +178,7 @@ const styles = StyleSheet.create({
     searchResults: {
         marginTop: '0%',
         overflow: 'scroll',
+        height: '100%',
         // height: '95%',
     },
 

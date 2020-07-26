@@ -14,7 +14,7 @@ import {
 } from "react-native";
 
 import {Colors, DefaultStyles, Fonts} from "../../constants";
-import firebase from "firebase";
+import * as firebase from 'firebase';
 import DismissKeyboardView from "../support-components/DismissKeyboardView";
 import HideWithKeyboard from "react-native-hide-with-keyboard";
 

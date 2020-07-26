@@ -1,4 +1,4 @@
-import firebase from "firebase";
+import * as firebase from 'firebase';
 
 const reviewsCollection = firebase.firestore().collection("REVIEWS");
 const ratingsCollection = firebase.firestore().collection("RATINGS");

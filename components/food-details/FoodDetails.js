@@ -19,7 +19,7 @@ import FoodInfoContainer from "../support-components/FoodInfoContainer";
 import requireSignInAlert from "../support-components/ComponentRequiresSignInAlert";
 
 import {Colors, DefaultStyles, Fonts} from "../../constants";
-import firebase from 'firebase';
+import * as firebase from 'firebase';
 
 const {width, height} = Dimensions.get('window');
 

@@ -4,7 +4,7 @@ import {ActivityIndicator, Dimensions, SafeAreaView, ScrollView, StyleSheet, Tex
 import {Colors, DefaultStyles, Fonts} from '../../constants';
 import RequestInfoContainer from './RequestInfoContainer';
 import {readAllUserRelatedRequests} from '../../api/HelpApi';
-import firebase from 'firebase';
+import * as firebase from 'firebase';
 
 
 const {width, height} = Dimensions.get('window');

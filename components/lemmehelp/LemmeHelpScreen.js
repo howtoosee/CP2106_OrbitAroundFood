@@ -4,7 +4,7 @@ import {ActivityIndicator, Button, SafeAreaView, ScrollView, StyleSheet, Text, V
 import {Colors, DefaultStyles, Fonts} from "../../constants";
 import {readHelps} from "../../api/HelpApi";
 import ActiveRequestContainer from "./ActiveRequestContainer";
-import firebase from 'firebase';
+import * as firebase from 'firebase';
 
 
 const helpCollection = firebase.firestore().collection('HELPS');

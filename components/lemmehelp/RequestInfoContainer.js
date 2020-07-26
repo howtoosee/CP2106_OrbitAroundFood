@@ -116,7 +116,7 @@ function RequestInfoContainer(props) {
                                       color={Colors.BUTTON}
                                 />
                             }
-                            onPress={() => navigation.navigate('Request Details', {
+                            onPress={() => navigation.navigate('Request Detail', {
                                 item: item,
                                 status: status
                             })}

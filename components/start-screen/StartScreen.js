@@ -5,7 +5,7 @@ import requireSignInAlert from "../support-components/ComponentRequiresSignInAle
 import StartScreenButton from "./StartScreenButton";
 import {Colors, DefaultStyles, Fonts} from "../../constants";
 
-import firebase from "firebase";
+import * as firebase from 'firebase';
 
 function StartScreen({navigation}) {
     const [displayName, setDisplayName] = useState();

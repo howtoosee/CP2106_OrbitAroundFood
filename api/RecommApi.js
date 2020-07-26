@@ -1,4 +1,4 @@
-import firebase from "firebase";
+import * as firebase from 'firebase';
 import combineAllData from "./combineAllData";
 
 const foodCollection = firebase.firestore().collection("FOODS");

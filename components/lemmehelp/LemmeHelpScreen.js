@@ -1,5 +1,14 @@
-import React, {useEffect, useState} from "react";
-import {ActivityIndicator, Button, SafeAreaView, ScrollView, StyleSheet, Text, View} from "react-native";
+import React, {useEffect, useState, useCallback} from "react";
+import {
+    ActivityIndicator,
+    Button,
+    SafeAreaView,
+    ScrollView,
+    StyleSheet,
+    Text,
+    View,
+    RefreshControl
+} from "react-native";
 
 import {Colors, DefaultStyles, Fonts} from "../../constants";
 import {readHelps} from "../../api/HelpApi";
@@ -12,6 +21,7 @@ const helpCollection = firebase.firestore().collection('HELPS');
 
 function LemmeHelpScreen({navigation}) {
     const [isLoading, setLoading] = useState(true);
+    const [isRefreshing, setRefreshing] = useState(false);
     const [requests, setRequests] = useState([]);
 
     const loadRequests = () => {
@@ -20,10 +30,17 @@ function LemmeHelpScreen({navigation}) {
             .catch(err => console.log("Error loading Requests:", err));
     }
 
-    const refresh = () => {
-        setLoading(true);
+    const wait = (timeout) => {
+        return new Promise(resolve => {
+            setTimeout(resolve, timeout);
+        });
+    }
+
+    const refresh = useCallback(() => {
+        setRefreshing(true);
         loadRequests();
-    };
+        wait(2000).then(() => setRefreshing(false));
+    });
 
     // Import Info from database
     useEffect(() => {
@@ -62,6 +79,9 @@ function LemmeHelpScreen({navigation}) {
 
                             <ScrollView style={styles.requestResultsContainer}
                                         showsVerticalScrollIndicator={false}
+                                        refreshControl={
+                                            <RefreshControl refreshing={isRefreshing} onRefresh={refresh}/>
+                                        }
                             >
                                 {
                                     requests.map((item) =>
@@ -176,6 +196,7 @@ const styles = StyleSheet.create({
     requestResultsContainer: {
         // height: '90%',
         overflow: 'hidden',
+        height: '100%',
     },
 
     endOfResultsText: {

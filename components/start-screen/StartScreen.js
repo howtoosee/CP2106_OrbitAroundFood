@@ -117,9 +117,12 @@ const styles = StyleSheet.create({
     userButtonContainer: {
         // flex: 2,
         alignSelf: 'center',
-        alignItems: 'flex-end',
+        alignItems: 'stretch',
         justifyContent: 'center',
-        marginVertical: '8%',
+        paddingVertical: 0.01 * height,
+        marginVertical: 0.02 * height,
+        width: width * 0.5,
+        height: height * 0.08,
     },
 
     userButton: {
@@ -127,8 +130,8 @@ const styles = StyleSheet.create({
         backgroundColor: Colors.DARKER_BUTTON,
         borderRadius: 4,
         width: "100%",
-        paddingVertical: '3%',
-        paddingHorizontal: '3%',
+        paddingVertical: 0.012 * height,
+        paddingHorizontal: 0.01 * height,
         borderColor: "white"
     }
 

@@ -1,7 +1,9 @@
 import React from 'react';
-import {Button, StyleSheet, View} from 'react-native';
+import {Button, Dimensions, StyleSheet, View} from 'react-native';
 
 import {Colors} from '../../constants';
+
+const {width, height} = Dimensions.get('window');
 
 
 function StartScreenButton(props) {
@@ -18,13 +20,14 @@ function StartScreenButton(props) {
 
 const styles = StyleSheet.create({
     buttonContainer: {
-        width: '100%',
+        width: width * 0.5,
+
         justifyContent: 'space-around',
-        alignItems: 'center',
+        // alignItems: 'center',
         marginVertical: '4%',
         backgroundColor: 'rgba(0,0,0,0)'
     },
-})
+});
 
 
 export default StartScreenButton;

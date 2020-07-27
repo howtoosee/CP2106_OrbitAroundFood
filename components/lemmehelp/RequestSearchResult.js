@@ -10,8 +10,8 @@ import {
     View
 } from "react-native";
 
-import searchQueryFood from "../../api/SearchApi";
 import {Colors, DefaultStyles, Fonts} from "../../constants";
+import searchQueryFood from "../../api/SearchApi";
 import FoodInfoContainer from "../support-components/FoodInfoContainer";
 
 
@@ -58,6 +58,8 @@ function RequestSearchResult({route, navigation}) {
         },
         [isLoading, searchKey, searchQueryFood]
     );
+
+
     return (
         <SafeAreaView style={DefaultStyles.screen}>
 

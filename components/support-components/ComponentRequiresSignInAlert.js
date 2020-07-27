@@ -1,7 +1,6 @@
 import {Alert} from "react-native";
 
-
-function requireSignInAlert(functionMsg, navigation) {
+export default function requireSignInAlert(functionMsg, navigation) {
     Alert.alert(
         'Error',
         'Please sign in to ' + functionMsg + '!',
@@ -16,5 +15,3 @@ function requireSignInAlert(functionMsg, navigation) {
         ]
     );
 }
-
-export default requireSignInAlert;

@@ -1,9 +1,8 @@
 import {Dimensions, PixelRatio, Platform} from 'react-native';
 
-
 const {width, height} = Dimensions.get('window');
-const scale = width / 400;
 
+const scale = width / 400;
 
 function normalise(size) {
     const newSize = size * scale;
@@ -14,7 +13,6 @@ function normalise(size) {
     }
 }
 
-
 const Fonts = {
     XL: normalise(34),
     L: normalise(26),
@@ -23,6 +21,5 @@ const Fonts = {
     XS: normalise(14),
     SPECIAL: normalise(22),
 }
-
 
 export default Fonts;

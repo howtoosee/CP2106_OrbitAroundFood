@@ -1,18 +1,22 @@
-import React, {useCallback, useEffect, useState} from "react";
+import React, {useEffect, useState, useCallback} from "react";
 import {
     ActivityIndicator,
     Button,
-    RefreshControl,
     SafeAreaView,
     ScrollView,
     StyleSheet,
     Text,
-    View
+    View,
+    RefreshControl
 } from "react-native";
 
-import {readHelps} from "../../api/HelpApi";
 import {Colors, DefaultStyles, Fonts} from "../../constants";
+import {readHelps} from "../../api/HelpApi";
 import ActiveRequestContainer from "./ActiveRequestContainer";
+import * as firebase from 'firebase';
+
+
+const helpCollection = firebase.firestore().collection('HELPS');
 
 
 function LemmeHelpScreen({navigation}) {

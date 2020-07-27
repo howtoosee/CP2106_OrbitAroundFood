@@ -1,13 +1,11 @@
 import React, {useEffect, useState} from 'react';
 import {SafeAreaView, StyleSheet, Text, View} from 'react-native';
-import * as firebase from 'firebase';
 
 import {Colors, DefaultStyles, Fonts} from '../../constants';
 import RequestInfoContainer from './RequestInfoContainer';
-
+import * as firebase from 'firebase';
 
 const helpCollection = firebase.firestore().collection("HELPS");
-
 
 function RequestDetail({navigation, route}) {
     const [item, setItem] = useState(route.params?.item);

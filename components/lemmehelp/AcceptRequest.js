@@ -2,15 +2,14 @@ import React, {useEffect, useState} from 'react';
 import {Alert, Button, Dimensions, SafeAreaView, StyleSheet, TextInput, View} from 'react-native';
 import * as firebase from 'firebase';
 
+import {Colors, DefaultStyles, Fonts} from '../../constants';
 import {setHelper} from '../../api/HelpApi';
 import {getUserContact} from "../../api/AuthenticationApi";
-import {Colors, DefaultStyles, Fonts} from '../../constants';
 import RequestInfoContainer from "./RequestInfoContainer";
 import DismissKeyboardView from "../support-components/DismissKeyboardView";
 
 
 const {width, height} = Dimensions.get('window');
-
 
 function AcceptRequest({navigation, route}) {
     const requestObj = route.params?.requestObj;

@@ -4,7 +4,6 @@ const Screen = {
     FAVOURITE: 'favourite',
     START_SCREEN: 'start_screen',
     SEARCH: 'search',
-
 }
 
 

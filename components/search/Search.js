@@ -14,9 +14,9 @@ import {
 import {Button as ButtonRNE} from 'react-native-elements';
 import Icon from 'react-native-vector-icons/FontAwesome';
 
-import {addHistory, clearHistory, getHistory} from '../../api/SearchHistoryLogic';
 import {Colors, DefaultStyles, Fonts} from '../../constants';
 import Filter from './Filter';
+import {addHistory, clearHistory, getHistory} from '../../api/SearchHistoryLogic';
 import DismissKeyboardView from "../support-components/DismissKeyboardView";
 
 

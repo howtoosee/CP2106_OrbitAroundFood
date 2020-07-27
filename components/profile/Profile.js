@@ -1,11 +1,12 @@
 import React from 'react';
 import {Alert, Button, Image, SafeAreaView, StyleSheet, Text, View} from 'react-native';
-import * as firebase from 'firebase';
 
-import {signOut} from "../../api/AuthenticationApi";
 import Fonts from '../../constants/Fonts';
 import Colors from '../../constants/Colors';
 import DefaultStyles from "../../constants/DefaultStyles";
+
+import * as firebase from "firebase";
+import {signOut} from "../../api/AuthenticationApi";
 
 
 function Profile({navigation}) {

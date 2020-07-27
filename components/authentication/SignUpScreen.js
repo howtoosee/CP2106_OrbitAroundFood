@@ -16,7 +16,6 @@ import {createUser, signOut, userNameExists} from '../../api/AuthenticationApi';
 import DismissKeyboardView from "../support-components/DismissKeyboardView";
 import HideWithKeyboard from "react-native-hide-with-keyboard";
 
-
 const {width, height} = Dimensions.get("window");
 
 

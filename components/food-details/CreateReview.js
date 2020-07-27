@@ -11,13 +11,13 @@ import {
     View
 } from 'react-native';
 import {AirbnbRating} from 'react-native-ratings';
-import * as firebase from 'firebase';
 
 import {writeReviews} from "../../api/ReviewsApi";
 import FoodInfoContainer from "../support-components/FoodInfoContainer";
 import DismissKeyboardView from "../support-components/DismissKeyboardView";
 import {Colors, DefaultStyles, Fonts} from '../../constants';
 
+import * as firebase from 'firebase';
 
 const {width, height} = Dimensions.get('window');
 

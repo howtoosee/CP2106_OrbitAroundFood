@@ -6,7 +6,6 @@ import Icon5 from 'react-native-vector-icons/FontAwesome5';
 
 import {Colors, Fonts} from "../../constants";
 
-
 const {width, height} = Dimensions.get('window');
 
 
@@ -38,59 +37,60 @@ function FoodInfoContainer(props) {
                 </Text>
             </View>
 
-            {hideButton
-                ? <View/>
-                : (buttonType === 'favs')
-                    ? <View style={styles.favButtonContainer}>
-                        <Button type='clear'
-                                icon={
-                                    <Icon name={isSaved ? 'heart' : 'heart-o'}
-                                          size={30}
-                                          color={Colors.BUTTON}
-                                    />
-                                }
-
-                                onPress={() => {
-                                    if (isSaved) {
-                                        removeFavHandler();
-                                    } else {
-                                        addFavHandler();
+            {/*<View style={{flex: 2}}>*/}
+                {hideButton
+                    ? <View/>
+                    : (buttonType === 'favs')
+                        ? <View style={styles.favButtonContainer}>
+                            <Button type='clear'
+                                    icon={
+                                        <Icon name={isSaved ? 'heart' : 'heart-o'}
+                                              size={30}
+                                              color={Colors.BUTTON}
+                                        />
                                     }
-                                    onGoBack();
-                                }}
-                        />
-                    </View>
 
-                    // details or lemmehelp request
-                    : <View style={styles.detailsButtonContainer}>
-                        <Button type='clear'
-                                icon={
-                                    <Icon5
-                                        name='chevron-right'
-                                        size={30}
-                                        color={Colors.BUTTON}
-                                    />
-                                }
-                                onPress={() => {
-                                    buttonType === 'details'
-                                        ? // go to details
-                                        navigation.navigate('Food Details',
-                                            {
-                                                foodObj: item,
-                                                onGoBack: () => onGoBack()
-                                            })
-                                        : // go to lemmehelp request
-                                        onPress()
-                                }
-                                }
-                        />
-                    </View>
-            }
+                                    onPress={() => {
+                                        if (isSaved) {
+                                            removeFavHandler();
+                                        } else {
+                                            addFavHandler();
+                                        }
+                                        onGoBack();
+                                    }}
+                            />
+                        </View>
+
+                        // details or lemmehelp request
+                        : <View style={styles.detailsButtonContainer}>
+                            <Button type='clear'
+                                    icon={
+                                        <Icon5
+                                            name='chevron-right'
+                                            size={30}
+                                            color={Colors.BUTTON}
+                                        />
+                                    }
+                                    onPress={() => {
+                                        buttonType === 'details'
+                                            ? // go to details
+                                            navigation.navigate('Food Details',
+                                                {
+                                                    foodObj: item,
+                                                    onGoBack: () => onGoBack()
+                                                })
+                                            : // go to lemmehelp request
+                                            onPress()
+                                    }
+                                    }
+                            />
+                        </View>
+                }
+            {/*</View>*/}
 
         </View>
     );
 }
-
 
 const styles = StyleSheet.create({
     searchResultContainer: {

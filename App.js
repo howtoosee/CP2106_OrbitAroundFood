@@ -3,13 +3,14 @@ import {NavigationContainer} from '@react-navigation/native';
 import {createStackNavigator} from '@react-navigation/stack';
 import {SafeAreaProvider} from 'react-native-safe-area-context';
 import getSlideFromRightTransition from 'react-navigation-slide-from-right-transition';
+import firebaseDB from './constants/firebaseDB';
 
 import {
     AcceptRequest,
     CreateRequest,
-    CreateReview,
     Favourite,
     FoodDetails,
+    CreateReview,
     LemmeHelpScreen,
     Profile,
     Recommendation,

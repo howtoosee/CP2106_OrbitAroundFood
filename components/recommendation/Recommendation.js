@@ -92,7 +92,7 @@ function Recommendation({navigation}) {
 const styles = StyleSheet.create({
 
     headerInfoContainer: {
-        flex: 1,
+        flex: 2,
     },
 
     headerInfoText: {
@@ -121,7 +121,7 @@ const styles = StyleSheet.create({
     },
 
     imageContainer: {
-        flex: 4,
+        // flex: 5,
         height: height * 0.25,
         marginTop: '3%',
         alignItems: 'center',
@@ -140,14 +140,16 @@ const styles = StyleSheet.create({
     },
 
     recommendationContainer: {
-        flex: 2,
+        // flex: 3,
+        height: height * 0.18,
         justifyContent: 'center',
         alignItems: 'stretch',
     },
 
     buttonContainer: {
-        flex: 4,
-        height: '100%',
+        // flex: 5,
+        // height: '100%',
+        marginTop: height * 0.1,
         alignItems: 'center',
         justifyContent: 'center',
     },

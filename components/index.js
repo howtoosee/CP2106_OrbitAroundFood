@@ -4,7 +4,7 @@ import SignUpScreen from './authentication/SignUpScreen';
 import Favourite from './favourite/Favourite';
 
 import FoodDetails from './food-details/FoodDetails';
-import LeaveReview from './food-details/LeaveReview';
+import CreateReview from './food-details/CreateReview';
 
 import AcceptRequest from './lemmehelp/AcceptRequest';
 import ActiveRequestContainer from "./lemmehelp/ActiveRequestContainer";
@@ -37,7 +37,7 @@ export {
     SignUpScreen,
     Favourite,
     FoodDetails,
-    LeaveReview,
+    CreateReview,
     AcceptRequest,
     ActiveRequestContainer,
     CreateRequest,

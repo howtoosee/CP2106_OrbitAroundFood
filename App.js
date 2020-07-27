@@ -10,7 +10,7 @@ import {
     CreateRequest,
     Favourite,
     FoodDetails,
-    LeaveReview,
+    CreateReview,
     LemmeHelpScreen,
     Profile,
     Recommendation,
@@ -67,8 +67,8 @@ export default function App() {
                                   component={FoodDetails}
                     />
 
-                    <stack.Screen name="Leave Review"
-                                  component={LeaveReview}
+                    <stack.Screen name="Create Review"
+                                  component={CreateReview}
                     />
 
                     <stack.Screen name="Recommendation"

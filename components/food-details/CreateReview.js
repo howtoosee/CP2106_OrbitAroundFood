@@ -22,7 +22,7 @@ import * as firebase from 'firebase';
 const {width, height} = Dimensions.get('window');
 
 
-function LeaveReview({route, navigation}) {
+function CreateReview({route, navigation}) {
 
     const foodObj = route.params?.foodObj;
 
@@ -240,4 +240,4 @@ const styles = StyleSheet.create({
 })
 
 
-export default LeaveReview;
+export default CreateReview;

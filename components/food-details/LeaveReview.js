@@ -88,68 +88,68 @@ function LeaveReview({route, navigation}) {
         <SafeAreaView style={DefaultStyles.screen}>
 
             <KeyboardAvoidingView style={DefaultStyles.keyboardAvoidScreen}
-                                  behavior={"padding"}
+                                  behavior={Platform.OS === 'ios' ? 'padding' : null}
             >
-            <DismissKeyboardView style={{flex: 1, justifyContent: 'flex-start', marginBottom: '25%'}}>
+                <DismissKeyboardView style={{flex: 1, justifyContent: 'flex-start'}}>
 
-                <View style={styles.foodInfoContainer}>
+                    <View style={styles.foodInfoContainer}>
 
-                    <FoodInfoContainer
-                        item={foodObj}
-                        hideButton={true}
-                    />
+                        <FoodInfoContainer
+                            item={foodObj}
+                            hideButton={true}
+                        />
 
-                </View>
-
-                <View style={styles.reviewContainer}>
-
-                    <View style={styles.reviewTitleContainer}>
-                        <Text style={styles.reviewTitleText}>LemmeReview:</Text>
                     </View>
 
-                    <View style={styles.ratingSectionContainer}>
+                    <View style={styles.reviewContainer}>
 
-                        <Text style={styles.reviewHeaderText}>{'@' + userID}'s rating:</Text>
-                        <View style={styles.ratingContainer}>
-                            <AirbnbRating
-                                selectedColor={Colors.DARKER_BUTTON}
-                                reviewColor={Colors.DARKER_BUTTON}
-                                size={30}
-                                count={5}
-                                defaultRating={rating}
-                                showRating={false}
-                                onFinishRating={setRating}
-                            />
+                        <View style={styles.reviewTitleContainer}>
+                            <Text style={styles.reviewTitleText}>LemmeReview:</Text>
                         </View>
 
-                    </View>
+                        <View style={styles.ratingSectionContainer}>
+
+                            <Text style={styles.reviewHeaderText}>{'@' + userID}'s rating:</Text>
+                            <View style={styles.ratingContainer}>
+                                <AirbnbRating
+                                    selectedColor={Colors.DARKER_BUTTON}
+                                    reviewColor={Colors.DARKER_BUTTON}
+                                    size={30}
+                                    count={5}
+                                    defaultRating={rating}
+                                    showRating={false}
+                                    onFinishRating={setRating}
+                                />
+                            </View>
+
+                        </View>
 
 
-                    <View style={styles.msgSectionContainer}>
-                        <Text style={styles.reviewHeaderText}>{'@' + userID}'s comments:</Text>
-                        <View style={styles.msgInputContainer}>
-                            <TextInput style={styles.inputText}
-                                       placeholder="nice dish! (max 200 chars)"
-                                       onChangeText={msgInputHandler}
-                                       value={msgString}
-                                       multiline={true}
-                                       numberOfLines={4}
-                                       maxLength={200}
-                                       autoCapitalize={'sentences'}
-                                       enablesReturnKeyAutomatically={true}
-                            />
+                        <View style={styles.msgSectionContainer}>
+                            <Text style={styles.reviewHeaderText}>{'@' + userID}'s comments:</Text>
+                            <View style={styles.msgInputContainer}>
+                                <TextInput style={styles.inputText}
+                                           placeholder="nice dish! (max 200 chars)"
+                                           onChangeText={msgInputHandler}
+                                           value={msgString}
+                                           multiline={true}
+                                           numberOfLines={4}
+                                           maxLength={200}
+                                           autoCapitalize={'sentences'}
+                                           enablesReturnKeyAutomatically={true}
+                                />
+                            </View>
                         </View>
                     </View>
-                </View>
 
-                <View style={styles.sendButtonContainer}>
-                    <Button title={"Send"}
-                            color={Colors.BUTTON}
-                            onPress={() => confirmHandler()}
-                    />
-                </View>
+                    <View style={styles.sendButtonContainer}>
+                        <Button title={"Send"}
+                                color={Colors.BUTTON}
+                                onPress={() => confirmHandler()}
+                        />
+                    </View>
 
-            </DismissKeyboardView>
+                </DismissKeyboardView>
             </KeyboardAvoidingView>
         </SafeAreaView>
 

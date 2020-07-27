@@ -6,6 +6,7 @@ import getRandomFood from "../../api/RecommApi";
 import {Colors, DefaultStyles} from "../../constants";
 import FoodInfoContainer from "../support-components/FoodInfoContainer";
 
+
 const {width, height} = Dimensions.get('window');
 
 

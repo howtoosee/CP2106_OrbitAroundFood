@@ -1,11 +1,14 @@
 import React from 'react';
-import {Alert, StyleSheet, Text, View, Dimensions} from 'react-native';
-import {Colors, Fonts} from '../../constants';
+import {Alert, Dimensions, StyleSheet, Text, View} from 'react-native';
 import {Button} from 'react-native-elements';
 import Icon from 'react-native-vector-icons/FontAwesome5';
 import * as firebase from 'firebase';
 
+import {Colors, Fonts} from '../../constants';
+
+
 const {width, height} = Dimensions.get('window');
+
 
 function ActiveRequestContainer(props) {
     const {item, onPress} = props;

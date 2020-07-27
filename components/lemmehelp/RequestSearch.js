@@ -10,12 +10,13 @@ import {
     TouchableOpacity,
     View
 } from 'react-native';
-import {Button as ButtonRNE,} from 'react-native-elements';
+import {Button as ButtonRNE} from 'react-native-elements';
 import Icon from "react-native-vector-icons/FontAwesome";
 
-import {Colors, DefaultStyles, Fonts} from '../../constants';
 import {addHistory, clearHistory, getHistory} from "../../api/SearchHistoryLogic";
+import {Colors, DefaultStyles, Fonts} from '../../constants';
 import DismissKeyboardView from "../support-components/DismissKeyboardView";
+
 
 function RequestSearch({navigation, route}) {
     const onGoBack = route.params?.onGoBack;

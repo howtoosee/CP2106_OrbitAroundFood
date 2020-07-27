@@ -2,8 +2,8 @@ import React, {useState} from 'react';
 import {Button, Dimensions, SafeAreaView, StyleSheet, Text, View} from 'react-native';
 import Icon from 'react-native-vector-icons/FontAwesome';
 
-
 import {Colors, DefaultStyles, Fonts} from '../../constants';
+
 
 const {width, height} = Dimensions.get('window');
 

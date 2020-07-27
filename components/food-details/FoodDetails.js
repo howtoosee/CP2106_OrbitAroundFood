@@ -1,25 +1,26 @@
-import React, {useEffect, useState, useCallback} from 'react';
+import React, {useCallback, useEffect, useState} from 'react';
 import {
     ActivityIndicator,
     Alert,
     Button,
     Dimensions,
-    Image, RefreshControl,
+    Image,
+    RefreshControl,
     SafeAreaView,
     ScrollView,
     StyleSheet,
     Text,
     View
 } from 'react-native';
+import * as firebase from 'firebase';
 
 import {readReviews} from "../../api/ReviewsApi";
 import getImage from "../../api/FoodImage";
 import {addFavourite, isFavourite, removeFavourite} from "../../api/FavouritesLogic";
+import {Colors, DefaultStyles, Fonts} from "../../constants";
 import FoodInfoContainer from "../support-components/FoodInfoContainer";
 import requireSignInAlert from "../support-components/ComponentRequiresSignInAlert";
 
-import {Colors, DefaultStyles, Fonts} from "../../constants";
-import * as firebase from 'firebase';
 
 const {width, height} = Dimensions.get('window');
 

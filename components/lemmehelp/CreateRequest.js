@@ -2,7 +2,6 @@ import React, {useEffect, useState} from 'react';
 import {Alert, Button, Dimensions, SafeAreaView, StyleSheet, Text, TextInput, View} from 'react-native';
 import {Button as ButtonRNE} from 'react-native-elements';
 import DateTimePickerModal from 'react-native-modal-datetime-picker';
-
 import * as firebase from 'firebase';
 
 import {getUserContact} from '../../api/AuthenticationApi';
@@ -10,6 +9,7 @@ import {writeHelp} from '../../api/HelpApi';
 import {Colors, DefaultStyles, Fonts} from '../../constants';
 import FoodInfoContainer from '../support-components/FoodInfoContainer';
 import DismissKeyboardView from "../support-components/DismissKeyboardView";
+
 
 const {width, height} = Dimensions.get('window');
 

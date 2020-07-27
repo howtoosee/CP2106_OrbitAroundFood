@@ -1,7 +1,8 @@
 import React from "react";
 import {Keyboard, TouchableWithoutFeedback, View} from "react-native";
 
-const DismissKeyboardHOC = (Comp) => {
+
+function DismissKeyboardHOC(Comp) {
     return ({children, ...props}) => (
         <TouchableWithoutFeedback onPress={() => Keyboard.dismiss()} accessible={false}>
             <Comp {...props}>
@@ -9,8 +10,9 @@ const DismissKeyboardHOC = (Comp) => {
             </Comp>
         </TouchableWithoutFeedback>
     );
-};
+}
 
 const DismissKeyboardView = DismissKeyboardHOC(View);
+
 
 export default DismissKeyboardView;

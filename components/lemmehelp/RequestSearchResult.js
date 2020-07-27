@@ -10,8 +10,8 @@ import {
     View
 } from "react-native";
 
-import {Colors, DefaultStyles, Fonts} from "../../constants";
 import searchQueryFood from "../../api/SearchApi";
+import {Colors, DefaultStyles, Fonts} from "../../constants";
 import FoodInfoContainer from "../support-components/FoodInfoContainer";
 
 

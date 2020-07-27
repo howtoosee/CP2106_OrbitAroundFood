@@ -1,11 +1,11 @@
 import React, {useEffect, useState} from "react";
-import {Image, SafeAreaView, StyleSheet, Text, TouchableOpacity, View, Dimensions} from "react-native";
+import {Dimensions, Image, SafeAreaView, StyleSheet, Text, TouchableOpacity, View} from "react-native";
+import * as firebase from 'firebase';
 
 import requireSignInAlert from "../support-components/ComponentRequiresSignInAlert";
 import StartScreenButton from "./StartScreenButton";
 import {Colors, DefaultStyles, Fonts} from "../../constants";
 
-import * as firebase from 'firebase';
 
 const {width, height} = Dimensions.get('window');
 

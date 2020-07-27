@@ -14,11 +14,13 @@ import {
 } from "react-native";
 
 import {Colors, DefaultStyles, Fonts} from "../../constants";
-import * as firebase from 'firebase';
 import DismissKeyboardView from "../support-components/DismissKeyboardView";
 import HideWithKeyboard from "react-native-hide-with-keyboard";
+import * as firebase from 'firebase';
+
 
 const {width, height} = Dimensions.get("window");
+
 
 function SignInScreen({navigation}) {
     const [email, setEmailInput] = useState("");

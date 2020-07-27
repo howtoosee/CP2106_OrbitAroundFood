@@ -1,14 +1,18 @@
-import React, {useEffect, useState, useCallback} from 'react';
-import {ActivityIndicator, Dimensions, SafeAreaView, ScrollView, StyleSheet, Text, View, RefreshControl} from 'react-native';
+import React, {useCallback, useEffect, useState} from 'react';
+import {
+    ActivityIndicator,
+    RefreshControl,
+    SafeAreaView,
+    ScrollView,
+    StyleSheet,
+    Text,
+    View
+} from 'react-native';
+import * as firebase from 'firebase';
 
 import {Colors, DefaultStyles, Fonts} from '../../constants';
 import RequestInfoContainer from './RequestInfoContainer';
 import {readAllUserRelatedRequests} from '../../api/HelpApi';
-import * as firebase from 'firebase';
-
-
-const {width, height} = Dimensions.get('window');
-const helpCollection = firebase.firestore().collection('HELPS');
 
 
 function RequestHistory({navigation, route}) {

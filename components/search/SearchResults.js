@@ -1,4 +1,4 @@
-import React, {useEffect, useState, useCallback} from "react";
+import React, {useCallback, useEffect, useState} from "react";
 import {
     ActivityIndicator,
     Dimensions,
@@ -10,9 +10,10 @@ import {
     View
 } from "react-native";
 
-import FoodInfoContainer from "../support-components/FoodInfoContainer";
-import {Colors, DefaultStyles, Fonts} from "../../constants";
 import searchQueryFood from "../../api/SearchApi";
+import {Colors, DefaultStyles, Fonts} from "../../constants";
+import FoodInfoContainer from "../support-components/FoodInfoContainer";
+
 
 const {width, height} = Dimensions.get('window');
 

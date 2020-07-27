@@ -39,7 +39,7 @@ function FoodDetails({route, navigation}) {
 
     const addReviewHandler = () => {
         if (user) {
-            navigation.navigate("Leave Review",
+            navigation.navigate("Create Review",
                 {
                     foodObj: foodObj,
                     user: user,

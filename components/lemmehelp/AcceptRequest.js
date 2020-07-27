@@ -45,7 +45,7 @@ function AcceptRequest({navigation, route}) {
                 );
             })
             .catch(err => console.log('Error setting helper:', err))
-            .then(setRemarks(''));
+            .then(() => setRemarks(''));
     };
 
 

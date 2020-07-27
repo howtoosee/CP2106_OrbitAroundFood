@@ -25,7 +25,7 @@ class DBWriter:
             price = row[1].value
             storeID = row[2].value
             url = row[3].value
-            filters = [] if row[4].value is None else row[4].value.strip(' ').split(',')
+            filters = [] if row[4].value is None else row[4].value.strip(' ').split(', ')
 
             foodID = self.__getID(storeID, name)
 

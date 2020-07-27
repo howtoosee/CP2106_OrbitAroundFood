@@ -46,9 +46,9 @@ function CreateRequest({navigation, route}) {
 
     const confirmTimeHandler = (dateObj) => {
         const hr24 = dateObj.getHours();
-        const hr = hr24 % 12;
+        const hr = hr24 === 12 ? 12 : hr24 % 12;
         const min = ('0' + dateObj.getMinutes()).slice(-2);
-        const ampm = hr24 > 12 ? 'pm' : 'am';
+        const ampm = hr24 >= 12 ? 'pm' : 'am';
         const timeString = hr + ':' + min + ' ' + ampm;
 
         if (dateObj < Date.now()) {
@@ -149,7 +149,7 @@ function CreateRequest({navigation, route}) {
 
                         <View style={styles.textInputContainer}>
 
-                            <Text style={styles.inputHeaderText}>Destination</Text>
+                            <Text style={styles.inputHeaderText}>Meeting place</Text>
                             <TextInput style={styles.textInput}
                                        numberOfLines={1}
                                        placeholder="Where to meet?"

@@ -1,11 +1,14 @@
 import React, {useEffect, useState} from "react";
-import {Image, SafeAreaView, StyleSheet, Text, TouchableOpacity, View} from "react-native";
+import {Image, SafeAreaView, StyleSheet, Text, TouchableOpacity, View, Dimensions} from "react-native";
 
 import requireSignInAlert from "../support-components/ComponentRequiresSignInAlert";
 import StartScreenButton from "./StartScreenButton";
 import {Colors, DefaultStyles, Fonts} from "../../constants";
 
 import * as firebase from 'firebase';
+
+const {width, height} = Dimensions.get('window');
+
 
 function StartScreen({navigation}) {
     const [displayName, setDisplayName] = useState();
@@ -103,6 +106,8 @@ const styles = StyleSheet.create({
 
     buttonContainer: {
         flex: 6,
+        width: 0.8 * width,
+        height: 0.6 * height,
         flexDirection: 'column',
         alignItems: 'center',
         alignSelf: 'center',
@@ -122,7 +127,7 @@ const styles = StyleSheet.create({
         backgroundColor: Colors.DARKER_BUTTON,
         borderRadius: 4,
         width: "100%",
-        paddingVertical: '2%',
+        paddingVertical: '3%',
         paddingHorizontal: '3%',
         borderColor: "white"
     }
